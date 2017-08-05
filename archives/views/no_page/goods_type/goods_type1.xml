@@ -1,0 +1,36 @@
+<openerp>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="archives_common_goods_type1_list">
+            <field name="name">物料分类1列表</field>
+            <field name="model">archives.goods_type1</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="archives_common_goods_type1_edit">
+            <field name="name">物料分类1新建</field>
+            <field name="model">archives.goods_type1</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top" string="物料分类1">
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="archives_common_goods_type1_action_window">
+            <field name="name">物料分类1</field>
+            <field name="res_model">archives.goods_type1</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</openerp>

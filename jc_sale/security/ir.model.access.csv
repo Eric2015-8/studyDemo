@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_jc_sale_jc_sale,jc_sale.jc_sale,model_jc_sale_jc_sale,,1,0,0,0

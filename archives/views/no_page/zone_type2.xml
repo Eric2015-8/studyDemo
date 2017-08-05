@@ -1,0 +1,36 @@
+<openerp>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="archives_common_zone_type2_list">
+            <field name="name">地区分类2列表</field>
+            <field name="model">archives.zone_type2</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="archives_common_zone_type2_edit">
+            <field name="name">地区分类2新建</field>
+            <field name="model">archives.zone_type2</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top" string="地区分类2">
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="archives_common_zone_type2_action_window">
+            <field name="name">地区分类2</field>
+            <field name="res_model">archives.zone_type2</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</openerp>

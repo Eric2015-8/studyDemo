@@ -1,0 +1,36 @@
+<openerp>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="archives_common_sale_type_list">
+            <field name="name">销售类型列表</field>
+            <field name="model">archives.sale_type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="archives_common_sale_type_edit">
+            <field name="name">销售类型新建</field>
+            <field name="model">archives.sale_type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top" string="销售类型">
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="archives_common_sale_type_action_window">
+            <field name="name">销售类型</field>
+            <field name="res_model">archives.sale_type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</openerp>

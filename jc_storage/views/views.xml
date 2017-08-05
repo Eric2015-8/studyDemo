@@ -1,0 +1,71 @@
+<openerp>
+    <data>
+        <!-- Top menu item -->
+        <menuitem name="仓储" id="jc_storage_menu_root"/>
+
+        <!-- menu categories -->
+        <!--<menuitem name="公用" id="archives_menu_common" parent="archives_menu_root"/>-->
+
+        <record model="ir.ui.view" id="jc_storage_common_staff_list">
+            <field name="name">员工列表</field>
+            <field name="model">archives.staff</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="company_id"/>
+                    <field name="department_id"/>
+                    <field name="gender"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="jc_storage_common_staff_edit">
+            <field name="name">员工新建</field>
+            <field name="model">archives.staff</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top" string="员工">
+                            <field name="name"/>
+                        </group>
+                        <notebook>
+                            <page string="公开信息">
+                                <group col="4">
+                                    <field name="company_id"/>
+                                    <field name="tel"/>
+                                    <field name="department_id"/>
+                                    <field name="officeTel"/>
+                                    <!--职务-->
+                                    <!--<field name="email"/>-->
+                                </group>
+                            </page>
+                            <page string="个人信息">
+                                <group col="4">
+                                    <field name="idNo"/>
+                                    <field name="address"/>
+                                    <!--账号-->
+                                    <field name="birthday"/>
+                                    <field name="gender"/>
+                                    <field name="place"/>
+                                </group>
+                            </page>
+                            <page string="系统信息">
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="jc_storage_common_staff_action_window">
+            <field name="name">员工</field>
+            <field name="res_model">archives.staff</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="测试" id="jc_storage_menu_staff" parent="jc_storage_menu_root"
+        action="jc_storage_common_staff_action_window"/>
+
+    </data>
+</openerp>

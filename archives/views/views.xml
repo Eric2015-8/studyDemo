@@ -1,0 +1,10 @@
+<openerp>
+  <data>
+    <!-- Top menu item -->
+    <menuitem name="档案" id="archives_menu_root"/>
+
+    <!-- menu categories -->
+    <menuitem name="公用" id="archives_menu_common" parent="archives_menu_root"/>
+
+  </data>
+</openerp>

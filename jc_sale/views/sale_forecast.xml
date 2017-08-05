@@ -1,0 +1,53 @@
+<openerp>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="archives_common_sale_forecast_list">
+            <field name="name">销售预报列表</field>
+            <field name="model">jc_sale.sale_forecast</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="customer_id"/>
+                    <field name="date"/>
+                    <field name="saleType_id"/>
+                    <field name="remark"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="archives_common_sale_forecast_edit">
+            <field name="name">销售预报新建</field>
+            <field name="model">jc_sale.sale_forecast</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top" string="销售预报" col="4">
+                            <field name="customer_id"/>
+                            <field name="date"/>
+                            <field name="saleType_id"/>
+                            <field name="remark"/>
+                        </group>
+                        <notebook>
+                            <page string="物料信息">
+
+                            </page>
+                            <page string="其它信息">
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="archives_common_sale_forecast_action_window">
+            <field name="name">销售预报</field>
+            <field name="res_model">jc_sale.sale_forecast</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="销售预报" id="jc_sale.menu_sale_customer" parent="jc_sale_menu_root"
+                  action="archives_common_sale_forecast_action_window"/>
+
+    </data>
+</openerp>

@@ -1,0 +1,58 @@
+<openerp>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="archives_common_department_list">
+            <field name="name">部门列表</field>
+            <field name="model">archives.department</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="company_id"/>
+                    <field name="parent_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="archives_common_department_edit">
+            <field name="name">部门新建</field>
+            <field name="model">archives.department</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="4" name="group_top" string="部门">
+                            <field name="name"/>
+                            <field name="company_id"/>
+                            <field name="parent_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="archives_common_department_action_window">
+            <field name="name">部门</field>
+            <field name="res_model">archives.department</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- server action to the one above -->
+        <!--
+        <record model="ir.actions.server" id="archives.action_server">
+          <field name="name">archives server</field>
+          <field name="model_id" ref="model_archives_archives"/>
+          <field name="code">
+            action = {
+              "type": "ir.actions.act_window",
+              "view_mode": "tree,form",
+              "res_model": self._name,
+            }
+          </field>
+        </record>
+        -->
+
+        <!-- actions -->
+        <menuitem name="部门" id="archives.menu_department" parent="archives_menu_common"
+                  action="archives_common_department_action_window"/>
+    </data>
+</openerp>

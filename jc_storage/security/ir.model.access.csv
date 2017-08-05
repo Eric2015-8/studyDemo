@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_jc_storage_jc_storage,jc_storage.jc_storage,model_jc_storage_jc_storage,,1,0,0,0

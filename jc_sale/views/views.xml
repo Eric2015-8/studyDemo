@@ -1,0 +1,7 @@
+<openerp>
+    <data>
+        <!-- Top menu item -->
+        <menuitem name="销售" id="jc_sale_menu_root"/>
+
+    </data>
+</openerp>
