@@ -28,7 +28,18 @@
                         </group>
                         <notebook>
                             <page string="物料信息">
-
+                                <field name="sale_forecast_detail" mode="tree,kanban">
+                                    <tree string="销售预报明细" editable="bottom">
+                                        <field name="goods_id"/>
+                                        <field name="secondUnit_id"/>
+                                        <field name="secondUnitNumber"/>
+                                        <field name="mainUnit_id"/>
+                                        <field name="mainUnitNumber"/>
+                                        <field name="price"/>
+                                        <field name="money"/>
+                                        <field name="remark"/>
+                                    </tree>
+                                </field>
                             </page>
                             <page string="其它信息">
 
