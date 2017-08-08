@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 
 
 class SaleForecast(models.Model):
@@ -41,34 +41,49 @@ class SaleForecastDetail(models.Model):
                                        copy=False)
 
     goods_id = fields.Many2one('archives.goods', string=u'产品', required=True)
-    secondUnit_id = fields.Many2one('archives.unit', string=u'辅单位')
+    secondUnit_id = fields.Many2one('archives.unit', string=u'辅单位', compute='_set_second')
     secondUnitNumber = fields.Float(digits=(6, 2), string=u'辅数量')
-    mainUnit_id = fields.Many2one('archives.unit', string=u'主单位')
+    mainUnit_id = fields.Many2one('archives.unit', string=u'主单位', compute='_set_main')
     mainUnitNumber = fields.Float(digits=(6, 2), string=u'主数量')
 
     price = fields.Float(digits=(6, 2), help="单价", string=u'单价')
-    money = fields.Float(digits=(6, 2), help="金额", string=u'金额')
+    money = fields.Float(digits=(6, 2), help="金额", string=u'金额', compute='_compute_money')
 
     remark = fields.Char(string=u'备注')
 
+    @api.depends('goods_id')
+    def _set_main(self):
+        for record in self:
+            record.mainUnit_id = record.goods_id.mainUnit_id
+
+    @api.depends('goods_id')
+    def _set_second(self):
+        for record in self:
+            record.secondUnit_id = record.goods_id.secondUnit_id
+
+    @api.depends('price', 'mainUnitNumber')
+    def _compute_money(self):
+        for record in self:
+            record.money = record.price * record.mainUnitNumber
+
     @api.onchange('price', 'mainUnitNumber')
     def _onchange_for_money(self):
-        # a=self.goods_id.
         self.money = self.price * self.mainUnitNumber
 
     @api.onchange('secondUnitNumber')
     def _onchange_second(self):
-        # a=self.goods_id.
-        self.mainUnitNumber = 2 * self.secondUnitNumber
+        if not self.goods_id.needSecondChange:
+            return
+        self.mainUnitNumber = self.goods_id.secondRate * self.secondUnitNumber
 
     @api.onchange('mainUnitNumber')
     def _onchange_main(self):
-        # a=self.goods_id.
-        self.secondUnitNumber = self.mainUnitNumber / 2
+        if not self.goods_id.needSecondChange:
+            return
+        self.secondUnitNumber = self.mainUnitNumber / self.goods_id.secondRate
 
     @api.onchange('goods_id')
     def _onchange_goods(self):
-        # a=self.goods_id.
         # self.secondUnit_id = self.env['archives.goods'].secondUnit_id
         # self.mainUnit_id = self.env['archives.goods'].mainUnit_id
         self.secondUnit_id = self.goods_id.secondUnit_id
