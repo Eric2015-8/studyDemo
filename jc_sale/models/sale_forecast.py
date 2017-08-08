@@ -52,6 +52,24 @@ class SaleForecastDetail(models.Model):
     remark = fields.Char(string=u'备注')
 
     @api.onchange('price', 'mainUnitNumber')
-    def _onchange_price(self):
+    def _onchange_for_money(self):
         # a=self.goods_id.
         self.money = self.price * self.mainUnitNumber
+
+    @api.onchange('secondUnitNumber')
+    def _onchange_second(self):
+        # a=self.goods_id.
+        self.mainUnitNumber = 2 * self.secondUnitNumber
+
+    @api.onchange('mainUnitNumber')
+    def _onchange_main(self):
+        # a=self.goods_id.
+        self.secondUnitNumber = self.mainUnitNumber / 2
+
+    @api.onchange('goods_id')
+    def _onchange_goods(self):
+        # a=self.goods_id.
+        # self.secondUnit_id = self.env['archives.goods'].secondUnit_id
+        # self.mainUnit_id = self.env['archives.goods'].mainUnit_id
+        self.secondUnit_id = self.goods_id.secondUnit_id
+        self.mainUnit_id = self.goods_id.mainUnit_id
