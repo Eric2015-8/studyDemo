@@ -31,18 +31,22 @@
                                 <field name="sale_forecast_detail" mode="tree,kanban">
                                     <tree string="销售预报明细" editable="bottom">
                                         <field name="goods_id"/>
-                                        <field name="secondUnit_id"/>
+                                        <field name="secondUnit_id" readonly="1"/>
                                         <field name="secondUnitNumber"/>
-                                        <field name="mainUnit_id"/>
+                                        <field name="mainUnit_id" readonly="1"/>
                                         <field name="mainUnitNumber"/>
                                         <field name="price"/>
-                                        <field name="money"/>
+                                        <field name="money" readonly="1"/>
                                         <field name="remark"/>
                                     </tree>
                                 </field>
                             </page>
                             <page string="其它信息">
-
+                                <group name="group_other" col="4">
+                                    <field name="company_id"/>
+                                    <field name="staff_id" domain="[('isSaleMan','=',True)]"/>
+                                    <field name="store_id"/>
+                                </group>
                             </page>
                         </notebook>
                     </sheet>

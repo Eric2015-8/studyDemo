@@ -20,6 +20,10 @@ class SaleForecast(models.Model):
     sale_forecast_detail = fields.One2many('jc_sale.sale_forecast.detail', 'sale_forecast_id', string=u'销售预报明细',
                                            copy=True)
 
+    company_id = fields.Many2one('archives.company', string=u'公司')
+    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
+    store_id = fields.Many2one('archives.store', string=u'仓库')
+
     #     value = fields.Integer()
     #     value2 = fields.Float(compute="_value_pc", store=True)
     #     description = fields.Text()
@@ -48,11 +52,6 @@ class SaleForecastDetail(models.Model):
     remark = fields.Char(string=u'备注')
 
     @api.onchange('price', 'mainUnitNumber')
-    def _onchange_unit(self):
+    def _onchange_price(self):
+        # a=self.goods_id.
         self.money = self.price * self.mainUnitNumber
-        return {
-            'warning': {
-                'title': "Something bad happened",
-                'message': "It was very bad indeed",
-            }
-        }
