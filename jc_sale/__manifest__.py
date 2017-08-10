@@ -30,6 +30,7 @@
         'views/templates.xml',
 
         'views/sale_forecast.xml',
+        'views/sale_order.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
