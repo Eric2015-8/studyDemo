@@ -4,11 +4,12 @@ from odoo import models, fields, api
 
 class Company(models.Model):
     _name = 'archives.company'
-#    _sql_constraints = [
-#        ('name_unique',
-#         'UNIQUE(name)',
-#         "已存在相同公司"),
-#    ]
+
+    _sql_constraints = [
+       ('name_unique',
+        'UNIQUE(name)',
+        "name cannot same"),
+   ]
 
     name = fields.Char(string=u'公司名称',required=True,help=u'您所在的公司的全称')
     shortName=fields.Char(string=u'简称',help=u'用于报表显示')

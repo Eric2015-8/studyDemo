@@ -5,18 +5,18 @@ from odoo import models, fields, api
 
 class Customer(models.Model):
     _name = 'archives.customer'
-    #    _sql_constraints = [
-    #        ('name_unique',
-    #         'UNIQUE(name)',
-    #         "已存在相同客户"),
-    #    ]
+    _sql_constraints = [
+        ('name_unique',
+         'UNIQUE(name)',
+         "已存在同名客户"),
+    ]
 
     name = fields.Char(string=u'客户名称', required=True)
     shortName = fields.Char(string=u'简称')
 
     # 通用信息
     tel = fields.Char(string=u'联系方式')
-    staff_id=fields.Many2one('archives.staff',string=u'销售员')
+    staff_id = fields.Many2one('archives.staff', string=u'销售员')
     address = fields.Char(string=u'地址')
     zone_id = fields.Many2one('archives.zone', string=u'地址')
     zone_type1_id = fields.Many2one('archives.zone_type1', string=u'地区分类1')

@@ -5,11 +5,11 @@ from odoo import models, fields, api
 
 class Staff(models.Model):
     _name = 'archives.staff'
-    #    _sql_constraints = [
-    #        ('name_unique',
-    #         'UNIQUE(name)',
-    #         "已存在相同员工"),
-    #    ]
+    _sql_constraints = [
+        ('name_unique',
+         'UNIQUE(name)',
+         "已存在同名员工"),
+    ]
 
     name = fields.Char(string=u'员工姓名', required=True)
 

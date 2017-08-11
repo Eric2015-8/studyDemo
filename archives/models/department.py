@@ -9,11 +9,11 @@ from odoo.modules.module import get_module_resource
 
 class Department(models.Model):
     _name = 'archives.department'
-#    _sql_constraints = [
-#        ('name_unique',
-#         'UNIQUE(name)',
-#         "已存在相同部门"),
-#    ]
+    _sql_constraints = [
+       ('name_unique',
+        'UNIQUE(name)',
+        "已存在同名部门"),
+   ]
 
     name = fields.Char(string=u'部门名称',required=True)
     active=fields.Boolean('Active',default=True)

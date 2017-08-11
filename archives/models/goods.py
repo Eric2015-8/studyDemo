@@ -4,11 +4,11 @@ from odoo import models, fields, api
 
 class Goods(models.Model):
     _name = 'archives.goods'
-    #    _sql_constraints = [
-    #        ('name_unique',
-    #         'UNIQUE(name)',
-    #         "已存在相同物料"),
-    #    ]
+    _sql_constraints = [
+        ('name_unique',
+         'UNIQUE(name)',
+         "已存在同名物料"),
+    ]
 
     name = fields.Char(string=u'物料名称', required=True)
     shortName= fields.Char(string=u'简称')
