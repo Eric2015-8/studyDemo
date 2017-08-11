@@ -96,6 +96,18 @@
             <field name="model">openacademy.session</field>
             <field name="arch" type="xml">
                 <form string="Session Form">
+                    <header>
+                        <button name="draft" type="workflow"
+                                string="重置"
+                                states="confirmed,done"/>
+                        <button name="confirm" type="workflow"
+                                string="确认" states="draft"
+                                class="oe_highlight"/>
+                        <button name="done" type="workflow"
+                                string="完毕" states="confirmed"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
                     <sheet>
                         <group>
                             <group string="General">
