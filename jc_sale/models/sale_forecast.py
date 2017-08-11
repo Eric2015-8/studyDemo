@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api  # , _
 
 
 class SaleForecast(models.Model):
     _name = 'jc_sale.sale_forecast'
-    #    _sql_constraints = [
-    #        ('name_unique',
-    #         'UNIQUE(name)',
-    #         "已存在相同销售预报"),
-    #    ]
 
     # name = fields.Char(string=u'销售预报', required=True, help=u'')
     customer_id = fields.Many2one('archives.customer', string=u'客户名称', required=True)
@@ -74,13 +69,15 @@ class SaleForecastDetail(models.Model):
     def _onchange_second(self):
         if not self.goods_id.needSecondChange:
             return
-        self.mainUnitNumber = self.goods_id.secondRate * self.secondUnitNumber
+        if  self.goods_id.secondRate != 0:
+            self.mainUnitNumber = self.goods_id.secondRate * self.secondUnitNumber
 
     @api.onchange('mainUnitNumber')
     def _onchange_main(self):
         if not self.goods_id.needSecondChange:
             return
-        self.secondUnitNumber = self.mainUnitNumber / self.goods_id.secondRate
+        if self.goods_id.secondRate != 0:
+            self.secondUnitNumber = self.mainUnitNumber / self.goods_id.secondRate
 
     @api.onchange('goods_id')
     def _onchange_goods(self):
