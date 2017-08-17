@@ -30,9 +30,9 @@
                                     <label for="address" string="客户地址"/>
                                     <div class="o_address_format">
                                         <field name="address"/>
-                                        <field name="zone_id" placeholder="地区"/>
-                                        <field name="zone_type1_id" placeholder="地区分类1"/>
-                                        <field name="zone_type2_id" placeholder="地区分类2"/>
+                                        <field name="zone_id" class="oe_inline" placeholder="地区" />
+                                        <field name="zone_type1_id" class="oe_inline" placeholder="地区分类1"/>
+                                        <field name="zone_type2_id" class="oe_inline" placeholder="地区分类2"/>
                                     </div>
                                     <field name="company_id"/>
                                 </group>
