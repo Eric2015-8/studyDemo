@@ -44,7 +44,7 @@
                                     <field name="address"/>
                                     <field name="account_id"/>
                                     <field name="birthday"/>
-                                    <field name="gender"/>
+                                    <field name="gender" widget="radio"/>
                                     <field name="place"/>
                                 </group>
                             </page>
