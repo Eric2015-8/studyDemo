@@ -90,6 +90,14 @@
              action="openacademy.course_list_action"
              It is not required when it is the same module -->
 
+        <!--<record model="ir.actions.act_window" id="act_make_procurement">-->
+            <!--<field name="name">Procurement Request</field>-->
+            <!--<field name="res_model">openacademy.session</field>-->
+            <!--<field name="src_model">openacademy.course</field>-->
+            <!--<field name="view_mode">form</field>-->
+            <!--<field name="target">new</field>-->
+        <!--</record>-->
+
         <!-- session form view -->
         <record model="ir.ui.view" id="session_form_view">
             <field name="name">session.form</field>
@@ -132,14 +140,6 @@
                 </form>
             </field>
         </record>
-
-        <!--<record model="ir.actions.act_window" id="act_make_procurement">-->
-            <!--<field name="name">Procurement Request</field>-->
-            <!--<field name="res_model">openacademy.session</field>-->
-            <!--<field name="src_model">openacademy.course</field>-->
-            <!--<field name="view_mode">form</field>-->
-            <!--<field name="target">new</field>-->
-        <!--</record>-->
 
         <!-- session tree/list view -->
         <record model="ir.ui.view" id="session_tree_view">
