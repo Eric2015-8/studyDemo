@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api  # , _
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class SaleForecast(models.Model):
     _name = 'jc_sale.sale_forecast'
+
+    bill_state = fields.Selection(
+        [(1, '未审核'), (10, '已审核'), (20, '已完毕')],
+        string=u'单据状态', require=True, default=1  # , readonly=True
+    )
 
     # name = fields.Char(string=u'销售预报', required=True, help=u'')
     customer_id = fields.Many2one('archives.customer', string=u'客户名称', required=True)
@@ -19,13 +25,27 @@ class SaleForecast(models.Model):
     staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库')
 
-    #     value = fields.Integer()
-    #     value2 = fields.Float(compute="_value_pc", store=True)
-    #     description = fields.Text()
-    #
-    #     @api.depends('value')
-    #     def _value_pc(self):
-    #         self.value2 = float(self.value) / 100
+    @api.multi
+    def unlink(self):
+        if self.bill_state > 1:
+            raise ValidationError(_('Error! 只有未审核的单据才能审核.'))
+        return super(SaleForecast, self).unlink()
+
+    @api.multi
+    def do_check(self):
+        self.bill_state = 10
+
+    @api.multi
+    def do_finish(self):
+        self.bill_state = 20
+
+    @api.multi
+    def do_un_finish(self):
+        self.bill_state = 10
+
+    @api.multi
+    def do_un_check(self):
+        self.bill_state = 1
 
 
 class SaleForecastDetail(models.Model):
@@ -69,7 +89,7 @@ class SaleForecastDetail(models.Model):
     def _onchange_second(self):
         if not self.goods_id.needSecondChange:
             return
-        if  self.goods_id.secondRate != 0:
+        if self.goods_id.secondRate != 0:
             self.mainUnitNumber = self.goods_id.secondRate * self.secondUnitNumber
 
     @api.onchange('mainUnitNumber')

@@ -19,12 +19,19 @@
             <field name="model">jc_sale.sale_forecast</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <field name="id" attrs="{'invisible': True}"/>
+                        <field name="bill_state" readonly="1" attrs="{'invisible': [('id', '==', False)]}"/>
+                        <button name="do_check" string="审核" type="object" class="oe_highlight"
+                                attrs="{'invisible': ['|',('bill_state', '!=', 1),('id', '==', False)]}"/>
+                        <button name="do_un_check" string="撤销" type="object"
+                                class="oe_highlight" attrs="{'invisible': [('bill_state', '!=', 10)]}"/>
+                        <button name="do_finish" string="完毕" type="object"
+                                class="oe_highlight" attrs="{'invisible': [('bill_state', '!=', 10)]}"/>
+                        <button name="do_un_finish" string="撤销完毕" type="object"
+                                class="oe_highlight" attrs="{'invisible': [('bill_state', '!=', 20)]}"/>
+                    </header>
                     <sheet>
-                        <!--<div class="oe_title">-->
-                            <!--<h1>-->
-                                <!--<field name="name" readonly="1"/>-->
-                            <!--</h1>-->
-                        <!--</div>-->
                         <group name="group_top" string="销售预报" col="4">
                             <field name="customer_id"/>
                             <field name="date"/>
