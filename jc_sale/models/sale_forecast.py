@@ -9,7 +9,7 @@ class SaleForecast(models.Model):
 
     bill_state = fields.Selection(
         [(1, '未审核'), (10, '已审核'), (20, '已完毕')],
-        string=u'单据状态', require=True, default=1  # , readonly=True
+        string=u'单据状态', require=True, default=1, readonly=True
     )
 
     # name = fields.Char(string=u'销售预报', required=True, help=u'')
