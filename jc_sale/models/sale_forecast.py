@@ -25,11 +25,23 @@ class SaleForecast(models.Model):
     staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库')
 
+    @staticmethod
+    def _is_bill_state_change(values):
+        if len(values) == 1 and 'bill_state' in values:
+            return True
+        return False
+
     @api.multi
     def unlink(self):
         if self.bill_state > 1:
-            raise ValidationError(_('Error! 只有未审核的单据才能审核.'))
+            raise ValidationError(_('只有未审核的单据才能审核.'))
         return super(SaleForecast, self).unlink()
+
+    @api.multi
+    def write(self, values):
+        if self.bill_state > 1 and not SaleForecast._is_bill_state_change(values):
+            raise ValidationError(_('只有未审核单据才能编辑.'))
+        return super(SaleForecast, self).write(values)
 
     @api.multi
     def do_check(self):

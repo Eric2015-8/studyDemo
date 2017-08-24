@@ -6,6 +6,8 @@
             <field name="model">jc_sale.sale_forecast</field>
             <field name="arch" type="xml">
                 <tree>
+                    <field name="id"/>
+                    <field name="bill_state"/>
                     <field name="customer_id"/>
                     <field name="date"/>
                     <field name="saleType_id"/>
