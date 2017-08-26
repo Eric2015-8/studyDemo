@@ -6,6 +6,8 @@ from odoo import models, fields, api
 class SaleOrder(models.Model):
     _name = 'jc_sale.sale_order'
 
+    forecast_id = fields.Many2one('jc_sale.sale_forecast', string=u'销售预报单ID')
+
     customer_id = fields.Many2one('archives.customer', string=u'客户名称', required=True)
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     saleType_id = fields.Many2one('archives.sale_type', string=u'销售类型', required=True)

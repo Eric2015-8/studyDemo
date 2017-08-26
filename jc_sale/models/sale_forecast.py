@@ -31,6 +31,38 @@ class SaleForecast(models.Model):
             return True
         return False
 
+    def _create_order(self):
+        values = {
+            'forecast_id': self.id,
+            'customer_id': self.customer_id.id,
+            'date': self.date,
+            'saleType_id': self.saleType_id.id,
+            'staff_id': self.staff_id.id,
+            'remark': self.remark,
+        }
+        order = self.env['jc_sale.sale_order'].create(values)
+        for detail in self.sale_forecast_detail:
+            values = {
+                'sale_order_id': order.id,
+                'forecast_id': self.id,
+                'forecast_detail_id': detail.id,
+                'goods_id': detail.goods_id.id,
+                'secondUnit_id': detail.secondUnit_id.id,
+                'secondUnitNumber': detail.secondUnitNumber,
+                'mainUnit_id': detail.mainUnit_id.id,
+                'mainUnitNumber': detail.mainUnitNumber,
+                'price': detail.price,
+                'money': detail.money,
+                'remark': detail.remark,
+            }
+            self.env['jc_sale.sale_order.detail'].create(values)
+
+    def _delete_order(self):
+        orders = self.env["jc_sale.sale_order"].search([('forecast_id', '=', self.id)])
+        if orders:
+            for bill in orders:
+                bill.unlink()
+
     @api.multi
     def unlink(self):
         if self.bill_state > 1:
@@ -46,6 +78,7 @@ class SaleForecast(models.Model):
     @api.multi
     def do_check(self):
         self.bill_state = 10
+        self._create_order()
 
     @api.multi
     def do_finish(self):
@@ -58,6 +91,7 @@ class SaleForecast(models.Model):
     @api.multi
     def do_un_check(self):
         self.bill_state = 1
+        self._delete_order()
 
 
 class SaleForecastDetail(models.Model):

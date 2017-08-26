@@ -13,6 +13,9 @@ class SaleOrderDetail(models.Model):
     sale_order_id = fields.Many2one('jc_sale.sale_order', string='销售订单引用', required=True,
                                     ondelete='cascade', index=True, copy=False)
 
+    forecast_id = fields.Many2one('jc_sale.sale_forecast', string=u'销售预报单ID')
+    forecast_detail_id = fields.Many2one('jc_sale.sale_forecast.detail', string=u'销售预报单明细ID')
+
     goods_id = fields.Many2one('archives.goods', string=u'产品', required=True)
     secondUnit_id = fields.Many2one('archives.unit', string=u'辅单位', compute='_set_second')
     secondUnitNumber = fields.Float(digits=(6, 2), string=u'辅数量')
