@@ -90,14 +90,6 @@
              action="openacademy.course_list_action"
              It is not required when it is the same module -->
 
-        <!--<record model="ir.actions.act_window" id="act_make_procurement">-->
-            <!--<field name="name">Procurement Request</field>-->
-            <!--<field name="res_model">openacademy.session</field>-->
-            <!--<field name="src_model">openacademy.course</field>-->
-            <!--<field name="view_mode">form</field>-->
-            <!--<field name="target">new</field>-->
-        <!--</record>-->
-
         <!-- session form view -->
         <record model="ir.ui.view" id="session_form_view">
             <field name="name">session.form</field>
@@ -134,9 +126,6 @@
                         <label for="attendee_ids"/>
                         <field name="attendee_ids"/>
                     </sheet>
-                    <!--<footer>-->
-                        <!--<button string="just a test" name="%(openacademy.act_make_procurement)d" type="action" class="oe_link"/>-->
-                    <!--</footer>-->
                 </form>
             </field>
         </record>
