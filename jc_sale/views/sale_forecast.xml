@@ -68,11 +68,29 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="sale_forecast_search_view">
+            <field name="name">sale_forecast.search</field>
+            <field name="model">jc_sale.sale_forecast</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="bill_state"/>
+                    <field name="customer_id"/>
+                    <filter name="not_checked_bill" string="未审核"
+                            domain="[('bill_state', '=', 1)]"/>
+                    <group string="Group By">
+                        <filter name="by_bill_state" string="单据状态"
+                                context="{'group_by': 'bill_state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <!-- actions opening views on models -->
         <record model="ir.actions.act_window" id="archives_common_sale_forecast_action_window">
             <field name="name">销售预报</field>
             <field name="res_model">jc_sale.sale_forecast</field>
             <field name="view_mode">tree,form</field>
+            <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
         </record>
 
         <menuitem name="销售预报" id="jc_sale.menu_sale_forecast" parent="jc_sale_menu_root"
