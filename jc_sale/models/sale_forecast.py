@@ -7,6 +7,8 @@ from odoo.exceptions import ValidationError
 class SaleForecast(models.Model):
     _name = 'jc_sale.sale_forecast'
 
+    _inherit = ['ir.needaction_mixin']
+
     bill_state = fields.Selection(
         [(1, '未审核'), (10, '已审核'), (20, '已完毕')],
         string=u'单据状态', require=True, default=1, readonly=True
@@ -24,6 +26,10 @@ class SaleForecast(models.Model):
     company_id = fields.Many2one('archives.company', string=u'公司')
     staff_id = fields.Many2one('archives.staff', related='customer_id.staff_id', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库')
+
+    @api.model
+    def _needaction_domain_get(self):
+        return [('bill_state', '=', 1)]
 
     @staticmethod
     def _is_bill_state_change(values):
