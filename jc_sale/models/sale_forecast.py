@@ -22,7 +22,7 @@ class SaleForecast(models.Model):
                                            copy=True)
 
     company_id = fields.Many2one('archives.company', string=u'公司')
-    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
+    staff_id = fields.Many2one('archives.staff', related='customer_id.staff_id', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库')
 
     @staticmethod
