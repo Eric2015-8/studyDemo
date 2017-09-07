@@ -31,7 +31,7 @@ class SaleForecast(models.Model):
     def add_goods_page(self):
         imd = self.env['ir.model.data']
         action = imd.xmlid_to_object('archives.archives_common_goods_action_page')
-        list_view_id = imd.xmlid_to_res_id('archives.archives_common_goods_list')
+        list_view_id = imd.xmlid_to_res_id('archives.archives_common_goods_page')
         form_view_id = imd.xmlid_to_res_id('archives.archives_common_goods_edit')
 
         result = {

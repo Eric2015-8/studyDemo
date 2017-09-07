@@ -68,6 +68,23 @@
             <field name="name">物料</field>
             <field name="res_model">archives.goods</field>
             <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="archives_common_goods_list"/>
+        </record>
+
+        <record model="ir.ui.view" id="archives_common_goods_page">
+            <field name="name">物料列表</field>
+            <field name="model">archives.goods</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false">
+                    <field name="name"/>
+                    <field name="shortName"/>
+                    <field name="mainUnit_id"/>
+                    <field name="secondUnit_id"/>
+                    <field name="statisticsUnit_id"/>
+                    <field name="isSale"/>
+                    <field name="isPurchase"/>
+                </tree>
+            </field>
         </record>
 
         <record model="ir.actions.act_window" id="archives_common_goods_action_page">
@@ -75,7 +92,7 @@
             <field name="res_model">archives.goods</field>
             <field name="view_type">tree</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="archives_common_goods_list"/>
+            <field name="view_id" ref="archives_common_goods_page"/>
         </record>
 
         <!-- server action to the one above -->
