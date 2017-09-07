@@ -101,7 +101,7 @@ class SaleForecast(models.Model):
     @api.multi
     def unlink(self):
         if self.bill_state > 1:
-            raise ValidationError(_('只有未审核的单据才能审核.'))
+            raise ValidationError(_('只有未审核的单据才能删除.'))
         return super(SaleForecast, self).unlink()
 
     @api.multi
