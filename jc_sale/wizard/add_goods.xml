@@ -1,0 +1,43 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="jc_sale_add_goods_wizard">
+            <field name="name">添加产品</field>
+            <field name="model">jc_sale.add_goods</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <!--<field name="goods_ids"/>-->
+                        <div>
+                            <separator string="Products" colspan="4"/>
+                            <newline/>
+                            <field name="goods_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="secondUnit_id"/>
+                                    <field name="mainUnit_id"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </group>
+                    <footer>
+                        <button name="subscribe" type="object"
+                                string="Subscribe" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="jc_sale_add_goods_action_window">
+            <field name="name">添加产品</field>
+            <field name="res_model">jc_sale.add_goods</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="jc_sale_add_goods_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>
