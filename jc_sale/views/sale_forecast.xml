@@ -23,7 +23,7 @@
                 <form>
                     <header>
                         <field name="id" attrs="{'invisible': True}"/>
-                        <!--<label class="control-label">单据状态:</label>-->
+                        <label string="单据状态:"/>
                         <field name="bill_state" readonly="1" attrs="{'invisible': [('id', '==', False)]}"/>
                         <button name="do_check" string="审核" type="object" class="oe_highlight oe_read_only"
                                 attrs="{'invisible': ['|',('bill_state', '!=', 1),('id', '==', False)]}"/>
