@@ -70,6 +70,23 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record model="ir.actions.act_window" id="archives_common_goods_action_dialog">
+            <field name="name">物料</field>
+            <field name="res_model">archives.goods</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="archives_common_goods_list"/>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="archives_common_goods_action_page">
+            <field name="name">物料</field>
+            <field name="res_model">archives.goods</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="archives_common_goods_list"/>
+        </record>
+
         <!-- server action to the one above -->
         <!--
     <record model="ir.actions.server" id="archives.action_server">

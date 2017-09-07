@@ -27,6 +27,60 @@ class SaleForecast(models.Model):
     staff_id = fields.Many2one('archives.staff', related='customer_id.staff_id', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库')
 
+    @api.multi
+    def add_goods_dialog(self):
+        # goods = self.env['archives.goods'].search([])
+        # values = {
+        # }
+        # main = self.env['jc_sale.add_goods'].create(values)
+        # for g in goods:
+        #     values = {
+        #         'add_goods_id': main.id,
+        #         'goods_id': g.id,
+        #         'secondUnit_id': g.secondUnit_id.id,
+        #         # 'secondUnitNumber': g.secondUnitNumber,
+        #         'mainUnit_id': g.mainUnit_id.id,
+        #         # 'mainUnitNumber': g.mainUnitNumber,
+        #     }
+        #     self.env['jc_sale.add_goods.detail'].create(values)
+        return {'type': 'ir.actions.act_window',
+                'res_model': 'jc_sale.add_goods',
+                'view_mode': 'form',
+                # 'res_id': self.product_tmpl_id.id,
+                # 'context': {
+                #     'default_id': main.id,
+                # },
+                'target': 'new'}
+
+    @api.multi
+    def add_goods_page(self):
+        imd = self.env['ir.model.data']
+        action = imd.xmlid_to_object('archives.archives_common_goods_action_page')
+        list_view_id = imd.xmlid_to_res_id('archives.archives_common_goods_list')
+        form_view_id = imd.xmlid_to_res_id('archives.archives_common_goods_edit')
+
+        result = {
+            'name': action.name,
+            'help': action.help,
+            'type': action.type,
+            'views': [[list_view_id, 'tree'], [form_view_id, 'form']],
+            'target': action.target,
+            # 'context': action.context,
+            'context': {
+                'id': self.id,
+                'customer_id': self.customer_id.id,
+            },
+            'res_model': action.res_model,
+        }
+        # if len(invoice_ids) > 1:
+        #     result['domain'] = "[('id','in',%s)]" % invoice_ids.ids
+        # elif len(invoice_ids) == 1:
+        #     result['views'] = [(form_view_id, 'form')]
+        #     result['res_id'] = invoice_ids.ids[0]
+        # else:
+        #     result = {'type': 'ir.actions.act_window_close'}
+        return result
+
     @api.model
     def _needaction_domain_get(self):
         return [('bill_state', '=', 1)]
