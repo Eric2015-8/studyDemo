@@ -44,11 +44,7 @@
                         <notebook>
                             <page string="物料信息">
                                 <div>
-                                    <button name="add_goods_dialog" string="添加fromFunction" type="object" class="oe_highlight oe_edit_only"/>
-                                    <button name="%(archives.archives_common_goods_action_dialog)d" string="添加from产品列表" type="action" class="oe_highlight oe_edit_only"/>
-                                    <button name="%(jc_sale_add_goods_action_window)d" string="添加from添加产品" type="action" class="oe_highlight oe_edit_only"/>
-                                    <button name="%(archives.archives_common_goods_action_page)d" string="添加from产品列表_当前页面" type="action" class="oe_highlight oe_edit_only"/>
-                                    <button name="add_goods_page" string="添加fromCurrentNewPage" type="object" class="oe_highlight oe_edit_only"/>
+                                    <button name="add_goods_page" string="添加" type="object" class="oe_highlight oe_edit_only"/>
                                 </div>
                                 <field name="sale_forecast_detail" mode="tree,kanban">
                                     <tree string="销售预报明细" editable="bottom">

@@ -28,31 +28,6 @@ class SaleForecast(models.Model):
     store_id = fields.Many2one('archives.store', string=u'仓库')
 
     @api.multi
-    def add_goods_dialog(self):
-        # goods = self.env['archives.goods'].search([])
-        # values = {
-        # }
-        # main = self.env['jc_sale.add_goods'].create(values)
-        # for g in goods:
-        #     values = {
-        #         'add_goods_id': main.id,
-        #         'goods_id': g.id,
-        #         'secondUnit_id': g.secondUnit_id.id,
-        #         # 'secondUnitNumber': g.secondUnitNumber,
-        #         'mainUnit_id': g.mainUnit_id.id,
-        #         # 'mainUnitNumber': g.mainUnitNumber,
-        #     }
-        #     self.env['jc_sale.add_goods.detail'].create(values)
-        return {'type': 'ir.actions.act_window',
-                'res_model': 'jc_sale.add_goods',
-                'view_mode': 'form',
-                # 'res_id': self.product_tmpl_id.id,
-                # 'context': {
-                #     'default_id': main.id,
-                # },
-                'target': 'new'}
-
-    @api.multi
     def add_goods_page(self):
         imd = self.env['ir.model.data']
         action = imd.xmlid_to_object('archives.archives_common_goods_action_page')
