@@ -34,14 +34,14 @@
                                     <field name="company_id"/>
                                     <field name="tel"/>
                                     <field name="department_id"/>
-                                    <field name="officeTel"/>
+                                    <field name="office_tel"/>
                                     <!--职务-->
                                     <!--<field name="email"/>-->
                                 </group>
                             </page>
                             <page string="个人信息">
                                 <group col="4">
-                                    <field name="idNo"/>
+                                    <field name="id_no"/>
                                     <field name="address"/>
                                     <!--账号-->
                                     <field name="birthday"/>

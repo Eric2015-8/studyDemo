@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
-                    <field name="shortName"/>
+                    <field name="short_name"/>
                 </tree>
             </field>
         </record>
@@ -20,13 +20,13 @@
                     <sheet>
                         <group name="group_top" string="客户">
                             <field name="name"/>
-                            <field name="shortName" placeholder="用于报表显示"/>
+                            <field name="short_name" placeholder="用于报表显示"/>
                         </group>
                         <notebook>
                             <page string="通用信息">
                                 <group col="4">
                                     <field name="tel"/>
-                                    <field name="staff_id"  domain="[('isSaleMan','=',True)]"/>
+                                    <field name="staff_id"  domain="[('is_sale_man','=',True)]"/>
                                     <label for="address" string="客户地址"/>
                                     <div class="o_address_format">
                                         <field name="address"/>
@@ -41,15 +41,15 @@
                             </page>
                             <page string="客户分类">
                                 <group col="2">
-                                    <field name="customerType_id" placeholder="主分类,用于单据列表、报表"/>
+                                    <field name="customer_type_id" placeholder="主分类,用于单据列表、报表"/>
                                 </group>
                                 <group col="4">
-                                    <field name="customerType1_id"/>
-                                    <field name="customerType2_id"/>
-                                    <field name="customerType3_id"/>
-                                    <field name="customerType4_id"/>
-                                    <field name="customerType5_id"/>
-                                    <field name="customerType6_id"/>
+                                    <field name="customer_type1_id"/>
+                                    <field name="customer_type2_id"/>
+                                    <field name="customer_type3_id"/>
+                                    <field name="customer_type4_id"/>
+                                    <field name="customer_type5_id"/>
+                                    <field name="customer_type6_id"/>
                                 </group>
                             </page>
                         </notebook>

@@ -13,8 +13,8 @@
                             <field name="goods_ids">
                                 <tree>
                                     <field name="name"/>
-                                    <field name="secondUnit_id"/>
-                                    <field name="mainUnit_id"/>
+                                    <field name="second_unit_id"/>
+                                    <field name="main_unit_id"/>
                                 </tree>
                             </field>
                         </div>

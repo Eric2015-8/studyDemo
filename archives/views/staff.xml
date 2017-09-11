@@ -10,10 +10,10 @@
                     <field name="company_id"/>
                     <field name="department_id"/>
                     <field name="gender"/>
-                    <field name="isSaleMan"/>
-                    <field name="isPurchaseMan"/>
-                    <field name="isDriver"/>
-                    <field name="isSender"/>
+                    <field name="is_sale_man"/>
+                    <field name="is_purchase_man"/>
+                    <field name="is_driver"/>
+                    <field name="is_sender"/>
                 </tree>
             </field>
         </record>
@@ -33,14 +33,14 @@
                                     <field name="company_id"/>
                                     <field name="tel"/>
                                     <field name="department_id"/>
-                                    <field name="officeTel"/>
+                                    <field name="office_tel"/>
                                     <field name="duty_id"/>
                                     <field name="email"/>
                                 </group>
                             </page>
                             <page string="个人信息">
                                 <group col="4">
-                                    <field name="idNo"/>
+                                    <field name="id_no"/>
                                     <field name="address"/>
                                     <field name="account_id"/>
                                     <field name="birthday"/>
@@ -50,10 +50,10 @@
                             </page>
                             <page string="系统信息">
                                 <group col="4">
-                                    <field name="isSaleMan"/>
-                                    <field name="isPurchaseMan"/>
-                                    <field name="isDriver"/>
-                                    <field name="isSender"/>
+                                    <field name="is_sale_man"/>
+                                    <field name="is_purchase_man"/>
+                                    <field name="is_driver"/>
+                                    <field name="is_sender"/>
                                 </group>
                             </page>
                         </notebook>

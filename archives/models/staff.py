@@ -18,11 +18,11 @@ class Staff(models.Model):
     department_id = fields.Many2one('archives.department', string=u'部门')
     duty_id = fields.Many2one('archives.duty', string=u'职务')
     tel = fields.Char(string=u'手机')
-    officeTel = fields.Char(string=u'办公电话')
+    office_tel = fields.Char(string=u'办公电话')
     email = fields.Char()
 
     #     个人信息
-    idNo = fields.Char(string=u'身份证号')
+    id_no = fields.Char(string=u'身份证号')
     address = fields.Char(string=u'家庭住址')
     account_id = fields.Many2one('archives.account', string=u'账号')
     birthday = fields.Date(string=u'出生日期')
@@ -34,10 +34,10 @@ class Staff(models.Model):
     place = fields.Char(string=u'籍贯')
 
     #     系统信息
-    isSaleMan = fields.Boolean(string=u'销售员')
-    isPurchaseMan = fields.Boolean(string=u'采购员')
-    isDriver = fields.Boolean(string=u'司机')
-    isSender = fields.Boolean(string=u'送货员')
+    is_sale_man = fields.Boolean(string=u'销售员')
+    is_purchase_man = fields.Boolean(string=u'采购员')
+    is_driver = fields.Boolean(string=u'司机')
+    is_sender = fields.Boolean(string=u'送货员')
 
     # value = fields.Integer()
     # value2 = fields.Float(compute="_value_pc", store=True)

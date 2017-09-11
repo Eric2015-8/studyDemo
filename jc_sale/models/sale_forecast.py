@@ -17,15 +17,19 @@ class SaleForecast(models.Model):
     # name = fields.Char(string=u'销售预报', required=True, help=u'')
     customer_id = fields.Many2one('archives.customer', string=u'客户名称', required=True)
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
-    saleType_id = fields.Many2one('archives.sale_type', string=u'销售类型', required=True)
+    sale_type_id = fields.Many2one('archives.sale_type', string=u'销售类型', required=True)
     remark = fields.Char(string=u'摘要')
 
     sale_forecast_detail = fields.One2many('jc_sale.sale_forecast.detail', 'sale_forecast_id', string=u'销售预报明细',
                                            copy=True)
 
     company_id = fields.Many2one('archives.company', string=u'公司')
-    staff_id = fields.Many2one('archives.staff', related='customer_id.staff_id', string=u'销售员', required=True)
+    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库')
+
+    @api.onchange('customer_id')
+    def _onchange_for_staff(self):
+        self.staff_id = self.customer_id.staff_id
 
     @api.multi
     def add_goods_page(self):
@@ -71,7 +75,7 @@ class SaleForecast(models.Model):
             'forecast_id': self.id,
             'customer_id': self.customer_id.id,
             'date': self.date,
-            'saleType_id': self.saleType_id.id,
+            'sale_type_id': self.sale_type_id.id,
             'staff_id': self.staff_id.id,
             'remark': self.remark,
         }
@@ -82,10 +86,10 @@ class SaleForecast(models.Model):
                 'forecast_id': self.id,
                 'forecast_detail_id': detail.id,
                 'goods_id': detail.goods_id.id,
-                'secondUnit_id': detail.secondUnit_id.id,
-                'secondUnitNumber': detail.secondUnitNumber,
-                'mainUnit_id': detail.mainUnit_id.id,
-                'mainUnitNumber': detail.mainUnitNumber,
+                'second_unit_id': detail.second_unit_id.id,
+                'second_unit_number': detail.second_unit_number,
+                'main_unit_id': detail.main_unit_id.id,
+                'main_unit_number': detail.main_unit_number,
                 'price': detail.price,
                 'money': detail.money,
                 'remark': detail.remark,
@@ -137,10 +141,10 @@ class SaleForecastDetail(models.Model):
                                        copy=False)
 
     goods_id = fields.Many2one('archives.goods', string=u'产品', required=True)
-    secondUnit_id = fields.Many2one('archives.unit', string=u'辅单位', compute='_set_second')
-    secondUnitNumber = fields.Float(digits=(6, 2), string=u'辅数量')
-    mainUnit_id = fields.Many2one('archives.unit', string=u'主单位', compute='_set_main')
-    mainUnitNumber = fields.Float(digits=(6, 2), string=u'主数量')
+    second_unit_id = fields.Many2one('archives.unit', string=u'辅单位', compute='_set_second')
+    second_unit_number = fields.Float(digits=(6, 2), string=u'辅数量')
+    main_unit_id = fields.Many2one('archives.unit', string=u'主单位', compute='_set_main')
+    main_unit_number = fields.Float(digits=(6, 2), string=u'主数量')
 
     price = fields.Float(digits=(6, 2), help="单价", string=u'单价')
     money = fields.Float(digits=(6, 2), help="金额", string=u'金额', compute='_compute_money')
@@ -150,39 +154,39 @@ class SaleForecastDetail(models.Model):
     @api.depends('goods_id')
     def _set_main(self):
         for record in self:
-            record.mainUnit_id = record.goods_id.mainUnit_id
+            record.main_unit_id = record.goods_id.main_unit_id
 
     @api.depends('goods_id')
     def _set_second(self):
         for record in self:
-            record.secondUnit_id = record.goods_id.secondUnit_id
+            record.second_unit_id = record.goods_id.second_unit_id
 
-    @api.depends('price', 'mainUnitNumber')
+    @api.depends('price', 'main_unit_number')
     def _compute_money(self):
         for record in self:
-            record.money = record.price * record.mainUnitNumber
+            record.money = record.price * record.main_unit_number
 
-    @api.onchange('price', 'mainUnitNumber')
+    @api.onchange('price', 'main_unit_number')
     def _onchange_for_money(self):
-        self.money = self.price * self.mainUnitNumber
+        self.money = self.price * self.main_unit_number
 
-    @api.onchange('secondUnitNumber')
+    @api.onchange('second_unit_number')
     def _onchange_second(self):
-        if not self.goods_id.needSecondChange:
+        if not self.goods_id.need_second_change:
             return
-        if self.goods_id.secondRate != 0:
-            self.mainUnitNumber = self.goods_id.secondRate * self.secondUnitNumber
+        if self.goods_id.second_rate != 0:
+            self.main_unit_number = self.goods_id.second_rate * self.second_unit_number
 
-    @api.onchange('mainUnitNumber')
+    @api.onchange('main_unit_number')
     def _onchange_main(self):
-        if not self.goods_id.needSecondChange:
+        if not self.goods_id.need_second_change:
             return
-        if self.goods_id.secondRate != 0:
-            self.secondUnitNumber = self.mainUnitNumber / self.goods_id.secondRate
+        if self.goods_id.second_rate != 0:
+            self.second_unit_number = self.main_unit_number / self.goods_id.second_rate
 
     @api.onchange('goods_id')
     def _onchange_goods(self):
-        # self.secondUnit_id = self.env['archives.goods'].secondUnit_id
-        # self.mainUnit_id = self.env['archives.goods'].mainUnit_id
-        self.secondUnit_id = self.goods_id.secondUnit_id
-        self.mainUnit_id = self.goods_id.mainUnit_id
+        # self.second_unit_id = self.env['archives.goods'].second_unit_id
+        # self.main_unit_id = self.env['archives.goods'].main_unit_id
+        self.second_unit_id = self.goods_id.second_unit_id
+        self.main_unit_id = self.goods_id.main_unit_id

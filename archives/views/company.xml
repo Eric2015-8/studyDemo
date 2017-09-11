@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
-                    <field name="shortName"/>
+                    <field name="short_name"/>
                 </tree>
             </field>
         </record>
@@ -20,7 +20,7 @@
                     <sheet>
                         <group name="group_top" string="公司">
                             <field name="name" placeholder="您所在的公司的全称"/>
-                            <field name="shortName" placeholder="用于报表显示"/>
+                            <field name="short_name" placeholder="用于报表显示"/>
                             <!--<field name="spell"/>-->
                         </group>
                     </sheet>

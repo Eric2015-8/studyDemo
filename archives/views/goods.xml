@@ -7,12 +7,12 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
-                    <field name="shortName"/>
-                    <field name="mainUnit_id"/>
-                    <field name="secondUnit_id"/>
-                    <field name="statisticsUnit_id"/>
-                    <field name="isSale"/>
-                    <field name="isPurchase"/>
+                    <field name="short_name"/>
+                    <field name="main_unit_id"/>
+                    <field name="second_unit_id"/>
+                    <field name="statistics_unit_id"/>
+                    <field name="is_sale"/>
+                    <field name="is_purchase"/>
                 </tree>
             </field>
         </record>
@@ -25,36 +25,36 @@
                     <sheet>
                         <group name="group_top" string="物料">
                             <field name="name"/>
-                            <field name="shortName" placeholder="用于报表显示"/>
+                            <field name="short_name" placeholder="用于报表显示"/>
                         </group>
                         <notebook>
                             <page string="通用信息">
                                 <group col="4">
-                                    <field name="mainUnit_id"/>
-                                    <field name="needSecondChange"/>
-                                    <field name="secondUnit_id"/>
-                                    <field name="secondRateString"/>
-                                    <field name="statisticsUnit_id"/>
-                                    <field name="statisticsRateString"/>
+                                    <field name="main_unit_id"/>
+                                    <field name="need_second_change"/>
+                                    <field name="second_unit_id"/>
+                                    <field name="second_rate_string"/>
+                                    <field name="statistics_unit_id"/>
+                                    <field name="statistics_rate_string"/>
                                 </group>
                             </page>
                             <page string="物料分类">
                                 <group>
-                                    <field name="goodsType_id"/>
+                                    <field name="goods_type_id"/>
                                 </group>
                                 <group col="4">
-                                    <field name="goodsType1_id"/>
-                                    <field name="goodsType2_id"/>
-                                    <field name="goodsType3_id"/>
-                                    <field name="goodsType4_id"/>
-                                    <field name="goodsType5_id"/>
-                                    <field name="goodsType6_id"/>
+                                    <field name="goods_type1_id"/>
+                                    <field name="goods_type2_id"/>
+                                    <field name="goods_type3_id"/>
+                                    <field name="goods_type4_id"/>
+                                    <field name="goods_type5_id"/>
+                                    <field name="goods_type6_id"/>
                                 </group>
                             </page>
                             <page string="系统信息">
                                 <group col="4">
-                                    <field name="isSale"/>
-                                    <field name="isPurchase"/>
+                                    <field name="is_sale"/>
+                                    <field name="is_purchase"/>
                                 </group>
                             </page>
                         </notebook>
@@ -77,12 +77,12 @@
             <field name="arch" type="xml">
                 <tree create="false" delete="false">
                     <field name="name"/>
-                    <field name="shortName"/>
-                    <field name="mainUnit_id"/>
-                    <field name="secondUnit_id"/>
-                    <field name="statisticsUnit_id"/>
-                    <field name="isSale"/>
-                    <field name="isPurchase"/>
+                    <field name="short_name"/>
+                    <field name="main_unit_id"/>
+                    <field name="second_unit_id"/>
+                    <field name="statistics_unit_id"/>
+                    <field name="is_sale"/>
+                    <field name="is_purchase"/>
                 </tree>
             </field>
         </record>

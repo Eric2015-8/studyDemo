@@ -12,7 +12,7 @@ class Customer(models.Model):
     ]
 
     name = fields.Char(string=u'客户名称', required=True)
-    shortName = fields.Char(string=u'简称')
+    short_name = fields.Char(string=u'简称')
 
     # 通用信息
     tel = fields.Char(string=u'联系方式')
@@ -26,13 +26,13 @@ class Customer(models.Model):
     # 地址 & 联系人
 
     # 客户分类
-    customerType_id = fields.Many2one('archives.customer_type', string=u'客户分类')
-    customerType1_id = fields.Many2one('archives.customer_type1', string=u'客户分类1')
-    customerType2_id = fields.Many2one('archives.customer_type2', string=u'客户分类2')
-    customerType3_id = fields.Many2one('archives.customer_type3', string=u'客户分类3')
-    customerType4_id = fields.Many2one('archives.customer_type4', string=u'客户分类4')
-    customerType5_id = fields.Many2one('archives.customer_type5', string=u'客户分类5')
-    customerType6_id = fields.Many2one('archives.customer_type6', string=u'客户分类6')
+    customer_type_id = fields.Many2one('archives.customer_type', string=u'客户分类')
+    customer_type1_id = fields.Many2one('archives.customer_type1', string=u'客户分类1')
+    customer_type2_id = fields.Many2one('archives.customer_type2', string=u'客户分类2')
+    customer_type3_id = fields.Many2one('archives.customer_type3', string=u'客户分类3')
+    customer_type4_id = fields.Many2one('archives.customer_type4', string=u'客户分类4')
+    customer_type5_id = fields.Many2one('archives.customer_type5', string=u'客户分类5')
+    customer_type6_id = fields.Many2one('archives.customer_type6', string=u'客户分类6')
     #     value = fields.Integer()
     #     value2 = fields.Float(compute="_value_pc", store=True)
     #     description = fields.Text()

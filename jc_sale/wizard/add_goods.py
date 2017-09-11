@@ -19,10 +19,10 @@ class AddGoodsDetail(models.TransientModel):
                                    ondelete='cascade', index=True, copy=False)
 
     goods_id = fields.Many2one('archives.goods', string=u'产品', required=True)
-    secondUnit_id = fields.Many2one('archives.unit', string=u'辅单位', compute='_set_second')
-    secondUnitNumber = fields.Float(digits=(6, 2), string=u'辅数量')
-    mainUnit_id = fields.Many2one('archives.unit', string=u'主单位', compute='_set_main')
-    mainUnitNumber = fields.Float(digits=(6, 2), string=u'主数量')
+    second_unit_id = fields.Many2one('archives.unit', string=u'辅单位', compute='_set_second')
+    second_unit_number = fields.Float(digits=(6, 2), string=u'辅数量')
+    main_unit_id = fields.Many2one('archives.unit', string=u'主单位', compute='_set_main')
+    main_unit_number = fields.Float(digits=(6, 2), string=u'主数量')
 
     @api.multi
     def subscribe(self):
@@ -33,31 +33,31 @@ class AddGoodsDetail(models.TransientModel):
     # @api.depends('goods_id')
     # def _set_main(self):
     #     for record in self:
-    #         record.mainUnit_id = record.goods_id.mainUnit_id
+    #         record.main_unit_id = record.goods_id.main_unit_id
     #
     # @api.depends('goods_id')
     # def _set_second(self):
     #     for record in self:
-    #         record.secondUnit_id = record.goods_id.secondUnit_id
+    #         record.second_unit_id = record.goods_id.second_unit_id
     #
-    # @api.onchange('secondUnitNumber')
+    # @api.onchange('second_unit_number')
     # def _onchange_second(self):
-    #     if not self.goods_id.needSecondChange:
+    #     if not self.goods_id.need_second_change:
     #         return
-    #     if self.goods_id.secondRate != 0:
-    #         self.mainUnitNumber = self.goods_id.secondRate * self.secondUnitNumber
+    #     if self.goods_id.second_rate != 0:
+    #         self.main_unit_number = self.goods_id.second_rate * self.second_unit_number
     #
-    # @api.onchange('mainUnitNumber')
+    # @api.onchange('main_unit_number')
     # def _onchange_main(self):
-    #     if not self.goods_id.needSecondChange:
+    #     if not self.goods_id.need_second_change:
     #         return
-    #     if self.goods_id.secondRate != 0:
-    #         self.secondUnitNumber = self.mainUnitNumber / self.goods_id.secondRate
+    #     if self.goods_id.second_rate != 0:
+    #         self.second_unit_number = self.main_unit_number / self.goods_id.second_rate
     #
     # @api.onchange('goods_id')
     # def _onchange_goods(self):
-    #     self.secondUnit_id = self.goods_id.secondUnit_id
-    #     self.mainUnit_id = self.goods_id.mainUnit_id
+    #     self.second_unit_id = self.goods_id.second_unit_id
+    #     self.main_unit_id = self.goods_id.main_unit_id
 
         # session_ids = fields.Many2many('openacademy.session',
         #                                string="Sessions", required=True, default=_default_sessions)

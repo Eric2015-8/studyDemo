@@ -17,10 +17,10 @@ class SaleOrderDetail(models.Model):
     forecast_detail_id = fields.Many2one('jc_sale.sale_forecast.detail', string=u'销售预报单明细ID')
 
     goods_id = fields.Many2one('archives.goods', string=u'产品', required=True)
-    secondUnit_id = fields.Many2one('archives.unit', string=u'辅单位', compute='_set_second')
-    secondUnitNumber = fields.Float(digits=(6, 2), string=u'辅数量')
-    mainUnit_id = fields.Many2one('archives.unit', string=u'主单位', compute='_set_main')
-    mainUnitNumber = fields.Float(digits=(6, 2), string=u'主数量')
+    second_unit_id = fields.Many2one('archives.unit', string=u'辅单位', compute='_set_second')
+    second_unit_number = fields.Float(digits=(6, 2), string=u'辅数量')
+    main_unit_id = fields.Many2one('archives.unit', string=u'主单位', compute='_set_main')
+    main_unit_number = fields.Float(digits=(6, 2), string=u'主数量')
 
     price = fields.Float(digits=(6, 2), help="单价", string=u'单价')
     money = fields.Float(digits=(6, 2), help="金额", string=u'金额', compute='_compute_money')
@@ -30,36 +30,36 @@ class SaleOrderDetail(models.Model):
     @api.depends('goods_id')
     def _set_main(self):
         for record in self:
-            record.mainUnit_id = record.goods_id.mainUnit_id
+            record.main_unit_id = record.goods_id.main_unit_id
 
     @api.depends('goods_id')
     def _set_second(self):
         for record in self:
-            record.secondUnit_id = record.goods_id.secondUnit_id
+            record.second_unit_id = record.goods_id.second_unit_id
 
-    @api.depends('price', 'mainUnitNumber')
+    @api.depends('price', 'main_unit_number')
     def _compute_money(self):
         for record in self:
-            record.money = record.price * record.mainUnitNumber
+            record.money = record.price * record.main_unit_number
 
-    @api.onchange('price', 'mainUnitNumber')
+    @api.onchange('price', 'main_unit_number')
     def _onchange_for_money(self):
-        self.money = self.price * self.mainUnitNumber
+        self.money = self.price * self.main_unit_number
 
-    @api.onchange('secondUnitNumber')
+    @api.onchange('second_unit_number')
     def _onchange_second(self):
-        if not self.goods_id.needSecondChange:
+        if not self.goods_id.need_second_change:
             return
-        self.mainUnitNumber = self.goods_id.secondRate * self.secondUnitNumber
+        self.main_unit_number = self.goods_id.second_rate * self.second_unit_number
 
-    @api.onchange('mainUnitNumber')
+    @api.onchange('main_unit_number')
     def _onchange_main(self):
-        if not self.goods_id.needSecondChange:
+        if not self.goods_id.need_second_change:
             return
-        if self.goods_id.secondRate != 0:
-            self.secondUnitNumber = self.mainUnitNumber / self.goods_id.secondRate
+        if self.goods_id.second_rate != 0:
+            self.second_unit_number = self.main_unit_number / self.goods_id.second_rate
 
     @api.onchange('goods_id')
     def _onchange_goods(self):
-        self.secondUnit_id = self.goods_id.secondUnit_id
-        self.mainUnit_id = self.goods_id.mainUnit_id
+        self.second_unit_id = self.goods_id.second_unit_id
+        self.main_unit_id = self.goods_id.main_unit_id
