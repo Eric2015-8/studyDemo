@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-from . import pinyin
 
 
 class Company(models.Model):
