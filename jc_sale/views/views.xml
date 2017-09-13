@@ -3,5 +3,6 @@
         <!-- Top menu item -->
         <menuitem name="销售" id="jc_sale_menu_root"/>
 
+        <menuitem name="报表" id="jc_sale_menu_report" parent="jc_sale_menu_root"/>
     </data>
 </openerp>
