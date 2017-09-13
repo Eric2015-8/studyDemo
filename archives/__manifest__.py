@@ -51,6 +51,7 @@
         'views/staff.xml',
         'views/store.xml',
         'views/goods.xml',
+        'models/no_page/goods_number/goods_number.xml',
         'views/customer.xml',
         'views/templates.xml',
     ],

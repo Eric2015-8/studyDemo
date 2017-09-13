@@ -34,20 +34,22 @@ class SaleForecast(models.Model):
     @api.multi
     def add_goods_page(self):
         imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('archives.archives_common_goods_action_page')
-        list_view_id = imd.xmlid_to_res_id('archives.archives_common_goods_page')
-        form_view_id = imd.xmlid_to_res_id('archives.archives_common_goods_edit')
+        action = imd.xmlid_to_object('archives.archives_common_goods_number_action_window')
+        list_view_id = imd.xmlid_to_res_id('archives.archives_common_goods_number_list')
+        # form_view_id = imd.xmlid_to_res_id('archives.archives_common_goods_edit')
 
         result = {
             'name': action.name,
             'help': action.help,
             'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form']],
+            # 'views': [[list_view_id, 'tree'], [form_view_id, 'form']],
+            'views': [[list_view_id, 'tree']],
             'target': action.target,
             # 'context': action.context,
             'context': {
                 'id': self.id,
                 'customer_id': self.customer_id.id,
+                'detail': 'jc_sale.sale_forecast.detail',
             },
             'res_model': action.res_model,
         }
