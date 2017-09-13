@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- 销售汇总表 tree 视图 -->
+        <record id="report_sale_order_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">report.sale_order</field>
+            <field name="arch" type="xml">
+                <tree string="销售订单分析表" create="false" delete="false">
+                    <field name="id"/>
+                    <field name="bill_state"/>
+                    <field name="customer_id"/>
+                    <field name="date"/>
+                    <field name="remark"/>
+                    <field name="company_id"/>
+                    <field name="store_id"/>
+                    <field name='goods_id'/>
+                    <!--<field name='second_unit_id'/>-->
+                    <field name='second_unit_number'/>
+                    <!--<field name='main_unit_id'/>-->
+                    <field name='main_unit_number'/>
+                    <field name='price'/>
+                    <!--<field name='money'/>-->
+                    <field name="remark_detail"/>
+                    <!--<field name="amount" sum="销售收入合计"/>-->
+                    <!--<field name="tax_amount" sum="税额合计" groups='sell.out_tax_groups'/>-->
+                    <!--<field name="subtotal" sum="价税合计的合计" groups='sell.out_tax_groups'/>-->
+                    <!--<field name="margin" sum="毛利合计"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <!-- 销售订单分析表 graph 视图 -->
+        <record id='report_sale_order_graph' model='ir.ui.view'>
+            <field name='name'>sale order graph</field>
+            <field name='model'>report.sale_order</field>
+            <field name='arch' type='xml'>
+                <pivot string="销售订单分析表">
+                    <field name='goods_id' type='row'/>
+                    <!--<field name='second_unit_number' type='measure'/>-->
+                    <!--<field name='main_unit_number' type='measure'/>-->
+                    <!--<field name="money" type='measure'/>-->
+                    <!--<field name="money" type='measure' sum="销售收入合计"/>-->
+                </pivot>
+            </field>
+        </record>
+
+        <!-- 销售订单分析表 search 视图 -->
+        <record id='report_sale_order_search' model='ir.ui.view'>
+            <field name='name'>report.sale_order.search</field>
+            <field name='model'>report.sale_order</field>
+            <field name='arch' type='xml'>
+                <search string='销售订单分析表'>
+                    <!--<field name='goods' string='商品' filter_domain="[('goods', 'ilike', self)]"/>-->
+                    <field name='customer_id' string='客户' filter_domain="[('customer_id', 'ilike', self)]"/>
+                    <field name='staff_id' string='销售员' filter_domain="[('staff_id', 'ilike', self)]"/>
+                    <!--<field name='department_id' string='部门' filter_domain="[('department_id', 'ilike', self)]"/>-->
+                    <!--<field name='lot' string='批号' filter_domain="[('lot', 'ilike', self)]" groups='goods.batch_groups' />-->
+                    <field name='store_id' string='仓库' filter_domain="[('store_id', 'ilike', self)]"/>
+
+                    <group expand="0" string="Group By">
+                        <!--<filter string="商品" context="{'group_by':'goods'}"/>-->
+                        <filter string="客户" context="{'group_by':'customer_id'}"/>
+                        <filter string="销售员" context="{'group_by':'staff_id'}"/>
+                        <!--<filter string="部门" context="{'group_by':'department_id'}"/>-->
+                        <!--<filter string="批号" context="{'group_by': 'lot'}" groups='goods.batch_groups'/>-->
+                        <filter string="仓库" context="{'group_by': 'store_id'}"/>
+                        <filter string="单位" context="{'group_by': 'main_unit_id'}"/>
+                        <filter string="辅单位" context="{'group_by': 'second_unit_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- 销售订单分析表 action -->
+        <record id='report_sale_order_action' model='ir.actions.act_window'>
+            <field name='name'>销售订单分析表</field>
+            <field name='res_model'>report.sale_order</field>
+            <field name='view_mode'>tree</field>
+            <field name='view_id' ref='report_sale_order_graph'/>
+        </record>
+
+        <!-- 销售订单分析表 menu -->
+        <menuitem id="menu_report_sale_order" name="销售订单分析表" action="report_sale_order_action" parent="jc_sale_menu_report" sequence="11"/>
+        <!--<menuitem id="menu_report_sale_order" name="销售订单分析表" action="report_sale_order_action" sequence="10"/>-->
+
+        <!--<record id="procurement_order_view_form_inherit_purchase" model="ir.ui.view">-->
+        <!--<field name="name">procurement.order.form.inherit.button</field>-->
+        <!--<field name="model">jc_sale.sale_order</field>-->
+        <!--<field name="inherit_id" ref="jc_sale.archives_common_sale_order_edit"/>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<xpath expr="//button[@name='do_check']" position="before">-->
+        <!--<button class="oe_stat_button" type="action" name="%(report_sale_order_action)d"-->
+        <!--string="分析表"/>-->
+        <!--</xpath>-->
+        <!--</field>-->
+        <!--</record>-->
+
+    </data>
+</openerp>

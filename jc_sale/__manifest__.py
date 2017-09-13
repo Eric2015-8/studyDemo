@@ -20,11 +20,14 @@
 
     # any module necessary for this one to work correctly
     'depends': ['archives',
+                'decimal_precision',
                 'base'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        # 'wizard/add_goods.xml',
+
         'views/no_page/sale_type.xml',
 
         'views/views.xml',
@@ -32,6 +35,7 @@
 
         'views/sale_forecast.xml',
         'views/sale_order.xml',
+        'report/report_sale_order.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
