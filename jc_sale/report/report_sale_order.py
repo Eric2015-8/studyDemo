@@ -60,7 +60,6 @@ class ReportSaleOrder(models.Model):
         cr.execute(
             """
             create or replace view report_sale_order as (
---SELECT b.id,b.customer_id,b.date,b.remark,b.company_id,b.store_id,d.goods_id,d.price,d.remark as remark_detail FROM jc_sale_sale_order b LEFT JOIN jc_sale_sale_order_detail d ON d.sale_order_id = b.id
 select
 b.ID,
 b.bill_state,
