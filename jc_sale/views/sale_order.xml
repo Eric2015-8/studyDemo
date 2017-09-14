@@ -97,7 +97,7 @@
         </record>
 
         <menuitem name="销售订单" id="jc_sale.menu_sale_order" parent="jc_sale_menu_root"
-                  action="archives_common_sale_order_action_window"/>
+                  action="archives_common_sale_order_action_window" sequence="2"/>
 
     </data>
 </openerp>
