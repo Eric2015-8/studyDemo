@@ -23,7 +23,7 @@ class SaleOrderDetail(models.Model):
     main_unit_number = fields.Float(digits=(6, 2), string=u'主数量')
 
     price = fields.Float(digits=(6, 2), help="单价", string=u'单价')
-    money = fields.Float(digits=(6, 2), help="金额", string=u'金额', compute='_compute_money')
+    money = fields.Float(digits=(6, 2), help="金额", string=u'金额')
 
     remark = fields.Char(string=u'备注')
 
@@ -36,11 +36,6 @@ class SaleOrderDetail(models.Model):
     def _set_second(self):
         for record in self:
             record.second_unit_id = record.goods_id.second_unit_id
-
-    @api.depends('price', 'main_unit_number')
-    def _compute_money(self):
-        for record in self:
-            record.money = record.price * record.main_unit_number
 
     @api.onchange('price', 'main_unit_number')
     def _onchange_for_money(self):
