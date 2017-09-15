@@ -1,46 +1,267 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!--这个应该放在别的地方:添加系统自带数据的地方。可以考虑新建一个模块来处理-->
+    <record id="paperformat_chn__a4_lowmargin" model="report.paperformat">
+        <field name="name">Chinese A4 low margin</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">80</field>
+    </record>
+
     <report
             id="report_sale_forecast"
             string="销售预报"
             model="jc_sale.sale_forecast"
-            report_type="qweb-pdf"
+            report_type="qweb-html"
             file="jc_sale.report_pdf_sale_forecast_file"
             name="jc_sale.report_pdf_sale_forecast"
+            paperformat="jc_sale.paperformat_chn__a4_lowmargin"
     />
 
     <template id="report_pdf_sale_forecast">
         <t t-call="report.html_container">
-            <div class="page">
-                <t t-foreach="docs" t-as="bill">
-                    <div class="col-xs-6 mb92">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="col-xs-4 danger"/>
-                                    <th class="active"/>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <strong t-field="bill.customer_id"/>
-                                    </td>
-                                    <td>
-                                        <strong t-field="bill.date"/>
-                                    </td>
-                                    <td>
-                                        <strong t-field="bill.sale_type_id"/>
-                                    </td>
-                                    <td>
-                                        <strong t-field="bill.remark"/>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <t t-set="data_report_margin_top" t-value="45"/>
+            <t t-set="data_report_header_spacing" t-value="40"/>
+            <t t-call="jc_sale.main_layout">
+                <t t-set="o" t-value="docs[0]"/>
+                <t t-foreach="docs" t-as="quotation">
+                    <div class="page">
+                        <div id="introduction" class="page-header mt16"><!--page-header:在下面加了淡淡的下划线，从最左边，到最右边-->
+                            <h1>
+                                销售预报
+                                <em t-esc="quotation.id"/>
+                            </h1>
+                        </div>
+                        <!-- 表头 -->
+                        <div class="row mt32">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="row">
+                                    <label class="col-sm-4 col-xs-4 text-right">客户名称:</label>
+                                    <div class="col-sm-8 col-xs-8">
+                                        <div t-field="quotation.customer_id"/>
+                                    </div>
+                                </div>
+                                <!--<div class="row">-->
+                                <!--<label class="col-sm-4 col-xs-4 text-right">Bill To:</label>-->
+                                <!--<div class="col-sm-8 col-xs-8">-->
+                                <!--<div t-field="quotation.partner_invoice_id" t-options='{-->
+                                <!--"widget": "contact",-->
+                                <!--"fields": ["address", "name", "phone", "email"]-->
+                                <!--}'/>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <!--<div class="row">-->
+                                <!--<label class="col-sm-5 col-xs-5 text-right">Your Contact:</label>-->
+                                <!--<div class="col-sm-7 col-xs-7">-->
+                                <!--<div t-field="quotation.user_id" t-options='{-->
+                                <!--"widget": "contact",-->
+                                <!--"fields": ["name", "phone", "email"]-->
+                                <!--}'/>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <div class="row">
+                                    <label class="col-sm-5 col-xs-5 text-right">日期:</label>
+                                    <div class="col-sm-7 col-xs-7">
+                                        <span t-field="quotation.date"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="oe_structure"/>
+                        <!--明细-->
+                        <t t-call="jc_sale.detail_layout"/>
+
                     </div>
                 </t>
-            </div>
+            </t>
         </t>
     </template>
+
+    <template id="main_layout">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <!--<t t-set="company" t-value="o.company_id"></t>-->
+            <t t-set="company" t-value="o.create_uid.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+
+        <t t-call="jc_sale.main_layout_header"/>
+        <t t-raw="0"/>
+        <t t-call="jc_sale.main_layout_footer"/>
+    </template>
+
+    <template id="main_layout_header">
+        <div class="header">
+            <div class="row">
+                <!--<div class="col-xs-3">-->
+                <!--<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"-->
+                <!--style="max-height: 45px;"/>-->
+                <!--</div>-->
+                <div class="col-xs-3">
+                    <!--<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"-->
+                    <!--style="max-height: 45px;"/>-->
+                    <t t-set="a1" t-value="doc"/>
+                    <div t-esc="a1"/>
+                </div>
+                <!--<div class="col-xs-9 text-right" style="margin-top:20px;" t-field="company.rml_header1"/>-->
+                <t t-set="header" t-value="1111"/>
+                <div class="col-xs-9 text-right" style="margin-top:20px;" t-esc="header"/>
+            </div>
+            <div class="row zero_min_height">
+                <div class="col-xs-12">
+                    <div style="border-bottom: 1px solid black;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6" name="company_address">
+                    <!--<span t-field="company.partner_id"-->
+                    <!--t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'-->
+                    <!--style="border-bottom: 1px solid black; display:inline-block;"/>-->
+                    <t t-set="header2" t-value="2222"/>
+                    <span t-esc="header2"
+                          style="border-bottom: 1px solid black; display:inline-block;"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="main_layout_footer">
+        <div class="footer">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <!--<ul t-if="not company.custom_footer" class="list-inline">-->
+                <!--<li t-if="company.phone">Phone:-->
+                <!--<span t-field="company.phone"/>-->
+                <!--</li>-->
+
+                <!--<li t-if="company.fax and company.phone">&amp;bull;</li>-->
+                <!--<li t-if="company.fax">Fax:-->
+                <!--<span t-field="company.fax"/>-->
+                <!--</li>-->
+
+                <!--<li t-if="company.email and company.fax or company.email and company.phone">&amp;bull;</li>-->
+                <!--<li t-if="company.email">Email:-->
+                <!--<span t-field="company.email"/>-->
+                <!--</li>-->
+
+                <!--<li t-if="company.website and company.email or company.website and company.fax or company.website and company.phone">-->
+                <!--&amp;bull;-->
+                <!--</li>-->
+                <!--<li t-if="company.website">Website:-->
+                <!--<span t-field="company.website"/>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <ul class="list-inline">
+                    <li>Phone:</li>
+
+                    <li>&amp;bull;</li>
+                    <li>Fax:</li>
+
+                    <li>&amp;bull;</li>
+                    <li>Email:</li>
+
+                    <li>&amp;bull;</li>
+                    <li>Website:
+                    </li>
+                </ul>
+
+                <!--<ul t-if="not company.custom_footer" class="list-inline" name="financial_infos">-->
+                <!--<li t-if="company.vat">TIN:-->
+                <!--<span t-field="company.vat"/>-->
+                <!--</li>-->
+                <!--</ul>-->
+
+                <!--<t t-if="company.custom_footer">-->
+                <!--<span t-raw="company.rml_footer"/>-->
+                <!--</t>-->
+
+                <ul class="list-inline">
+                    <li>Page:</li>
+                    <li>
+                        <span class="page"/>
+                    </li>
+                    <li>/</li>
+                    <li>
+                        <span class="topage"/>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <template id="detail_layout" name="Price">
+        <div id="quote">
+            <!--<h1 class="page-header">Pricing</h1>-->
+            <!--<t t-foreach="quotation.order_lines_layouted()" t-as="page">-->
+            <table class="table wq-table">
+                <thead>
+                    <tr class="active">
+                        <th>存货</th>
+                        <th>辅数量</th>
+                        <th>主数量</th>
+                        <th>单价</th>
+                        <th>金额</th>
+                        <!--<th><span t-if="True in [line.discount > 0 for line in quotation.order_line]">Discount</span></th>-->
+                        <!--<th class="text-right">Unit Price</th>-->
+                        <!--<th class="text-right" groups="sale.group_show_price_subtotal">Price</th>-->
+                        <!--<th class="text-right price_tax_included" groups="sale.group_show_price_total">Total Price</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="quotation.sale_forecast_detail" t-as="detail">
+                        <tr>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.goods_id.name"/>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-if="detail.goods_id.need_second_change == '1'">
+                                    <t t-esc="round(detail.second_unit_number,2)"/>
+                                    <t t-esc="detail.second_unit_id.name"/>
+                                </t>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.main_unit_number"/>
+                                <t t-esc="detail.main_unit_id.name"/>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.price"/>
+                                <!--<t t-esc="detail['price']"/>-->
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="round(detail.money,2)"/>
+                                <!--<t t-esc="detail['money']"/>-->
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
+            <!--<t t-if="page_index &lt; page_size - 1" groups="sale.group_sale_layout">-->
+            <!--<p style="page-break-before:always;"> </p>-->
+            <!--</t>-->
+
+            <!--</t>-->
+        </div>
+        <!--<section id="terms" class="container" t-if="quotation.note">-->
+        <!--<h2 class="page-header">Terms &amp; Conditions</h2>-->
+        <!--<p t-field="quotation.note"/>-->
+        <!--</section>-->
+    </template>
+
 </odoo>
