@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+            id="report_sale_forecast"
+            string="销售预报"
+            model="jc_sale.sale_forecast"
+            report_type="qweb-pdf"
+            file="jc_sale.report_pdf_sale_forecast_file"
+            name="jc_sale.report_pdf_sale_forecast"
+    />
+
+    <template id="report_pdf_sale_forecast">
+        <t t-call="report.html_container">
+            <div class="page">
+                <t t-foreach="docs" t-as="bill">
+                    <div class="col-xs-6 mb92">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-4 danger"/>
+                                    <th class="active"/>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong t-field="bill.customer_id"/>
+                                    </td>
+                                    <td>
+                                        <strong t-field="bill.date"/>
+                                    </td>
+                                    <td>
+                                        <strong t-field="bill.sale_type_id"/>
+                                    </td>
+                                    <td>
+                                        <strong t-field="bill.remark"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

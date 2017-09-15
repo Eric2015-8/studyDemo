@@ -21,6 +21,7 @@
     # any module necessary for this one to work correctly
     'depends': ['archives',
                 'decimal_precision',
+                'report',
                 'base'],
 
     # always loaded
@@ -34,6 +35,7 @@
         'views/templates.xml',
 
         'views/sale_forecast.xml',
+        'print/sale_forecast_report.xml',
         'views/sale_order.xml',
         'report/report_sale_order.xml',
     ],
