@@ -14,7 +14,7 @@ class Staff(models.Model):
     name = fields.Char(string=u'员工姓名', required=True)
 
     #     public
-    company_id = fields.Many2one('archives.company', string=u'公司', index=True)
+    company_id = fields.Many2one('res.company', string=u'公司', index=True)
     department_id = fields.Many2one('archives.department', string=u'部门')
     duty_id = fields.Many2one('archives.duty', string=u'职务')
     tel = fields.Char(string=u'手机')

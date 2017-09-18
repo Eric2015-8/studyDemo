@@ -17,7 +17,7 @@ class Department(models.Model):
 
     name = fields.Char(string=u'部门名称',required=True)
     active=fields.Boolean('Active',default=True)
-    company_id=fields.Many2one('archives.company',string=u'公司',index=True)#,default=lambda self:self.evn.user.company_id
+    company_id=fields.Many2one('res.company',string=u'公司',index=True)#,default=lambda self:self.evn.user.company_id
     parent_id=fields.Many2one('archives.department',string=u'上级部门',index=True)
     #child_ids=fields.One2many('archive.department',string=u'子部门')
 

@@ -19,7 +19,7 @@ class ReportSaleOrder(models.Model):
     date = fields.Date(string=u'日期', default=fields.Date.today)
     sale_type_id = fields.Many2one('archives.sale_type', string=u'销售类型')
     remark = fields.Char(string=u'摘要')
-    company_id = fields.Many2one('archives.company', string=u'公司')
+    company_id = fields.Many2one('res.company', string=u'公司')
     staff_id = fields.Many2one('archives.staff', string=u'销售员')
     store_id = fields.Many2one('archives.store', string=u'仓库')
     goods_id = fields.Many2one('archives.goods', string=u'产品')

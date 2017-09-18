@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from . import company
 from . import department
 from . import staff
 from . import store

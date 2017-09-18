@@ -21,7 +21,7 @@ class Customer(models.Model):
     zone_id = fields.Many2one('archives.zone', string=u'地址')
     zone_type1_id = fields.Many2one('archives.zone_type1', string=u'地区分类1')
     zone_type2_id = fields.Many2one('archives.zone_type2', string=u'地区分类2')
-    company_id = fields.Many2one('archives.company', string=u'公司', index=True)
+    company_id = fields.Many2one('res.company', string=u'公司', index=True)
 
     # 地址 & 联系人
 
