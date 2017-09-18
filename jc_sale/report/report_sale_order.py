@@ -10,6 +10,9 @@ class ReportSaleOrder(models.Model):
     _description = u'销售订单分析表'
     _auto = False
 
+    bill_id = fields.Integer(string=u'ID')
+    bill_name = fields.Char(string=u'单据编号')
+
     bill_state = fields.Selection(
         [(1, '未审核'), (10, '已审核'), (20, '已完毕')],
         string=u'单据状态', require=True, default=1, readonly=True
@@ -42,7 +45,9 @@ class ReportSaleOrder(models.Model):
             """
             create or replace view report_sale_order as (
 select
-b.ID,
+d.id id,
+b.ID bill_id,
+b.name bill_name,
 b.bill_state,
 b.customer_id,
 b.date,
@@ -62,7 +67,8 @@ d.remark remark_detail
 FROM jc_sale_sale_order b 
 LEFT JOIN jc_sale_sale_order_detail d ON d.sale_order_id = b.id
 LEFT JOIN archives_goods g on d.goods_id = g.id
-group by b.id,b.bill_state,b.customer_id,b.date,b.sale_type_id,b.remark,b.company_id,b.staff_id,b.store_id,d.goods_id,g.second_unit_id,g.main_unit_id,d.price,d.remark
+where d.id is not null
+group by d.id,b.id,b.name,b.bill_state,b.customer_id,b.date,b.sale_type_id,b.remark,b.company_id,b.staff_id,b.store_id,d.goods_id,g.second_unit_id,g.main_unit_id,d.price,d.remark
 
             )
         """)

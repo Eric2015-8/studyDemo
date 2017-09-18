@@ -7,7 +7,8 @@
             <field name="model">report.sale_order</field>
             <field name="arch" type="xml">
                 <tree string="销售订单分析表" create="false" delete="false">
-                    <field name="id"/>
+                    <field name="bill_id"/>
+                    <field name="bill_name"/>
                     <field name="bill_state"/>
                     <field name="customer_id"/>
                     <field name="date"/>
