@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- 销售预报 -->
+        <record id="seq_sale_forecast" model="ir.sequence">
+            <field name="name">销售预报</field>
+            <field name="code">jc_sale.sale_forecast</field>
+            <field name="prefix">SF</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- 销售订单 -->
+        <record id="seq_sale_order" model="ir.sequence">
+            <field name="name">销售订单</field>
+            <field name="code">jc_sale.sale_order</field>
+            <field name="prefix">SO</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

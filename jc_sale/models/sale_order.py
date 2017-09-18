@@ -14,6 +14,9 @@ class SaleOrder(models.Model):
         string=u'单据状态', require=True, default=1, readonly=True
     )
 
+    name = fields.Char(string=u'订单编号', required=True, copy=False, readonly=True,
+                       index=True, default=lambda self: _('新建'))
+
     forecast_id = fields.Many2one('jc_sale.sale_forecast', string=u'销售预报单ID')
 
     customer_id = fields.Many2one('archives.customer', string=u'客户名称', required=True)
@@ -26,7 +29,7 @@ class SaleOrder(models.Model):
     # company_id = fields.Many2one('archives.company', string=u'公司')
     company_id = fields.Many2one('res.company', string=u'公司',
                                  default=lambda self: self.env['res.company']._company_default_get(
-                                     'jc_sale.sale_forecast'))
+                                     'jc_sale.sale_order'))
     staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库')
 
@@ -49,6 +52,14 @@ class SaleOrder(models.Model):
         if self.bill_state > 1:
             raise ValidationError(_('只有未审核的单据才能删除.'))
         return super(SaleOrder, self).unlink()
+
+    @api.model
+    def create(self, values):
+        if values.get('name', '新建') == '新建':
+            values['name'] = self.env['ir.sequence'].next_by_code('jc_sale.sale_order') or '新建'
+
+        result = super(SaleOrder, self).create(values)
+        return result
 
     @api.multi
     def write(self, values):

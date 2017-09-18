@@ -26,6 +26,7 @@
 
     # always loaded
     'data': [
+        'data/ir_sequence_data.xml',
         # 'security/ir.model.access.csv',
         # 'wizard/add_goods.xml',
 

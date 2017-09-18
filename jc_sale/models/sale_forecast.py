@@ -14,7 +14,8 @@ class SaleForecast(models.Model):
         string=u'单据状态', require=True, default=1, readonly=True
     )
 
-    # name = fields.Char(string=u'销售预报', required=True, help=u'')
+    name = fields.Char(string=u'预报编号', required=True, copy=False, readonly=True,
+                       index=True, default=lambda self: _('新建'))
     customer_id = fields.Many2one('archives.customer', string=u'客户名称', required=True)
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     sale_type_id = fields.Many2one('archives.sale_type', string=u'销售类型', required=True)
@@ -106,6 +107,14 @@ class SaleForecast(models.Model):
         if orders:
             for bill in orders:
                 bill.unlink()
+
+    @api.model
+    def create(self, values):
+        if values.get('name', '新建') == '新建':
+            values['name'] = self.env['ir.sequence'].next_by_code('jc_sale.sale_forecast') or '新建'
+
+        result = super(SaleForecast, self).create(values)
+        return result
 
     @api.multi
     def unlink(self):
