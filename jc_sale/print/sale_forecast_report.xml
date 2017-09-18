@@ -31,7 +31,7 @@
         <t t-call="report.html_container">
             <t t-set="data_report_margin_top" t-value="45"/>
             <t t-set="data_report_header_spacing" t-value="40"/>
-            <t t-call="jc_sale.main_layout">
+            <t t-call="report.external_layout">
                 <t t-set="o" t-value="docs[0]"/>
                 <t t-foreach="docs" t-as="quotation">
                     <div class="page">
@@ -89,6 +89,7 @@
         </t>
     </template>
 
+    <!--自定义打印页面：页眉、页脚、中间空白.通用，需完善-->
     <template id="main_layout">
         <!-- Multicompany -->
         <t t-if="not o and doc">
@@ -107,6 +108,7 @@
         <t t-call="jc_sale.main_layout_footer"/>
     </template>
 
+    <!--自定义打印页面：页眉.通用，需完善-->
     <template id="main_layout_header">
         <div class="header">
             <div class="row">
@@ -142,6 +144,7 @@
         </div>
     </template>
 
+    <!--自定义打印页面：页脚.通用，需完善-->
     <template id="main_layout_footer">
         <div class="footer">
             <div class="text-center" style="border-top: 1px solid black;">
@@ -205,7 +208,8 @@
         </div>
     </template>
 
-    <template id="detail_layout" name="Price">
+    <!--自定义打印页面：销售预报明细-->
+    <template id="detail_layout" name="detail">
         <div id="quote">
             <!--<h1 class="page-header">Pricing</h1>-->
             <!--<t t-foreach="quotation.order_lines_layouted()" t-as="page">-->
