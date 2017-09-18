@@ -15,17 +15,13 @@
                     <field name="company_id"/>
                     <field name="store_id"/>
                     <field name='goods_id'/>
-                    <!--<field name='second_unit_id'/>-->
-                    <field name='second_unit_number'/>
-                    <!--<field name='main_unit_id'/>-->
-                    <field name='main_unit_number'/>
+                    <field name='second_unit_id'/>
+                    <field name='second_unit_number' sum="辅数量合计"/>
+                    <field name='main_unit_id'/>
+                    <field name='main_unit_number' sum="主数量合计"/>
                     <field name='price'/>
-                    <!--<field name='money'/>-->
+                    <field name='money' sum="金额合计"/>
                     <field name="remark_detail"/>
-                    <!--<field name="amount" sum="销售收入合计"/>-->
-                    <!--<field name="tax_amount" sum="税额合计" groups='sell.out_tax_groups'/>-->
-                    <!--<field name="subtotal" sum="价税合计的合计" groups='sell.out_tax_groups'/>-->
-                    <!--<field name="margin" sum="毛利合计"/>-->
                 </tree>
             </field>
         </record>
@@ -37,9 +33,9 @@
             <field name='arch' type='xml'>
                 <pivot string="销售订单分析表">
                     <field name='goods_id' type='row'/>
-                    <!--<field name='second_unit_number' type='measure'/>-->
-                    <!--<field name='main_unit_number' type='measure'/>-->
-                    <!--<field name="money" type='measure'/>-->
+                    <field name='second_unit_number' type='measure'/>
+                    <field name='main_unit_number' type='measure'/>
+                    <field name="money" type='measure'/>
                     <!--<field name="money" type='measure' sum="销售收入合计"/>-->
                 </pivot>
             </field>
@@ -51,19 +47,21 @@
             <field name='model'>report.sale_order</field>
             <field name='arch' type='xml'>
                 <search string='销售订单分析表'>
-                    <!--<field name='goods' string='商品' filter_domain="[('goods', 'ilike', self)]"/>-->
+                    <field name='goods_id' string='产品' filter_domain="[('goods_id', 'ilike', self)]"/>
                     <field name='customer_id' string='客户' filter_domain="[('customer_id', 'ilike', self)]"/>
                     <field name='staff_id' string='销售员' filter_domain="[('staff_id', 'ilike', self)]"/>
+                    <field name='company_id' string='公司' filter_domain="[('company_id', 'ilike', self)]"/>
                     <!--<field name='department_id' string='部门' filter_domain="[('department_id', 'ilike', self)]"/>-->
                     <!--<field name='lot' string='批号' filter_domain="[('lot', 'ilike', self)]" groups='goods.batch_groups' />-->
                     <field name='store_id' string='仓库' filter_domain="[('store_id', 'ilike', self)]"/>
+                    <field name='sale_type_id' string='销售类型' filter_domain="[('sale_type_id', 'ilike', self)]"/>
+                    <field name='remark' string='摘要' filter_domain="[('remark', 'ilike', self)]"/>
 
                     <group expand="0" string="Group By">
-                        <!--<filter string="商品" context="{'group_by':'goods'}"/>-->
+                        <filter string="产品" context="{'group_by':'goods_id'}"/>
                         <filter string="客户" context="{'group_by':'customer_id'}"/>
                         <filter string="销售员" context="{'group_by':'staff_id'}"/>
-                        <!--<filter string="部门" context="{'group_by':'department_id'}"/>-->
-                        <!--<filter string="批号" context="{'group_by': 'lot'}" groups='goods.batch_groups'/>-->
+                        <filter string="公司" context="{'group_by':'company_id'}"/>
                         <filter string="仓库" context="{'group_by': 'store_id'}"/>
                         <filter string="单位" context="{'group_by': 'main_unit_id'}"/>
                         <filter string="辅单位" context="{'group_by': 'second_unit_id'}"/>
@@ -76,8 +74,8 @@
         <record id='report_sale_order_action' model='ir.actions.act_window'>
             <field name='name'>销售订单分析表</field>
             <field name='res_model'>report.sale_order</field>
-            <field name='view_mode'>tree</field>
-            <field name='view_id' ref='report_sale_order_graph'/>
+            <field name='view_mode'>tree,pivot</field>
+            <field name='view_id' ref='report_sale_order_tree'/>
         </record>
 
         <!-- 销售订单分析表 menu -->
