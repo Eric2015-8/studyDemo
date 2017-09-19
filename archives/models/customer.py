@@ -16,7 +16,7 @@ class Customer(models.Model):
 
     # 通用信息
     tel = fields.Char(string=u'联系方式')
-    staff_id = fields.Many2one('archives.staff', string=u'销售员')
+    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
     address = fields.Char(string=u'地址')
     zone_id = fields.Many2one('archives.zone', string=u'地址')
     zone_type1_id = fields.Many2one('archives.zone_type1', string=u'地区分类1')
