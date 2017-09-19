@@ -21,10 +21,10 @@ class Goods(models.Model):
     statistics_unit_id = fields.Many2one('archives.unit', string=u'统计单位')
 
     second_rate = fields.Float(digits=(6, 2), string=u'辅单位转换率', help=u"主单位与辅单位的换算率，如“10”，一件（辅单位）=10公斤（主单位）",
-                              compute='_compute_second_rate')
+                               compute='_compute_second_rate')
     second_rate_string = fields.Char(string=u'辅单位转换率')
     statistics_rate = fields.Float(digits=(6, 2), string=u'统计单位转换率', help=u"主单位与统计单位的换算率，如“10”，一件（统计单位）=10公斤（主单位）",
-                                  compute='_compute_statistics_rate')
+                                   compute='_compute_statistics_rate')
     statistics_rate_string = fields.Char(string=u'统计单位转换率')
     need_second_change = fields.Selection([
         ('1', '是'),
@@ -43,6 +43,7 @@ class Goods(models.Model):
     # 系统信息
     is_sale = fields.Boolean(string=u'用于销售')
     is_purchase = fields.Boolean(string=u'用于采购')
+    is_batch_available = fields.Boolean(string=u'启用批次')
 
     @api.depends('second_rate_string')
     def _compute_second_rate(self):

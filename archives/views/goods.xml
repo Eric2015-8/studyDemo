@@ -13,6 +13,7 @@
                     <field name="statistics_unit_id"/>
                     <field name="is_sale"/>
                     <field name="is_purchase"/>
+                    <field name="is_batch_available"/>
                 </tree>
             </field>
         </record>
@@ -55,6 +56,7 @@
                                 <group col="4">
                                     <field name="is_sale"/>
                                     <field name="is_purchase"/>
+                                    <field name="is_batch_available"/>
                                 </group>
                             </page>
                         </notebook>
