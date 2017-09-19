@@ -1,2 +1,11 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_archives_archives,archives.archives,model_archives_archives,,1,0,0,0
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+customer_manager,customer manager,model_archives_customer,group_manager,1,1,1,1
+department_manager,department manager,model_archives_department,group_manager,1,1,1,1
+goods_manager,goods manager,model_archives_goods,group_manager,1,1,1,1
+staff_manager,staff manager,model_archives_staff,group_manager,1,1,1,1
+store_manager,store manager,model_archives_store,group_manager,1,1,1,1
+customer_read,customer read,model_archives_customer,,1,0,0,0
+department_read,department read,model_archives_department,,1,0,0,0
+goods_read,goods read,model_archives_goods,,1,0,0,0
+staff_read,staff read,model_archives_staff,,1,0,0,0
+store_read,store read,model_archives_store,,1,0,0,0
