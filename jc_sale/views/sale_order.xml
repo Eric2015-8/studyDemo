@@ -12,6 +12,7 @@
                     <field name="customer_id"/>
                     <field name="date"/>
                     <field name="sale_type_id"/>
+                    <field name="department_id"/>
                     <field name="remark"/>
                 </tree>
             </field>
@@ -64,6 +65,7 @@
                                     <field name="company_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="staff_id" domain="[('is_sale_man','=',True)]" options="{'no_open':True,'no_create':True}"/>
                                     <field name="store_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="department_id" options="{'no_open':True,'no_create':True}"/>
                                 </group>
                             </page>
                         </notebook>
@@ -79,6 +81,7 @@
                 <search>
                     <field name="bill_state"/>
                     <field name="customer_id"/>
+                    <field name="department_id"/>
                     <filter name="not_checked_bill" string="未审核"
                             domain="[('bill_state', '=', 1)]"/>
                     <group string="Group By">

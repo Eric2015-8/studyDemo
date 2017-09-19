@@ -25,10 +25,11 @@ class SaleForecast(models.Model):
     sale_forecast_detail = fields.One2many('jc_sale.sale_forecast.detail', 'sale_forecast_id', string=u'销售预报明细',
                                            copy=True)
 
-    company_id = fields.Many2one('res.company', string=u'公司',
+    company_id = fields.Many2one('res.company', string=u'公司', required=True,
                                  default=lambda self: self.env['res.company']._company_default_get())
     staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库')
+    department_id = fields.Many2one('archives.department', string=u'部门', required=True)
 
     @api.onchange('customer_id')
     def _onchange_for_staff(self):
@@ -82,6 +83,7 @@ class SaleForecast(models.Model):
             'date': self.date,
             'sale_type_id': self.sale_type_id.id,
             'staff_id': self.staff_id.id,
+            'department_id': self.department_id,
             'remark': self.remark,
         }
         order = self.env['jc_sale.sale_order'].create(values)

@@ -25,6 +25,7 @@ class ReportSaleOrder(models.Model):
     company_id = fields.Many2one('res.company', string=u'公司')
     staff_id = fields.Many2one('archives.staff', string=u'销售员')
     store_id = fields.Many2one('archives.store', string=u'仓库')
+    department_id = fields.Many2one('archives.department', string=u'部门')
     goods_id = fields.Many2one('archives.goods', string=u'产品')
     second_unit_id = fields.Many2one('archives.unit', string=u'辅单位')
     second_unit_number = fields.Float(digits=dp.get_precision('Quantity'), string=u'辅数量')
@@ -56,6 +57,7 @@ b.remark,
 b.company_id,
 b.staff_id,
 b.store_id,
+b.department_id,
 d.goods_id,
 g.second_unit_id,
 sum(d.second_unit_number) second_unit_number,
@@ -68,7 +70,7 @@ FROM jc_sale_sale_order b
 LEFT JOIN jc_sale_sale_order_detail d ON d.sale_order_id = b.id
 LEFT JOIN archives_goods g on d.goods_id = g.id
 where d.id is not null
-group by d.id,b.id,b.name,b.bill_state,b.customer_id,b.date,b.sale_type_id,b.remark,b.company_id,b.staff_id,b.store_id,d.goods_id,g.second_unit_id,g.main_unit_id,d.price,d.remark
+group by d.id,b.id,b.name,b.bill_state,b.customer_id,b.date,b.sale_type_id,b.remark,b.company_id,b.staff_id,b.store_id,b.department_id,d.goods_id,g.second_unit_id,g.main_unit_id,d.price,d.remark
 
             )
         """)
