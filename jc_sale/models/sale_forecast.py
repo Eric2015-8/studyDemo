@@ -24,10 +24,8 @@ class SaleForecast(models.Model):
     sale_forecast_detail = fields.One2many('jc_sale.sale_forecast.detail', 'sale_forecast_id', string=u'销售预报明细',
                                            copy=True)
 
-    # company_id = fields.Many2one('archives.company', string=u'公司')
     company_id = fields.Many2one('res.company', string=u'公司',
-                                 default=lambda self: self.env['res.company']._company_default_get(
-                                     'jc_sale.sale_forecast'))
+                                 default=lambda self: self.env['res.company']._company_default_get())
     staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库')
 
