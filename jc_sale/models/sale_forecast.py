@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 
 class SaleForecast(models.Model):
     _name = 'jc_sale.sale_forecast'
+    _description = u'销售：销售预报'
 
     _inherit = ['ir.needaction_mixin']
 
@@ -147,6 +148,7 @@ class SaleForecast(models.Model):
 
 class SaleForecastDetail(models.Model):
     _name = 'jc_sale.sale_forecast.detail'
+    _description = u'销售：销售预报明细'
 
     sale_forecast_id = fields.Many2one('jc_sale.sale_forecast', string='销售预报引用', required=True,
                                        ondelete='cascade', index=True,

@@ -5,6 +5,7 @@ from odoo import models, fields, api
 
 class SaleOrderDetail(models.Model):
     _name = 'jc_sale.sale_order.detail'
+    _description = u'销售：销售订单明细'
 
     # sale_forecast_detail_id = fields.Many2one('jc_sale.sale_forecast',string=u'销售预报')
     # sale_forecast_id = fields.Integer(string=u'预报单号')

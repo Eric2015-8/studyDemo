@@ -7,7 +7,7 @@ from odoo import models, fields, api
 
 class ReportSaleOrder(models.Model):
     _name = 'jc_sale.report.sale_order'
-    _description = u'销售订单分析表'
+    _description = u'销售：销售订单分析表'
     _auto = False
 
     bill_id = fields.Integer(string=u'ID')
