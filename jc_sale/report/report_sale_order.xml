@@ -13,7 +13,7 @@
                     <field name="customer_id"/>
                     <field name="date"/>
                     <field name="remark"/>
-                    <field name="company_id"/>
+                    <!--<field name="company_id"/>-->
                     <field name="store_id"/>
                     <field name='goods_id'/>
                     <field name='second_unit_id'/>
@@ -51,7 +51,7 @@
                     <field name='goods_id' string='产品' filter_domain="[('goods_id', 'ilike', self)]"/>
                     <field name='customer_id' string='客户' filter_domain="[('customer_id', 'ilike', self)]"/>
                     <field name='staff_id' string='销售员' filter_domain="[('staff_id', 'ilike', self)]"/>
-                    <field name='company_id' string='公司' filter_domain="[('company_id', 'ilike', self)]"/>
+                    <!--<field name='company_id' string='公司' filter_domain="[('company_id', 'ilike', self)]"/>-->
                     <!--<field name='department_id' string='部门' filter_domain="[('department_id', 'ilike', self)]"/>-->
                     <!--<field name='lot' string='批号' filter_domain="[('lot', 'ilike', self)]" groups='goods.batch_groups' />-->
                     <field name='store_id' string='仓库' filter_domain="[('store_id', 'ilike', self)]"/>
@@ -62,7 +62,7 @@
                         <filter string="产品" context="{'group_by':'goods_id'}"/>
                         <filter string="客户" context="{'group_by':'customer_id'}"/>
                         <filter string="销售员" context="{'group_by':'staff_id'}"/>
-                        <filter string="公司" context="{'group_by':'company_id'}"/>
+                        <!--<filter string="公司" context="{'group_by':'company_id'}"/>-->
                         <filter string="仓库" context="{'group_by': 'store_id'}"/>
                         <filter string="单位" context="{'group_by': 'main_unit_id'}"/>
                         <filter string="辅单位" context="{'group_by': 'second_unit_id'}"/>
