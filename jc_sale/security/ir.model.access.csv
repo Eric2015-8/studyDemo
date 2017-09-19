@@ -1,2 +1,16 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_jc_sale_jc_sale,jc_sale.jc_sale,model_jc_sale_jc_sale,,1,0,0,0
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+sale_forecast_manager,sale_forecast manager,model_jc_sale_sale_forecast,group_manager,1,1,1,1
+sale_forecast_detail_manager,sale_forecast_detail manager,model_jc_sale_sale_forecast_detail,group_manager,1,1,1,1
+sale_order_manager,sale_order manager,model_jc_sale_sale_order,group_manager,1,1,1,1
+sale_order_detail_manager,sale_order_detail manager,model_jc_sale_sale_order_detail,group_manager,1,1,1,1
+report_sale_order_manager,report_sale_order manager,model_jc_sale_report_sale_order,group_manager,1,1,1,1
+sale_forecast_only_self,sale_forecast only_self,model_jc_sale_sale_forecast,,0,0,0,0
+sale_forecast_detail_only_self,sale_forecast_detail only_self,model_jc_sale_sale_forecast_detail,,0,0,0,0
+sale_order_only_self,sale_order only_self,model_jc_sale_sale_order,,0,0,0,0
+sale_order_detail_only_self,sale_order_detail only_self,model_jc_sale_sale_order_detail,,0,0,0,0
+report_sale_order_only_self,report_sale_order only_self,model_jc_sale_report_sale_order,,0,0,0,0
+sale_forecast_read,sale_forecast read,model_jc_sale_sale_forecast,group_read,1,0,0,0
+sale_forecast_detail_read,sale_forecast_detail read,model_jc_sale_sale_forecast_detail,group_read,1,0,0,0
+sale_order_read,sale_order read,model_jc_sale_sale_order,group_read,1,0,0,0
+sale_order_detail_read,sale_order_detail read,model_jc_sale_sale_order_detail,group_read,1,0,0,0
+report_sale_order_read,report_sale_order read,model_jc_sale_report_sale_order,group_read,1,0,0,0

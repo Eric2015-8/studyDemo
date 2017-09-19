@@ -6,7 +6,7 @@ from odoo import models, fields, api
 
 
 class ReportSaleOrder(models.Model):
-    _name = 'report.sale_order'
+    _name = 'jc_sale.report.sale_order'
     _description = u'销售订单分析表'
     _auto = False
 
@@ -40,10 +40,10 @@ class ReportSaleOrder(models.Model):
 
     def init(self):
         cr = self._cr
-        tools.drop_view_if_exists(cr, 'report_sale_order')
+        tools.drop_view_if_exists(cr, 'jc_sale_report_sale_order')
         cr.execute(
             """
-            create or replace view report_sale_order as (
+            create or replace view jc_sale_report_sale_order as (
 select
 d.id id,
 b.ID bill_id,

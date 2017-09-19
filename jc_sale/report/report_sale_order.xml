@@ -4,7 +4,7 @@
         <!-- 销售汇总表 tree 视图 -->
         <record id="report_sale_order_tree" model="ir.ui.view">
             <field name="name">sale.order.tree</field>
-            <field name="model">report.sale_order</field>
+            <field name="model">jc_sale.report.sale_order</field>
             <field name="arch" type="xml">
                 <tree string="销售订单分析表" create="false" delete="false">
                     <field name="bill_id"/>
@@ -30,7 +30,7 @@
         <!-- 销售订单分析表 graph 视图 -->
         <record id='report_sale_order_graph' model='ir.ui.view'>
             <field name='name'>sale order graph</field>
-            <field name='model'>report.sale_order</field>
+            <field name='model'>jc_sale.report.sale_order</field>
             <field name='arch' type='xml'>
                 <pivot string="销售订单分析表">
                     <field name='goods_id' type='row'/>
@@ -44,8 +44,8 @@
 
         <!-- 销售订单分析表 search 视图 -->
         <record id='report_sale_order_search' model='ir.ui.view'>
-            <field name='name'>report.sale_order.search</field>
-            <field name='model'>report.sale_order</field>
+            <field name='name'>jc_sale.report.sale_order.search</field>
+            <field name='model'>jc_sale.report.sale_order</field>
             <field name='arch' type='xml'>
                 <search string='销售订单分析表'>
                     <field name='goods_id' string='产品' filter_domain="[('goods_id', 'ilike', self)]"/>
@@ -74,7 +74,7 @@
         <!-- 销售订单分析表 action -->
         <record id='report_sale_order_action' model='ir.actions.act_window'>
             <field name='name'>销售订单分析表</field>
-            <field name='res_model'>report.sale_order</field>
+            <field name='res_model'>jc_sale.report.sale_order</field>
             <field name='view_mode'>tree,pivot</field>
             <field name='view_id' ref='report_sale_order_tree'/>
         </record>
