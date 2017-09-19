@@ -86,7 +86,7 @@
         <!--<record id="procurement_order_view_form_inherit_purchase" model="ir.ui.view">-->
         <!--<field name="name">procurement.order.form.inherit.button</field>-->
         <!--<field name="model">jc_sale.sale_order</field>-->
-        <!--<field name="inherit_id" ref="jc_sale.archives_common_sale_order_edit"/>-->
+        <!--<field name="inherit_id" ref="jc_sale.jc_sale_sale_order_edit"/>-->
         <!--<field name="arch" type="xml">-->
         <!--<xpath expr="//button[@name='do_check']" position="before">-->
         <!--<button class="oe_stat_button" type="action" name="%(report_sale_order_action)d"-->

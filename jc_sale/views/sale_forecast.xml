@@ -1,7 +1,7 @@
 <openerp>
     <data>
         <!-- explicit list view definition -->
-        <record model="ir.ui.view" id="archives_common_sale_forecast_list">
+        <record model="ir.ui.view" id="jc_sale_sale_forecast_list">
             <field name="name">销售预报列表</field>
             <field name="model">jc_sale.sale_forecast</field>
             <field name="arch" type="xml">
@@ -17,7 +17,7 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="archives_common_sale_forecast_edit">
+        <record model="ir.ui.view" id="jc_sale_sale_forecast_edit">
             <field name="name">销售预报新建</field>
             <field name="model">jc_sale.sale_forecast</field>
             <field name="arch" type="xml">
@@ -91,7 +91,7 @@
         </record>
 
         <!-- actions opening views on models -->
-        <record model="ir.actions.act_window" id="archives_common_sale_forecast_action_window">
+        <record model="ir.actions.act_window" id="jc_sale_sale_forecast_action_window">
             <field name="name">销售预报</field>
             <field name="res_model">jc_sale.sale_forecast</field>
             <field name="view_mode">tree,form</field>
@@ -99,7 +99,7 @@
         </record>
 
         <menuitem name="销售预报" id="jc_sale.menu_sale_forecast" parent="jc_sale_menu_root"
-                  action="archives_common_sale_forecast_action_window" sequence="1"/>
+                  action="jc_sale_sale_forecast_action_window" sequence="1"/>
 
     </data>
 </openerp>
