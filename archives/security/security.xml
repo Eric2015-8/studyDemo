@@ -1,7 +1,7 @@
 <odoo>
     <data>
         <record id="group_manager" model="res.groups">
-            <field name="name">Archives / Manager</field>
+            <field name="name">档案 / 管理</field>
         </record>
 
         <!--<record id="only_responsible_can_modify" model="ir.rule">-->
