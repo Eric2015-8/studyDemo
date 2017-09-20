@@ -6,7 +6,7 @@
         <record id="seq_sale_forecast" model="ir.sequence">
             <field name="name">销售预报</field>
             <field name="code">jc_sale.sale_forecast</field>
-            <field name="prefix">SF</field>
+            <field name="prefix">%(year)s/%(month)s/</field>
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
@@ -15,7 +15,7 @@
         <record id="seq_sale_order" model="ir.sequence">
             <field name="name">销售订单</field>
             <field name="code">jc_sale.sale_order</field>
-            <field name="prefix">SO</field>
+            <field name="prefix">%(year)s/%(month)s/</field>
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
