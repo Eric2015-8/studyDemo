@@ -21,8 +21,8 @@
                     <sheet>
                         <group col="4" name="group_top" string="部门">
                             <field name="name"/>
-                            <field name="company_id"/>
-                            <field name="parent_id"/>
+                            <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="parent_id" options="{'no_open':True,'no_create':True}"/>
                         </group>
                     </sheet>
                 </form>
