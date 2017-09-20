@@ -41,15 +41,15 @@
                             </page>
                             <page string="物料分类">
                                 <group>
-                                    <field name="goods_type_id"/>
+                                    <field name="goods_type_id" domain="[('archive_name','=',9)]" options="{'no_open':True,'no_create':True}"/>
                                 </group>
                                 <group col="4">
-                                    <field name="goods_type1_id"/>
-                                    <field name="goods_type2_id"/>
-                                    <field name="goods_type3_id"/>
-                                    <field name="goods_type4_id"/>
-                                    <field name="goods_type5_id"/>
-                                    <field name="goods_type6_id"/>
+                                    <field name="goods_type1_id" domain="[('archive_name','=',10)]" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="goods_type2_id" domain="[('archive_name','=',11)]" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="goods_type3_id" domain="[('archive_name','=',12)]" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="goods_type4_id" domain="[('archive_name','=',13)]" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="goods_type5_id" domain="[('archive_name','=',14)]" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="goods_type6_id" domain="[('archive_name','=',15)]" options="{'no_open':True,'no_create':True}"/>
                                 </group>
                             </page>
                             <page string="系统信息">

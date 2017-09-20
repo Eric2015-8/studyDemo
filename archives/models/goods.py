@@ -34,13 +34,13 @@ class Goods(models.Model):
     ], string=u'辅单位是否换算', default='1')
 
     # 物料分类
-    goods_type_id = fields.Many2one('archives.goods_type', string=u'物料分类')
-    goods_type1_id = fields.Many2one('archives.goods_type1', string=u'物料分类1')
-    goods_type2_id = fields.Many2one('archives.goods_type2', string=u'物料分类2')
-    goods_type3_id = fields.Many2one('archives.goods_type3', string=u'物料分类3')
-    goods_type4_id = fields.Many2one('archives.goods_type4', string=u'物料分类4')
-    goods_type5_id = fields.Many2one('archives.goods_type5', string=u'物料分类5')
-    goods_type6_id = fields.Many2one('archives.goods_type6', string=u'物料分类6')
+    goods_type_id = fields.Many2one('archives.common_archive', string=u'物料分类')
+    goods_type1_id = fields.Many2one('archives.common_archive', string=u'物料分类1')
+    goods_type2_id = fields.Many2one('archives.common_archive', string=u'物料分类2')
+    goods_type3_id = fields.Many2one('archives.common_archive', string=u'物料分类3')
+    goods_type4_id = fields.Many2one('archives.common_archive', string=u'物料分类4')
+    goods_type5_id = fields.Many2one('archives.common_archive', string=u'物料分类5')
+    goods_type6_id = fields.Many2one('archives.common_archive', string=u'物料分类6')
 
     # 系统信息
     is_sale = fields.Boolean(string=u'用于销售')

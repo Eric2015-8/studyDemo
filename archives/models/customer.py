@@ -28,13 +28,13 @@ class Customer(models.Model):
     # 地址 & 联系人
 
     # 客户分类
-    customer_type_id = fields.Many2one('archives.customer_type', string=u'客户分类')
-    customer_type1_id = fields.Many2one('archives.customer_type1', string=u'客户分类1')
-    customer_type2_id = fields.Many2one('archives.customer_type2', string=u'客户分类2')
-    customer_type3_id = fields.Many2one('archives.customer_type3', string=u'客户分类3')
-    customer_type4_id = fields.Many2one('archives.customer_type4', string=u'客户分类4')
-    customer_type5_id = fields.Many2one('archives.customer_type5', string=u'客户分类5')
-    customer_type6_id = fields.Many2one('archives.customer_type6', string=u'客户分类6')
+    customer_type_id = fields.Many2one('archives.common_archive', string=u'客户分类')
+    customer_type1_id = fields.Many2one('archives.common_archive', string=u'客户分类1')
+    customer_type2_id = fields.Many2one('archives.common_archive', string=u'客户分类2')
+    customer_type3_id = fields.Many2one('archives.common_archive', string=u'客户分类3')
+    customer_type4_id = fields.Many2one('archives.common_archive', string=u'客户分类4')
+    customer_type5_id = fields.Many2one('archives.common_archive', string=u'客户分类5')
+    customer_type6_id = fields.Many2one('archives.common_archive', string=u'客户分类6')
     #     value = fields.Integer()
     #     value2 = fields.Float(compute="_value_pc", store=True)
     #     description = fields.Text()
