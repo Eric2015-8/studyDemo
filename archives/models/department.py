@@ -9,6 +9,8 @@ from odoo.modules.module import get_module_resource
 
 class Department(models.Model):
     _name = 'archives.department'
+    _description = u'档案：部门'
+
     _sql_constraints = [
        ('name_unique',
         'UNIQUE(name)',

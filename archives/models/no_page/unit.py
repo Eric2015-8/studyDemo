@@ -5,6 +5,8 @@ from odoo import models, fields, api
 
 class Unit(models.Model):
     _name = 'archives.unit'
+    _description = u'无菜单档案：单位'
+
     _sql_constraints = [
         ('name_unique',
          'UNIQUE(name)',

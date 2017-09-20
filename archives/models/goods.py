@@ -6,6 +6,8 @@ from odoo.exceptions import ValidationError
 
 class Goods(models.Model):
     _name = 'archives.goods'
+    _description = u'档案：物料'
+
     _sql_constraints = [
         ('name_unique',
          'UNIQUE(name)',

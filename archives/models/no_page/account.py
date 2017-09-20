@@ -5,6 +5,8 @@ from odoo import models, fields, api
 
 class Account(models.Model):
     _name = 'archives.account'
+    _description = u'无菜单档案：账号'
+
     _sql_constraints = [
         ('name_unique',
          'UNIQUE(name)',

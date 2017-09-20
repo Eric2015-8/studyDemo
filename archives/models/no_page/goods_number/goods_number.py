@@ -8,7 +8,8 @@ from odoo.exceptions import ValidationError
 
 class GoodsNumber(models.Model):
     _name = 'archives.goods_number'
-    _description = u'添加存货'
+    _description = u'无菜单档案：添加存货'
+
     _auto = False
 
     name = fields.Char(string=u'物料名称', required=True)

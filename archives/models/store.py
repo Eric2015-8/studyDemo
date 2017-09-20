@@ -4,6 +4,8 @@ from odoo import models, fields, api
 
 class Store(models.Model):
     _name = 'archives.store'
+    _description = u'档案：仓库'
+
     _sql_constraints = [
         ('name_unique',
          'UNIQUE(name)',

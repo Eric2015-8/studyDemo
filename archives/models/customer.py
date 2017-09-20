@@ -5,6 +5,8 @@ from odoo import models, fields, api
 
 class Customer(models.Model):
     _name = 'archives.customer'
+    _description = u'档案：客户'
+
     _sql_constraints = [
         ('name_unique',
          'UNIQUE(name)',

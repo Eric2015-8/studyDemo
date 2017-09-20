@@ -5,6 +5,8 @@ from odoo import models, fields, api
 
 class ZoneType2(models.Model):
     _name = 'archives.zone_type2'
+    _description = u'无菜单档案：地区分类2'
+
     _sql_constraints = [
         ('name_unique',
          'UNIQUE(name)',
