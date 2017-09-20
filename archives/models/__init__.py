@@ -6,3 +6,4 @@ from . import store
 from . import goods
 from . import customer
 from . import no_page
+from . import common_archive

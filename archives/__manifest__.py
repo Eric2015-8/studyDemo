@@ -47,6 +47,7 @@
         'views/no_page/zone_type2.xml',
 
         'views/views.xml',
+        'views/common_archive.xml',
         'views/department.xml',
         'views/staff.xml',
         'views/store.xml',

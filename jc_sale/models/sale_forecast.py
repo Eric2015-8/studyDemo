@@ -19,7 +19,7 @@ class SaleForecast(models.Model):
                        index=True, default=lambda self: _('新建'))
     customer_id = fields.Many2one('archives.customer', string=u'客户名称', required=True)
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
-    sale_type_id = fields.Many2one('archives.sale_type', string=u'销售类型', required=True)
+    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True)
     remark = fields.Char(string=u'摘要')
 
     sale_forecast_detail = fields.One2many('jc_sale.sale_forecast.detail', 'sale_forecast_id', string=u'销售预报明细',
