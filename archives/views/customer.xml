@@ -29,7 +29,7 @@
                             <page string="通用信息">
                                 <group col="4">
                                     <field name="tel"/>
-                                    <field name="staff_id" domain="[('is_sale_man','=',True)]"/>
+                                    <field name="staff_id" domain="[('is_sale_man','=',True)]" options="{'no_open':True,'no_create':True}"/>
                                     <label for="address" string="客户地址"/>
                                     <div class="o_address_format">
                                         <field name="address"/>
@@ -37,7 +37,7 @@
                                         <field name="zone_type1_id" class="oe_inline" placeholder="地区分类1"/>
                                         <field name="zone_type2_id" class="oe_inline" placeholder="地区分类2"/>
                                     </div>
-                                    <field name="company_id"/>
+                                    <field name="company_id" options="{'no_open':True,'no_create':True}"/>
                                 </group>
                             </page>
                             <page string="地址&amp;联系人">
