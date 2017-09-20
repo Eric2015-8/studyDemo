@@ -9,6 +9,4 @@ from . import zone
 from . import zone_type1
 from . import zone_type2
 
-from . import customer_type
-from . import goods_type
 from . import goods_number

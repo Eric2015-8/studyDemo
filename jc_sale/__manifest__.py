@@ -31,8 +31,6 @@
         'data/ir_sequence_data.xml',
         # 'wizard/add_goods.xml',
 
-        'views/no_page/sale_type.xml',
-
         'views/views.xml',
         'views/templates.xml',
 

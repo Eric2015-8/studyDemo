@@ -1,9 +1,12 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+common_archive_manager,common_archive manager,model_archives_common_archive,group_manager,1,1,1,1
 customer_manager,customer manager,model_archives_customer,group_manager,1,1,1,1
 department_manager,department manager,model_archives_department,group_manager,1,1,1,1
 goods_manager,goods manager,model_archives_goods,group_manager,1,1,1,1
 staff_manager,staff manager,model_archives_staff,group_manager,1,1,1,1
 store_manager,store manager,model_archives_store,group_manager,1,1,1,1
+
+common_archive_read,common_archive read,model_archives_common_archive,,1,0,0,0
 customer_read,customer read,model_archives_customer,,1,0,0,0
 department_read,department read,model_archives_department,,1,0,0,0
 goods_read,goods read,model_archives_goods,,1,0,0,0
@@ -15,18 +18,4 @@ no_menu_unit_read,unit read,model_archives_unit,,1,0,0,0
 no_menu_zone_read,zone read,model_archives_zone,,1,0,0,0
 no_menu_zone_type1_read,zone_type1 read,model_archives_zone_type1,,1,0,0,0
 no_menu_zone_type2_read,zone_type2 read,model_archives_zone_type2,,1,0,0,0
-no_menu_customer_type_read,customer_type read,model_archives_customer_type,,1,0,0,0
-no_menu_customer_type1_read,customer_type1 read,model_archives_customer_type1,,1,0,0,0
-no_menu_customer_type2_read,customer_type2 read,model_archives_customer_type2,,1,0,0,0
-no_menu_customer_type3_read,customer_type3 read,model_archives_customer_type3,,1,0,0,0
-no_menu_customer_type4_read,customer_type4 read,model_archives_customer_type4,,1,0,0,0
-no_menu_customer_type5_read,customer_type5 read,model_archives_customer_type5,,1,0,0,0
-no_menu_customer_type6_read,customer_type6 read,model_archives_customer_type6,,1,0,0,0
 no_menu_goods_number_read,goods_number read,model_archives_goods_number,,1,0,0,0
-no_menu_goods_type_read,goods_type read,model_archives_goods_type,,1,0,0,0
-no_menu_goods_type1_read,goods_type1 read,model_archives_goods_type1,,1,0,0,0
-no_menu_goods_type2_read,goods_type2 read,model_archives_goods_type2,,1,0,0,0
-no_menu_goods_type3_read,goods_type3 read,model_archives_goods_type3,,1,0,0,0
-no_menu_goods_type4_read,goods_type4 read,model_archives_goods_type4,,1,0,0,0
-no_menu_goods_type5_read,goods_type5 read,model_archives_goods_type5,,1,0,0,0
-no_menu_goods_type6_read,goods_type6 read,model_archives_goods_type6,,1,0,0,0
