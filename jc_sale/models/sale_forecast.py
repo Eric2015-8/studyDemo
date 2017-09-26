@@ -17,7 +17,8 @@ class SaleForecast(models.Model):
 
     name = fields.Char(string=u'预报编号', required=True, copy=False, readonly=True,
                        index=True, default=lambda self: _('新建'))
-    customer_id = fields.Many2one('archives.customer', string=u'客户名称', required=True)
+    customer_id = fields.Many2one('archives.customer', string=u'客户名称', required=True,
+                                  domain=lambda self: self._get_customer_organization())
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True)
     remark = fields.Char(string=u'摘要')
@@ -30,6 +31,23 @@ class SaleForecast(models.Model):
     staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库')
     department_id = fields.Many2one('archives.department', string=u'部门', required=True)
+
+    def _get_customer_organization(self):
+        user = self.env.user
+        result = []
+        if not user.organization_id:
+            return result
+        if user.organization_id.active_customer_staff:
+            ids = []
+            for detail in user.organization_id.customer_staff_ids:
+                ids.append(detail.id)
+            result.append(('staff_id', 'in', ids))
+        if user.organization_id.active_customer:
+            ids = []
+            for detail in user.organization_id.customer_organization_ids:
+                ids.append(detail.id)
+            result.append(('organization_id', 'in', ids))
+        return result
 
     @api.onchange('customer_id')
     def _onchange_for_staff(self):
