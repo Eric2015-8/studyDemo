@@ -57,6 +57,11 @@
                                     <field name="customer_type6_id" domain="[('archive_name','=',8)]" options="{'no_open':True,'no_create':True}"/>
                                 </group>
                             </page>
+                            <page string="客户权限">
+                                <group col="2">
+                                    <field name="organization_id" options="{'no_open':True,'no_create':True}"/>
+                                </group>
+                            </page>
                         </notebook>
                     </sheet>
                 </form>

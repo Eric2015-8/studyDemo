@@ -35,6 +35,9 @@ class Customer(models.Model):
     customer_type4_id = fields.Many2one('archives.common_archive', string=u'客户分类4')
     customer_type5_id = fields.Many2one('archives.common_archive', string=u'客户分类5')
     customer_type6_id = fields.Many2one('archives.common_archive', string=u'客户分类6')
+
+    # 权限
+    organization_id = fields.Many2one('archives.common_archive', string=u'客户权限', domain="[('archive_name','=',16)]")
     #     value = fields.Integer()
     #     value2 = fields.Float(compute="_value_pc", store=True)
     #     description = fields.Text()

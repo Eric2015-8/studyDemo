@@ -41,6 +41,8 @@
         'models/no_page/goods_number/goods_number.xml',
         'views/customer.xml',
         'views/templates.xml',
+        'views/organization.xml',
+        'views/res_users.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
