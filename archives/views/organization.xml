@@ -21,7 +21,7 @@
                 <form>
                     <sheet>
                         <group name="group_top" string="数据权限" col="4">
-                            <field name="user_id" attrs="{'readonly':[('user_id','!=',False),('id','>',0)]}"/>
+                            <field name="user_id" attrs="{'readonly':[('user_id','!=',False),('id','>',0)]}" options="{'no_open':True,'no_create':True}"/>
                             <field name="id" attrs="{'invisible':True}"/>
                         </group>
                         <group col="4">
