@@ -38,6 +38,22 @@ class Organization(models.Model):
     def _set_name(self, values):
         values['name'] = self.env['res.users'].browse(values['user_id']).name
 
+    @api.multi
+    def load_group(self):
+        if not self.group_id:
+            return
+        group = self.env['archives.organization_group'].search([('id', '=', self.group_id.id)])
+        values = self._get_organization(group)
+        super(Organization, self).write(values)
+
+    def _get_organization(self, bill):
+        return {
+            'active_customer_staff': bill.active_customer_staff,
+            'active_customer': bill.active_customer,
+            'customer_staff_ids': [[6, False, bill.customer_staff_ids.ids]],
+            'customer_organization_ids': [[6, False, bill.customer_organization_ids.ids]],
+        }
+
     @api.model
     def create(self, values):
         self._set_name(values)

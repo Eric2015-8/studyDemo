@@ -22,8 +22,12 @@
                     <sheet>
                         <group name="group_top" string="数据权限" col="4">
                             <field name="user_id" attrs="{'readonly':[('user_id','!=',False),('id','>',0)]}"/>
-                            <field name="group_id"/>
                             <field name="id" attrs="{'invisible':True}"/>
+                        </group>
+                        <group col="4">
+                            <field name="group_id" options="{'no_open':True,'no_create':True}"/>
+                            <button name="load_group" string="载入" type="object" class="oe_highlight oe_edit_only"/>
+                            <button name="load_group" string="载入" type="object" attrs="{'invisible':True}"/>
                         </group>
                         <notebook>
                             <page string="设置">

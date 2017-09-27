@@ -6,6 +6,7 @@ goods_manager,goods manager,model_archives_goods,group_manager,1,1,1,1
 staff_manager,staff manager,model_archives_staff,group_manager,1,1,1,1
 store_manager,store manager,model_archives_store,group_manager,1,1,1,1
 organization_manager,organization manager,model_archives_organization,group_organization_manager,1,1,1,1
+organization_group_manager,organization_group manager,model_archives_organization_group,group_organization_manager,1,1,1,1
 
 common_archive_read,common_archive read,model_archives_common_archive,,1,0,0,0
 customer_read,customer read,model_archives_customer,,1,0,0,0
@@ -14,6 +15,7 @@ goods_read,goods read,model_archives_goods,,1,0,0,0
 staff_read,staff read,model_archives_staff,,1,0,0,0
 store_read,store read,model_archives_store,,1,0,0,0
 organization_read,organization read,model_archives_organization,,1,0,0,0
+organization_group_read,organization_group read,model_archives_organization_group,,1,0,0,0
 no_menu_account_read,account read,model_archives_account,,1,0,0,0
 no_menu_duty_read,duty read,model_archives_duty,,1,0,0,0
 no_menu_unit_read,unit read,model_archives_unit,,1,0,0,0
