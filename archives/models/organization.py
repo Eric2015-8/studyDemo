@@ -14,17 +14,20 @@ class Organization(models.Model):
          "已为该用户授权"),
     ]
 
-    name = fields.Char(string=u'预报编号', required=True, copy=False, readonly=True,
-                       index=True, default=lambda self: _('新建'))
+    name = fields.Char(string=u'数据权限名称', required=True, copy=False, readonly=True,
+                       index=True, default=lambda self: _('新建'))  # 使用用户名
 
     user_id = fields.Many2one('res.users', string=u'用户', required=True, ondelete='cascade')
+
+    group_id = fields.Many2one('archives.organization_group', string=u'数据权限组', ondelete='cascade')
 
     active_customer_staff = fields.Boolean('启用客户销售人员权限')
     active_customer = fields.Boolean('启用客户权限')
 
     customer_staff_ids = fields.Many2many('archives.staff', string=u'销售员', domain="[('is_sale_man','=',True)]")
 
-    customer_organization_ids = fields.Many2many('archives.common_archive', string=u'客户权限', domain="[('archive_name','=',16)]")
+    customer_organization_ids = fields.Many2many('archives.common_archive', string=u'客户权限',
+                                                 domain="[('archive_name','=',16)]")
 
     def _set_user_organization(self, bill):
         self.env['res.users'].search([('id', '=', bill.user_id.id)]).write({'organization_id': bill.id, })

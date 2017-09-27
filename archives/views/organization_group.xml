@@ -1,31 +1,31 @@
 <openerp>
     <data>
         <!-- explicit list view definition -->
-        <record model="ir.ui.view" id="archives_common_organization_list">
-            <field name="name">数据权限列表</field>
-            <field name="model">archives.organization</field>
+        <record model="ir.ui.view" id="archives_common_organization_group_list">
+            <field name="name">数据权限组列表</field>
+            <field name="model">archives.organization_group</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="user_id"/>
-                    <field name="group_id"/>
+                    <field name="name"/>
                     <field name="active_customer_staff"/>
                     <field name="active_customer"/>
                 </tree>
             </field>
         </record>
 
-        <record model="ir.ui.view" id="archives_common_organization_edit">
-            <field name="name">数据权限新建</field>
-            <field name="model">archives.organization</field>
+        <record model="ir.ui.view" id="archives_common_organization_group_edit">
+            <field name="name">数据权限组新建</field>
+            <field name="model">archives.organization_group</field>
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <group name="group_top" string="数据权限" col="4">
-                            <field name="user_id" attrs="{'readonly':[('user_id','!=',False),('id','>',0)]}"/>
-                            <field name="group_id"/>
-                            <field name="id" attrs="{'invisible':True}"/>
+                        <group name="group_top" string="数据权限组">
+                            <field name="name"/>
                         </group>
                         <notebook>
+                            <page string="用户">
+                                <field name="user_ids"/>
+                            </page>
                             <page string="设置">
                                 <group name="group_setting" col="4">
                                     <field name="active_customer_staff"/>
@@ -45,14 +45,14 @@
         </record>
 
         <!-- actions opening views on models -->
-        <record model="ir.actions.act_window" id="archives_common_organization_action_window">
-            <field name="name">数据权限</field>
-            <field name="res_model">archives.organization</field>
+        <record model="ir.actions.act_window" id="archives_common_organization_group_action_window">
+            <field name="name">数据权限组</field>
+            <field name="res_model">archives.organization_group</field>
             <field name="view_mode">tree,form</field>
         </record>
 
         <!-- actions -->
-        <menuitem name="数据权限" id="archives.menu_organization" parent="base.menu_users"
-                  action="archives_common_organization_action_window" sequence="5"/>
+        <menuitem name="数据权限组" id="archives.menu_organization_group" parent="base.menu_users"
+                  action="archives_common_organization_group_action_window" sequence="6"/>
     </data>
 </openerp>

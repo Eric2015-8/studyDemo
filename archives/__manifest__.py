@@ -42,6 +42,7 @@
         'views/customer.xml',
         'views/templates.xml',
         'views/organization.xml',
+        'views/organization_group.xml',
         'views/res_users.xml',
     ],
     # only loaded in demonstration mode
