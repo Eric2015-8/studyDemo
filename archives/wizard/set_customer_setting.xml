@@ -1,0 +1,42 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="archives_set_customer_setting_wizard">
+            <field name="name">个性设置</field>
+            <field name="model">archives.set_customer_setting</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group colspan="4">
+                        <field name="user_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="table_show_name"/>
+                        <field name="table" attrs="{'invisible':True}"/>
+                    </group>
+                    <group colspan="4">
+                        <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="sale_type_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="staff_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="store_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="department_id" options="{'no_open':True,'no_create':True}"/>
+                    </group>
+                    <footer>
+                        <button name="subscribe" type="object"
+                                string="Save" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!--&lt;!&ndash; actions opening views on models &ndash;&gt;-->
+        <!--<record model="ir.actions.act_window" id="archives_set_customer_setting_action_window">-->
+            <!--<field name="name">个性设置</field>-->
+            <!--<field name="res_model">archives.set_customer_setting</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">tree,form</field>-->
+            <!--<field name="view_id" ref="archives_set_customer_setting_wizard"/>-->
+            <!--<field name="target">new</field>-->
+        <!--</record>-->
+
+    </data>
+</openerp>
