@@ -14,30 +14,13 @@ class SetCustomerSetting(models.TransientModel):
     table_show_name = fields.Char(string=u'表名', readonly=True)
 
     customer_id = fields.Many2one('archives.customer', string=u'客户名称',
-                                  domain=lambda self: self._get_customer_organization())
+                                  domain=lambda self: self.env['archives.organization'].get_customer_organization())
     sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', domain=[('archive_name', '=', 1)])
     company_id = fields.Many2one('res.company', string=u'公司',
                                  default=lambda self: self.env['res.company']._company_default_get())
     staff_id = fields.Many2one('archives.staff', string=u'销售员')
     store_id = fields.Many2one('archives.store', string=u'仓库')
     department_id = fields.Many2one('archives.department', string=u'部门')
-
-    def _get_customer_organization(self):
-        user = self.env.user
-        result = []
-        if not user.organization_id:
-            return result
-        if user.organization_id.active_customer_staff:
-            ids = []
-            for detail in user.organization_id.customer_staff_ids:
-                ids.append(detail.id)
-            result.append(('staff_id', 'in', ids))
-        if user.organization_id.active_customer:
-            ids = []
-            for detail in user.organization_id.customer_organization_ids:
-                ids.append(detail.id)
-            result.append(('organization_id', 'in', ids))
-        return result
 
     def query_default(self, table, field):
         setting = self.env["archives.customer_setting"].search(
