@@ -11,12 +11,24 @@
                         <field name="table" attrs="{'invisible':True}"/>
                     </group>
                     <group colspan="4">
-                        <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
-                        <field name="sale_type_id" options="{'no_open':True,'no_create':True}"/>
-                        <field name="company_id" options="{'no_open':True,'no_create':True}"/>
-                        <field name="staff_id" options="{'no_open':True,'no_create':True}"/>
-                        <field name="store_id" options="{'no_open':True,'no_create':True}"/>
-                        <field name="department_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="is_show_customer_id" attrs="{'invisible':True}"/>
+                        <field name="is_show_sale_type_id" attrs="{'invisible':True}"/>
+                        <field name="is_show_company_id" attrs="{'invisible':True}"/>
+                        <field name="is_show_staff_id" attrs="{'invisible':True}"/>
+                        <field name="is_show_store_id" attrs="{'invisible':True}"/>
+                        <field name="is_show_department_id" attrs="{'invisible':True}"/>
+                        <field name="customer_id" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible':[('is_show_customer_id','!=',True)]}"/>
+                        <field name="sale_type_id" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible':[('is_show_sale_type_id','!=',True)]}"/>
+                        <field name="company_id" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible':[('is_show_company_id','!=',True)]}"/>
+                        <field name="staff_id" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible':[('is_show_staff_id','!=',True)]}"/>
+                        <field name="store_id" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible':[('is_show_store_id','!=',True)]}"/>
+                        <field name="department_id" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible':[('is_show_department_id','!=',True)]}"/>
                     </group>
                     <footer>
                         <button name="subscribe" type="object"
