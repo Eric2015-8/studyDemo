@@ -28,15 +28,5 @@
             </field>
         </record>
 
-        <!--&lt;!&ndash; actions opening views on models &ndash;&gt;-->
-        <!--<record model="ir.actions.act_window" id="archives_set_customer_setting_action_window">-->
-            <!--<field name="name">个性设置</field>-->
-            <!--<field name="res_model">archives.set_customer_setting</field>-->
-            <!--<field name="view_type">form</field>-->
-            <!--<field name="view_mode">tree,form</field>-->
-            <!--<field name="view_id" ref="archives_set_customer_setting_wizard"/>-->
-            <!--<field name="target">new</field>-->
-        <!--</record>-->
-
     </data>
 </openerp>

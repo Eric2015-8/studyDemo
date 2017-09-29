@@ -83,25 +83,3 @@ class SetCustomerSetting(models.TransientModel):
             'value': value,
         }
         self.env['archives.customer_setting.detail'].create(values)
-
-    def test(self):
-        s = ''
-        if self.user_id:
-            s += 'user_id:' + str(self.user_id.id) + ';--'
-        if self.table:
-            s += 'table:' + str(self.table) + ';--'
-        if self.table_show_name:
-            s += 'table_show_name:' + self.table_show_name + ';--'
-        if self.customer_id:
-            s += 'customer_id:' + str(self.customer_id.id) + ';--'
-        if self.sale_type_id:
-            s += 'sale_type_id:' + str(self.sale_type_id.id) + ';--'
-        if self.company_id:
-            s += 'company_id:' + str(self.company_id.id) + ';--'
-        if self.staff_id:
-            s += 'staff_id:' + str(self.staff_id.id) + ';--'
-        if self.store_id:
-            s += 'store_id:' + str(self.store_id.id) + ';--'
-        if self.department_id:
-            s += 'department_id:' + str(self.department_id.id) + ';--'
-        raise ValidationError(s)
