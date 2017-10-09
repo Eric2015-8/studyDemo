@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from . import utils
 
 
 class Organization(models.Model):
@@ -16,6 +17,7 @@ class Organization(models.Model):
 
     name = fields.Char(string=u'数据权限名称', required=True, copy=False, readonly=True,
                        index=True, default=lambda self: _('新建'))  # 使用用户名
+    spell = fields.Char(string=u'首拼')
 
     user_id = fields.Many2one('res.users', string=u'用户', required=True, ondelete='cascade')
 
@@ -74,7 +76,8 @@ class Organization(models.Model):
 
     @api.model
     def create(self, values):
-        self._set_name(values)
+        self._set_name(values)#不要与下一行颠倒
+        utils.set_spell(values)#不要与上一行颠倒
         result = super(Organization, self).create(values)
         self._set_user_organization(result)
         return result
@@ -83,3 +86,8 @@ class Organization(models.Model):
     def unlink(self):
         self._clear_user_organization()
         return super(Organization, self).unlink()
+
+    @api.multi
+    def write(self, values):
+        utils.set_spell(values)
+        return super(Organization, self).write(values)

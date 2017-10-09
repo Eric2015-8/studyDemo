@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from . import utils
 
 
 class Goods(models.Model):
@@ -16,6 +17,7 @@ class Goods(models.Model):
 
     name = fields.Char(string=u'物料名称', required=True)
     short_name = fields.Char(string=u'简称')
+    spell = fields.Char(string=u'首拼')
 
     # 通用信息
     main_unit_id = fields.Many2one('archives.unit', string=u'主单位')
@@ -56,3 +58,13 @@ class Goods(models.Model):
     def _compute_statistics_rate(self):
         for record in self:
             record.statistics_rate = float(record.statistics_rate_string)
+
+    @api.model
+    def create(self, values):
+        utils.set_spell(values)
+        return super(Goods, self).create(values)
+
+    @api.multi
+    def write(self, values):
+        utils.set_spell(values)
+        return super(Goods, self).write(values)

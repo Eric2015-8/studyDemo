@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+from . import utils
 
 ARCHIVE_NAME = [
     (1, '销售类型'),
@@ -28,6 +29,7 @@ class CommonArchive(models.Model):
     _description = u'档案：通用档案'
 
     name = fields.Char(string=u'名称', required=True, copy=False)
+    spell = fields.Char(string=u'首拼')
 
     archive_name = fields.Selection(ARCHIVE_NAME, string=u'档案名称', require=True, default=1)
 
@@ -38,3 +40,13 @@ class CommonArchive(models.Model):
         if not all_data:
             return
         raise ValidationError('名称已存在')
+
+    @api.model
+    def create(self, values):
+        utils.set_spell(values)
+        return super(CommonArchive, self).create(values)
+
+    @api.multi
+    def write(self, values):
+        utils.set_spell(values)
+        return super(CommonArchive, self).write(values)

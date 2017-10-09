@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from . import utils
 
 
 class Staff(models.Model):
@@ -14,6 +15,7 @@ class Staff(models.Model):
     ]
 
     name = fields.Char(string=u'员工姓名', required=True)
+    spell = fields.Char(string=u'首拼')
 
     #     public
     company_id = fields.Many2one('res.company', string=u'公司', index=True)
@@ -40,6 +42,16 @@ class Staff(models.Model):
     is_purchase_man = fields.Boolean(string=u'采购员')
     is_driver = fields.Boolean(string=u'司机')
     is_sender = fields.Boolean(string=u'送货员')
+
+    @api.model
+    def create(self, values):
+        utils.set_spell(values)
+        return super(Staff, self).create(values)
+
+    @api.multi
+    def write(self, values):
+        utils.set_spell(values)
+        return super(Staff, self).write(values)
 
     # value = fields.Integer()
     # value2 = fields.Float(compute="_value_pc", store=True)

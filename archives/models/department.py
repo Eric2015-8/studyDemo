@@ -6,6 +6,7 @@ from odoo import models, fields, api
 from odoo import tools, _
 from odoo.exceptions import ValidationError
 from odoo.modules.module import get_module_resource
+from . import utils
 
 
 class Department(models.Model):
@@ -19,6 +20,8 @@ class Department(models.Model):
     ]
 
     name = fields.Char(string=u'部门名称', required=True)
+    spell = fields.Char(string=u'首拼')
+
     active = fields.Boolean('Active', default=True)
     company_id = fields.Many2one('res.company', string=u'公司',
                                  index=True)  # ,default=lambda self:self.evn.user.company_id
@@ -29,3 +32,13 @@ class Department(models.Model):
     def _check_parent_id(self):
         if not self._check_recursion():
             raise ValidationError(_(u'错误!与上级部门互为上下级，发生循环.'))
+
+    @api.model
+    def create(self, values):
+        utils.set_spell(values)
+        return super(Department, self).create(values)
+
+    @api.multi
+    def write(self, values):
+        utils.set_spell(values)
+        return super(Department, self).write(values)

@@ -31,6 +31,16 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="store_search_view">
+            <field name="name">archives.store.search</field>
+            <field name="model">archives.store</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" filter_domain="['|', '|', ('spell', 'ilike', self), ('short_name', 'ilike', self), ('name', 'ilike', self)]"/>
+                </search>
+            </field>
+        </record>
+
         <!-- actions opening views on models -->
         <record model="ir.actions.act_window" id="archives_common_store_action_window">
             <field name="name">仓库</field>

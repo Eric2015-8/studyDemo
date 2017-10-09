@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from . import utils
+# import sys;
+#
+# sys.path.append("..");
+# import utils
 
 
 class Customer(models.Model):
@@ -15,6 +20,7 @@ class Customer(models.Model):
 
     name = fields.Char(string=u'客户名称', required=True)
     short_name = fields.Char(string=u'简称')
+    spell = fields.Char(string=u'首拼')
 
     # 通用信息
     tel = fields.Char(string=u'联系方式')
@@ -38,6 +44,7 @@ class Customer(models.Model):
 
     # 权限
     organization_id = fields.Many2one('archives.common_archive', string=u'客户权限', domain="[('archive_name','=',16)]")
+
     #     value = fields.Integer()
     #     value2 = fields.Float(compute="_value_pc", store=True)
     #     description = fields.Text()
@@ -45,3 +52,13 @@ class Customer(models.Model):
     #     @api.depends('value')
     #     def _value_pc(self):
     #         self.value2 = float(self.value) / 100
+
+    @api.model
+    def create(self, values):
+        utils.set_spell(values)
+        return super(Customer, self).create(values)
+
+    @api.multi
+    def write(self, values):
+        utils.set_spell(values)
+        return super(Customer, self).write(values)

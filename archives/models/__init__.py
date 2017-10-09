@@ -12,3 +12,4 @@ from . import organization_group
 from . import res_user
 from . import customer_setting
 from . import customer_setting_detail
+from . import utils

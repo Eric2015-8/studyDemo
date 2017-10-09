@@ -68,6 +68,16 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="customer_search_view">
+            <field name="name">archives.customer.search</field>
+            <field name="model">archives.customer</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" filter_domain="['|', '|', ('spell', 'ilike', self), ('short_name', 'ilike', self), ('name', 'ilike', self)]"/>
+                </search>
+            </field>
+        </record>
+
         <!-- actions opening views on models -->
         <record model="ir.actions.act_window" id="archives_common_customer_action_window">
             <field name="name">客户</field>

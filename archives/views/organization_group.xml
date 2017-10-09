@@ -44,6 +44,16 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="organization_group_search_view">
+            <field name="name">archives.organization_group.search</field>
+            <field name="model">archives.organization_group</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" filter_domain="['|', ('spell', 'ilike', self), ('name', 'ilike', self)]"/>
+                </search>
+            </field>
+        </record>
+
         <!-- actions opening views on models -->
         <record model="ir.actions.act_window" id="archives_common_organization_group_action_window">
             <field name="name">数据权限组</field>

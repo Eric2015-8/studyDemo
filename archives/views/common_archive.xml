@@ -27,6 +27,16 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="sale_forecast_search_view">
+            <field name="name">archives.common_archive.search</field>
+            <field name="model">archives.common_archive</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" filter_domain="['|', ('spell', 'ilike', self), ('name', 'ilike', self)]"/>
+                </search>
+            </field>
+        </record>
+
         <!-- actions opening views on models -->
         <record model="ir.actions.act_window" id="archives_common_common_archive_action_window">
             <field name="name">通用档案</field>
