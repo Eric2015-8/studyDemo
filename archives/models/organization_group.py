@@ -92,3 +92,10 @@ class OrganizationGroup(models.Model):
     @api.multi
     def unlink(self):
         return super(OrganizationGroup, self).unlink()
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = args or []
+        domain = ['|', ('spell', operator, name), ('name', operator, name)]
+        recs = self.search(domain + args, limit=limit)
+        return recs.name_get()

@@ -91,3 +91,10 @@ class Organization(models.Model):
     def write(self, values):
         utils.set_spell(values)
         return super(Organization, self).write(values)
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = args or []
+        domain = ['|', ('spell', operator, name), ('name', operator, name)]
+        recs = self.search(domain + args, limit=limit)
+        return recs.name_get()

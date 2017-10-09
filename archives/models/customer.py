@@ -2,6 +2,8 @@
 
 from odoo import models, fields, api
 from . import utils
+
+
 # import sys;
 #
 # sys.path.append("..");
@@ -62,3 +64,12 @@ class Customer(models.Model):
     def write(self, values):
         utils.set_spell(values)
         return super(Customer, self).write(values)
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        # if operator not in ('ilike', 'like', '=', '=like', '=ilike'):
+        #     return super(Customer, self).name_search(name, args, operator, limit)
+        args = args or []
+        domain = ['|', ('spell', operator, name), ('name', operator, name)]
+        recs = self.search(domain + args, limit=limit)
+        return recs.name_get()
