@@ -28,5 +28,15 @@
             </field>
         </record>
 
+        <!--<record model="ir.ui.view" id="res_users_search_view">-->
+            <!--<field name="name">res.users.search</field>-->
+            <!--<field name="model">res.users</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<search>-->
+                    <!--<field name="name" filter_domain="['|', ('spell', 'ilike', self), ('name', 'ilike', self)]"/>-->
+                <!--</search>-->
+            <!--</field>-->
+        <!--</record>-->
+
     </data>
 </odoo>
