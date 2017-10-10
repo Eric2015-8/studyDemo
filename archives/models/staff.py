@@ -14,7 +14,7 @@ class Staff(models.Model):
          "已存在同名员工"),
     ]
 
-    name = fields.Char(string=u'员工姓名', required=True)
+    name = fields.Char(string=u'姓名', required=True)
     spell = fields.Char(string=u'首拼')
 
     #     public

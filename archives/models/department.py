@@ -19,7 +19,7 @@ class Department(models.Model):
          "已存在同名部门"),
     ]
 
-    name = fields.Char(string=u'部门名称', required=True)
+    name = fields.Char(string=u'名称', required=True)
     spell = fields.Char(string=u'首拼')
 
     active = fields.Boolean('Active', default=True)

@@ -20,7 +20,7 @@ class Customer(models.Model):
          "已存在同名客户"),
     ]
 
-    name = fields.Char(string=u'客户名称', required=True)
+    name = fields.Char(string=u'客户', required=True)
     short_name = fields.Char(string=u'简称')
     spell = fields.Char(string=u'首拼')
 

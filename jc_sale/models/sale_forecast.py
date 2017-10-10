@@ -17,7 +17,7 @@ class SaleForecast(models.Model):
 
     name = fields.Char(string=u'预报编号', required=True, copy=False, readonly=True,
                        index=True, default=lambda self: _('新建'))
-    customer_id = fields.Many2one('archives.customer', string=u'客户名称', required=True,
+    customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization(),
                                   default=lambda self: self.env['archives.set_customer_setting'].query_default(self._name,
                                                                                                                'customer_id'))
@@ -149,8 +149,8 @@ class SaleForecast(models.Model):
 
     @api.multi
     def do_check(self):
-        self.bill_state = 10
         self._create_order()
+        self.bill_state = 10
 
     @api.multi
     def do_finish(self):
@@ -162,8 +162,8 @@ class SaleForecast(models.Model):
 
     @api.multi
     def do_un_check(self):
-        self.bill_state = 1
         self._delete_order()
+        self.bill_state = 1
 
     @api.multi
     def do_customer_setting(self):

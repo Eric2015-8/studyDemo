@@ -15,7 +15,7 @@ class Goods(models.Model):
          "已存在同名物料"),
     ]
 
-    name = fields.Char(string=u'物料名称', required=True)
+    name = fields.Char(string=u'名称', required=True)
     short_name = fields.Char(string=u'简称')
     spell = fields.Char(string=u'首拼')
 

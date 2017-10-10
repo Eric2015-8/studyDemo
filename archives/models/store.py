@@ -13,7 +13,7 @@ class Store(models.Model):
          "已存在同名仓库"),
     ]
 
-    name = fields.Char(string=u'仓库名称',required=True)
+    name = fields.Char(string=u'名称',required=True)
     short_name=fields.Char(string=u'简称',help=u'用于报表显示')
     spell = fields.Char(string=u'首拼')
 

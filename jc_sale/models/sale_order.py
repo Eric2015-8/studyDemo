@@ -20,7 +20,7 @@ class SaleOrder(models.Model):
 
     forecast_id = fields.Many2one('jc_sale.sale_forecast', string=u'销售预报单ID')
 
-    customer_id = fields.Many2one('archives.customer', string=u'客户名称', required=True)
+    customer_id = fields.Many2one('archives.customer', string=u'客户', required=True)
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True)
     remark = fields.Char(string=u'摘要')
