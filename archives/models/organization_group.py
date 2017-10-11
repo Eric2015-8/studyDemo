@@ -20,13 +20,26 @@ class OrganizationGroup(models.Model):
 
     user_ids = fields.Many2many('res.users', string=u'用户')
 
+    # 客户权限的设置
+
     active_customer_staff = fields.Boolean('启用客户销售人员权限')
     active_customer = fields.Boolean('启用客户权限')
 
     customer_staff_ids = fields.Many2many('archives.staff', string=u'销售员', domain="[('is_sale_man','=',True)]")
 
-    customer_organization_ids = fields.Many2many('archives.common_archive', string=u'客户权限',
-                                                 domain="[('archive_name','=',16)]")
+    customer_organization_ids = fields.Many2many('archives.common_archive', 'archives_organization_group_customer_rel',
+                                                 string=u'客户权限', domain="[('archive_name','=',16)]")
+
+    # 存货权限的设置
+
+    active_goods_goods_type = fields.Boolean('启用存货存货类型权限')
+    active_goods = fields.Boolean('启用存货权限')
+
+    goods_goods_type_ids = fields.Many2many('archives.common_archive', 'archives_organization_group_goods_type_rel',
+                                            string=u'物料分类', domain="[('archive_name','=',9)]")
+
+    goods_organization_ids = fields.Many2many('archives.common_archive', 'archives_organization_group_goods_rel',
+                                              string=u'存货权限', domain="[('archive_name','=',17)]")
 
     def _del_and_add_organization(self, bill):
         if not bill.user_ids:
@@ -49,10 +62,16 @@ class OrganizationGroup(models.Model):
             'name': 'new',  # 此值随意
             'user_id': user_id,
             'group_id': bill.id,
+            # 客户权限的设置：
             'active_customer_staff': bill.active_customer_staff,
             'active_customer': bill.active_customer,
             'customer_staff_ids': [[6, False, bill.customer_staff_ids.ids]],
             'customer_organization_ids': [[6, False, bill.customer_organization_ids.ids]],
+            # 存货权限的设置：
+            'active_goods_goods_type': bill.active_goods_goods_type,
+            'active_goods': bill.active_goods,
+            'goods_goods_type_ids': [[6, False, bill.goods_goods_type_ids.ids]],
+            'goods_organization_ids': [[6, False, bill.goods_organization_ids.ids]],
         }
 
     def _get_del_ids(self, values):

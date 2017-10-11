@@ -23,13 +23,26 @@ class Organization(models.Model):
 
     group_id = fields.Many2one('archives.organization_group', string=u'数据权限组', ondelete='cascade')
 
+    #客户权限的设置
+
     active_customer_staff = fields.Boolean('启用客户销售人员权限')
     active_customer = fields.Boolean('启用客户权限')
 
     customer_staff_ids = fields.Many2many('archives.staff', string=u'销售员', domain="[('is_sale_man','=',True)]")
 
-    customer_organization_ids = fields.Many2many('archives.common_archive', string=u'客户权限',
-                                                 domain="[('archive_name','=',16)]")
+    customer_organization_ids = fields.Many2many('archives.common_archive', 'archives_organization_customer_rel',
+                                                 string=u'客户权限', domain="[('archive_name','=',16)]")
+
+    # 存货权限的设置
+
+    active_goods_goods_type = fields.Boolean('启用存货存货类型权限')
+    active_goods = fields.Boolean('启用存货权限')
+
+    goods_goods_type_ids = fields.Many2many('archives.common_archive', 'archives_organization_goods_type_rel',
+                                            string=u'物料分类', domain="[('archive_name','=',9)]")
+
+    goods_organization_ids = fields.Many2many('archives.common_archive', 'archives_organization_goods_rel',
+                                              string=u'存货权限', domain="[('archive_name','=',17)]")
 
     def _set_user_organization(self, bill):
         self.env['res.users'].search([('id', '=', bill.user_id.id)]).write({'organization_id': bill.id, })
@@ -58,6 +71,24 @@ class Organization(models.Model):
             result.append(('organization_id', 'in', ids))
         return result
 
+    # 得到受权限控制的：存货
+    def get_goods_organization(self):
+        user = self.env.user
+        result = []
+        if not user.organization_id:
+            return result
+        if user.organization_id.active_goods_goods_type:
+            ids = []
+            for detail in user.organization_id.goods_goods_type_ids:
+                ids.append(detail.id)
+            result.append(('goods_type_id', 'in', ids))
+        if user.organization_id.active_goods:
+            ids = []
+            for detail in user.organization_id.goods_organization_ids:
+                ids.append(detail.id)
+            result.append(('organization_id', 'in', ids))
+        return result
+
     @api.multi
     def load_group(self):
         if not self.group_id:
@@ -68,10 +99,16 @@ class Organization(models.Model):
 
     def _get_organization(self, bill):
         return {
+            #客户权限的设置：
             'active_customer_staff': bill.active_customer_staff,
             'active_customer': bill.active_customer,
             'customer_staff_ids': [[6, False, bill.customer_staff_ids.ids]],
             'customer_organization_ids': [[6, False, bill.customer_organization_ids.ids]],
+            #存货权限的设置：
+            'active_goods_goods_type': bill.active_goods_goods_type,
+            'active_goods': bill.active_goods,
+            'goods_goods_type_ids': [[6, False, bill.goods_goods_type_ids.ids]],
+            'goods_organization_ids': [[6, False, bill.goods_organization_ids.ids]],
         }
 
     @api.model

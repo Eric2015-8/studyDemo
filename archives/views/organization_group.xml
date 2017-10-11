@@ -9,6 +9,8 @@
                     <field name="name"/>
                     <field name="active_customer_staff"/>
                     <field name="active_customer"/>
+                    <field name="active_goods_goods_type"/>
+                    <field name="active_goods"/>
                 </tree>
             </field>
         </record>
@@ -30,6 +32,8 @@
                                 <group name="group_setting" col="4">
                                     <field name="active_customer_staff"/>
                                     <field name="active_customer"/>
+                                    <field name="active_goods_goods_type"/>
+                                    <field name="active_goods"/>
                                 </group>
                             </page>
                             <page string="客户销售人员授权">
@@ -37,6 +41,12 @@
                             </page>
                             <page string="客户权限授权">
                                 <field name="customer_organization_ids"/>
+                            </page>
+                            <page string="存货的存货类型授权">
+                                <field name="goods_goods_type_ids"/>
+                            </page>
+                            <page string="存货权限授权">
+                                <field name="goods_organization_ids"/>
                             </page>
                         </notebook>
                     </sheet>

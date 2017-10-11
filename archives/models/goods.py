@@ -49,6 +49,9 @@ class Goods(models.Model):
     is_purchase = fields.Boolean(string=u'用于采购')
     is_batch_available = fields.Boolean(string=u'启用批次')
 
+    # 权限
+    organization_id = fields.Many2one('archives.common_archive', string=u'存货权限', domain="[('archive_name','=',17)]")
+
     @api.depends('second_rate_string')
     def _compute_second_rate(self):
         for record in self:
