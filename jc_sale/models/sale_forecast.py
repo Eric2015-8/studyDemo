@@ -32,14 +32,17 @@ class SaleForecast(models.Model):
                                            copy=True)
 
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
+                                 domain=lambda self: self.env['archives.organization'].get_company_organization(),
                                  default=lambda self: self._set_company())
     staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True,
                                default=lambda self: self.env['archives.set_customer_setting'].query_default(self._name,
                                                                                                             'staff_id'))
     store_id = fields.Many2one('archives.store', string=u'仓库',
+                               domain=lambda self: self.env['archives.organization'].get_store_organization(),
                                default=lambda self: self.env['archives.set_customer_setting'].query_default(self._name,
                                                                                                             'store_id'))
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
+                                    domain=lambda self: self.env['archives.organization'].get_department_organization(),
                                     default=lambda self: self.env['archives.set_customer_setting'].query_default(
                                         self._name, 'department_id'))
 

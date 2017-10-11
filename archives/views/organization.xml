@@ -12,6 +12,9 @@
                     <field name="active_customer"/>
                     <field name="active_goods_goods_type"/>
                     <field name="active_goods"/>
+                    <field name="active_company"/>
+                    <field name="active_department"/>
+                    <field name="active_store"/>
                 </tree>
             </field>
         </record>
@@ -38,6 +41,9 @@
                                     <field name="active_customer"/>
                                     <field name="active_goods_goods_type"/>
                                     <field name="active_goods"/>
+                                    <field name="active_company"/>
+                                    <field name="active_department"/>
+                                    <field name="active_store"/>
                                 </group>
                             </page>
                             <page string="客户销售人员授权">
@@ -51,6 +57,15 @@
                             </page>
                             <page string="存货权限授权">
                                 <field name="goods_organization_ids"/>
+                            </page>
+                            <page string="公司授权">
+                                <field name="company_ids"/>
+                            </page>
+                            <page string="部门授权">
+                                <field name="department_ids"/>
+                            </page>
+                            <page string="仓库授权">
+                                <field name="store_ids"/>
                             </page>
                         </notebook>
                     </sheet>

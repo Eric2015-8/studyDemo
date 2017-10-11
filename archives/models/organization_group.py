@@ -41,6 +41,21 @@ class OrganizationGroup(models.Model):
     goods_organization_ids = fields.Many2many('archives.common_archive', 'archives_organization_group_goods_rel',
                                               string=u'存货权限', domain="[('archive_name','=',17)]")
 
+    # 公司权限的设置
+
+    active_company = fields.Boolean('启用公司权限')
+    company_ids = fields.Many2many('res.company', string=u'公司')
+
+    # 仓库权限的设置
+
+    active_store = fields.Boolean('启用仓库权限')
+    store_ids = fields.Many2many('archives.store', string=u'仓库')
+
+    # 部门权限的设置
+
+    active_department = fields.Boolean('启用部门权限')
+    department_ids = fields.Many2many('archives.department', string=u'部门')
+
     def _del_and_add_organization(self, bill):
         if not bill.user_ids:
             return
@@ -72,6 +87,15 @@ class OrganizationGroup(models.Model):
             'active_goods': bill.active_goods,
             'goods_goods_type_ids': [[6, False, bill.goods_goods_type_ids.ids]],
             'goods_organization_ids': [[6, False, bill.goods_organization_ids.ids]],
+            # 公司权限的设置
+            'active_company': bill.active_company,
+            'company_ids': [[6, False, bill.company_ids.ids]],
+            # 仓库权限的设置
+            'active_store': bill.active_store,
+            'store_ids': [[6, False, bill.store_ids.ids]],
+            # 部门权限的设置
+            'active_department': bill.active_department,
+            'department_ids': [[6, False, bill.department_ids.ids]],
         }
 
     def _get_del_ids(self, values):

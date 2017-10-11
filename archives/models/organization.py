@@ -23,7 +23,7 @@ class Organization(models.Model):
 
     group_id = fields.Many2one('archives.organization_group', string=u'数据权限组', ondelete='cascade')
 
-    #客户权限的设置
+    # 客户权限的设置
 
     active_customer_staff = fields.Boolean('启用客户销售人员权限')
     active_customer = fields.Boolean('启用客户权限')
@@ -43,6 +43,21 @@ class Organization(models.Model):
 
     goods_organization_ids = fields.Many2many('archives.common_archive', 'archives_organization_goods_rel',
                                               string=u'存货权限', domain="[('archive_name','=',17)]")
+
+    # 公司权限的设置
+
+    active_company = fields.Boolean('启用公司权限')
+    company_ids = fields.Many2many('res.company', string=u'公司')
+
+    # 仓库权限的设置
+
+    active_store = fields.Boolean('启用仓库权限')
+    store_ids = fields.Many2many('archives.store', string=u'仓库')
+
+    # 部门权限的设置
+
+    active_department = fields.Boolean('启用部门权限')
+    department_ids = fields.Many2many('archives.department', string=u'部门')
 
     def _set_user_organization(self, bill):
         self.env['res.users'].search([('id', '=', bill.user_id.id)]).write({'organization_id': bill.id, })
@@ -89,6 +104,45 @@ class Organization(models.Model):
             result.append(('organization_id', 'in', ids))
         return result
 
+    # 得到受权限控制的：公司
+    def get_company_organization(self):
+        user = self.env.user
+        result = []
+        if not user.organization_id:
+            return result
+        if user.organization_id.active_company:
+            ids = []
+            for detail in user.organization_id.company_ids:
+                ids.append(detail.id)
+            result.append(('id', 'in', ids))
+        return result
+
+    # 得到受权限控制的：仓库
+    def get_store_organization(self):
+        user = self.env.user
+        result = []
+        if not user.organization_id:
+            return result
+        if user.organization_id.active_store:
+            ids = []
+            for detail in user.organization_id.store_ids:
+                ids.append(detail.id)
+            result.append(('id', 'in', ids))
+        return result
+
+    # 得到受权限控制的：部门
+    def get_department_organization(self):
+        user = self.env.user
+        result = []
+        if not user.organization_id:
+            return result
+        if user.organization_id.active_department:
+            ids = []
+            for detail in user.organization_id.department_ids:
+                ids.append(detail.id)
+            result.append(('id', 'in', ids))
+        return result
+
     @api.multi
     def load_group(self):
         if not self.group_id:
@@ -99,22 +153,31 @@ class Organization(models.Model):
 
     def _get_organization(self, bill):
         return {
-            #客户权限的设置：
+            # 客户权限的设置：
             'active_customer_staff': bill.active_customer_staff,
             'active_customer': bill.active_customer,
             'customer_staff_ids': [[6, False, bill.customer_staff_ids.ids]],
             'customer_organization_ids': [[6, False, bill.customer_organization_ids.ids]],
-            #存货权限的设置：
+            # 存货权限的设置：
             'active_goods_goods_type': bill.active_goods_goods_type,
             'active_goods': bill.active_goods,
             'goods_goods_type_ids': [[6, False, bill.goods_goods_type_ids.ids]],
             'goods_organization_ids': [[6, False, bill.goods_organization_ids.ids]],
+            # 公司权限的设置
+            'active_company': bill.active_company,
+            'company_ids': [[6, False, bill.goods_goods_type_ids.ids]],
+            # 仓库权限的设置
+            'active_store': bill.active_store,
+            'store_ids': [[6, False, bill.goods_goods_type_ids.ids]],
+            # 部门权限的设置
+            'active_department': bill.active_department,
+            'department_ids': [[6, False, bill.goods_goods_type_ids.ids]],
         }
 
     @api.model
     def create(self, values):
-        self._set_name(values)#不要与下一行颠倒
-        utils.set_spell(values)#不要与上一行颠倒
+        self._set_name(values)  # 不要与下一行颠倒
+        utils.set_spell(values)  # 不要与上一行颠倒
         result = super(Organization, self).create(values)
         self._set_user_organization(result)
         return result
