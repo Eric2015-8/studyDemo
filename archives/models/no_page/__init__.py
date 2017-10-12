@@ -8,5 +8,6 @@ from . import unit
 from . import zone
 from . import zone_type1
 from . import zone_type2
+from . import goods_position
 
 from . import goods_number

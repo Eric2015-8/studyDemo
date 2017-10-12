@@ -10,6 +10,9 @@
                     <field name="short_name"/>
                     <field name="address"/>
                     <field name="company_id"/>
+                    <field name="active_batch"/>
+                    <field name="active_goods_position"/>
+                    <field name="default_goods_position_id"/>
                 </tree>
             </field>
         </record>
@@ -25,6 +28,10 @@
                             <field name="short_name" placeholder="用于报表显示"/>
                             <field name="address"/>
                             <field name="company_id"/>
+                            <field name="active_batch"/>
+                            <field name="active_goods_position"/>
+                            <field name="default_goods_position_id"/>
+                            <field name="goods_position_ids"/>
                         </group>
                     </sheet>
                 </form>
