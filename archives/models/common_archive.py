@@ -22,7 +22,13 @@ ARCHIVE_NAME = [
     (15, '物料分类6'),
     (16, '客户权限'),
     (17, '存货权限'),
+    (18, '入库类型'),
 ]
+
+# customer_organization_ids = fields.Many2many('archives.common_archive', 'archives_organization_customer_rel',
+#                                              string=u'客户权限', domain="[('archive_name','=',16)]")
+
+# organization_id = fields.Many2one('archives.common_archive', string=u'客户权限', domain="[('archive_name','=',16)]")
 
 
 class CommonArchive(models.Model):
