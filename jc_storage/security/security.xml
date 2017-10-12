@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record id="store_group_manager" model="res.groups">
+            <field name="name">仓储 / 管理</field>
+        </record>
+        <record id="store_group_read" model="res.groups">
+            <field name="name">仓储 / 只读</field>
+        </record>
+    </data>
+</odoo>
