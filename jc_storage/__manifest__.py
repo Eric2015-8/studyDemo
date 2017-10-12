@@ -28,6 +28,7 @@
         'views/views.xml',
         'views/templates.xml',
         'views/other_in_store.xml',
+        'views/other_out_store.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
