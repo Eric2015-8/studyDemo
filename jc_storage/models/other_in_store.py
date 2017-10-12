@@ -50,7 +50,7 @@ class OtherInStore(models.Model):
             # 'context': action.context,
             'context': {
                 'id': self.id,
-                'customer_id': self.customer_id.id,
+                # 'customer_id': self.customer_id.id,
                 'detail': 'jc_storage.other_in_store.detail',
             },
             'res_model': action.res_model,
