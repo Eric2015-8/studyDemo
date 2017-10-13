@@ -16,14 +16,10 @@ class OtherInStore(models.Model):
     )
 
     store_id = fields.Many2one('archives.store', string=u'仓库', required=True,
-                               domain=lambda self: self.env['archives.organization'].get_store_organization(),
-                               default=lambda self: self.env['archives.set_customer_setting'].query_default(self._name,
-                                                                                                            'store_id'))
+                               domain=lambda self: self.env['archives.organization'].get_store_organization())
     in_store_type_id = fields.Many2one('archives.common_archive', string=u'入库类型', required=True,
                                        domain="[('archive_name','=',18)]")
-    staff_id = fields.Many2one('archives.staff', string=u'经办人',
-                               default=lambda self: self.env['archives.set_customer_setting'].query_default(self._name,
-                                                                                                            'staff_id'))
+    staff_id = fields.Many2one('archives.staff', string=u'经办人')
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     remark = fields.Char(string=u'摘要')
 
@@ -102,3 +98,10 @@ class OtherInStore(models.Model):
         table_show_name = u'其它入库'
         need_set_fields = ['store_id', 'in_store_type_id', 'staff_id']
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name)
+
+    @api.model
+    def default_get(self, fields):
+        res = super(OtherInStore, self).default_get(fields)
+        need_set_fields = ['store_id', 'in_store_type_id', 'staff_id']
+        self.env['archives.set_customer_setting'].set_default(res, self._name, fields, need_set_fields)
+        return res

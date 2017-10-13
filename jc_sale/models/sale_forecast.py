@@ -18,39 +18,22 @@ class SaleForecast(models.Model):
     name = fields.Char(string=u'预报编号', required=True, copy=False, readonly=True,
                        index=True, default=lambda self: _('新建'))
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
-                                  domain=lambda self: self.env['archives.organization'].get_customer_organization(),
-                                  default=lambda self: self.env['archives.set_customer_setting'].query_default(
-                                      self._name, 'customer_id'))
+                                  domain=lambda self: self.env['archives.organization'].get_customer_organization())
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
-                                   domain=[('archive_name', '=', 1)],
-                                   default=lambda self: self.env['archives.set_customer_setting'].query_default(
-                                       self._name, 'sale_type_id'))
+                                   domain=[('archive_name', '=', 1)])
     remark = fields.Char(string=u'摘要')
 
     sale_forecast_detail = fields.One2many('jc_sale.sale_forecast.detail', 'sale_forecast_id', string=u'销售预报明细',
                                            copy=True)
 
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
-                                 domain=lambda self: self.env['archives.organization'].get_company_organization(),
-                                 default=lambda self: self._set_company())
-    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True,
-                               default=lambda self: self.env['archives.set_customer_setting'].query_default(self._name,
-                                                                                                            'staff_id'))
+                                 domain=lambda self: self.env['archives.organization'].get_company_organization())
+    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库',
-                               domain=lambda self: self.env['archives.organization'].get_store_organization(),
-                               default=lambda self: self.env['archives.set_customer_setting'].query_default(self._name,
-                                                                                                            'store_id'))
+                               domain=lambda self: self.env['archives.organization'].get_store_organization())
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
-                                    domain=lambda self: self.env['archives.organization'].get_department_organization(),
-                                    default=lambda self: self.env['archives.set_customer_setting'].query_default(
-                                        self._name, 'department_id'))
-
-    def _set_company(self):
-        id = self.env['archives.set_customer_setting'].query_default(self._name, 'company_id')
-        if id:
-            return id
-        return self.env['res.company']._company_default_get()
+                                    domain=lambda self: self.env['archives.organization'].get_department_organization())
 
     @api.onchange('customer_id')
     def _onchange_for_staff(self):
@@ -104,7 +87,9 @@ class SaleForecast(models.Model):
             'date': self.date,
             'sale_type_id': self.sale_type_id.id,
             'staff_id': self.staff_id.id,
-            'department_id': self.department_id,
+            'department_id': self.department_id.id,
+            'store_id': self.store_id.id,
+            'company_id': self.company_id.id,
             'remark': self.remark,
         }
         order = self.env['jc_sale.sale_order'].create(values)
@@ -174,6 +159,13 @@ class SaleForecast(models.Model):
         table_show_name = u'销售预报'
         need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name)
+
+    @api.model
+    def default_get(self, fields):
+        res = super(SaleForecast, self).default_get(fields)
+        need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        self.env['archives.set_customer_setting'].set_default(res, self._name, fields, need_set_fields)
+        return res
 
 
 class SaleForecastDetail(models.Model):
