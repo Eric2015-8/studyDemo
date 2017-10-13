@@ -78,5 +78,5 @@ def get_first_spell(str_input):
 
 # @staticmethod
 def set_spell(values):
-    if values.get('name', 'a新建b') != 'a新建b':
+    if values.has_key('name'):
         values['spell'] = get_first_spell(values['name'])
