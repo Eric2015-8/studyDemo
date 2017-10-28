@@ -82,3 +82,17 @@ class SaleOrder(models.Model):
     @api.multi
     def do_un_check(self):
         self.bill_state = 1
+
+    @api.multi
+    def do_customer_setting(self):
+        table = u'jc_sale.sale_order'
+        table_show_name = u'销售订单'
+        need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name)
+
+    @api.model
+    def default_get(self, fields):
+        res = super(SaleOrder, self).default_get(fields)
+        need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        self.env['archives.set_customer_setting'].set_default(res, self._name, fields, need_set_fields)
+        return res
