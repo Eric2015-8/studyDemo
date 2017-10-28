@@ -33,6 +33,21 @@ class SaleOrder(models.Model):
     store_id = fields.Many2one('archives.store', string=u'仓库')
     department_id = fields.Many2one('archives.department', string=u'部门', required=True)
 
+    total_money = fields.Float(string='金额', store=True, readonly=True, compute='_amount_all', track_visibility='always')
+
+    @api.depends('sale_order_detail.money')
+    def _amount_all(self):
+        """
+        Compute the total amounts of the SO.
+        """
+        for order in self:
+            total = 0.0
+            for line in order.sale_order_detail:
+                total += line.money
+            order.update({
+                'total_money': total,
+            })
+
     @api.onchange('customer_id')
     def _onchange_for_staff(self):
         self.staff_id = self.customer_id.staff_id

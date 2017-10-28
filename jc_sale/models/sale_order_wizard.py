@@ -16,15 +16,15 @@ class CreateOrderWizard1(models.TransientModel):
 
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
-    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', require=True,
+    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
                                    domain=[('archive_name', '=', 1)])
 
-    company_id = fields.Many2one('res.company', string=u'公司', require=True,
+    company_id = fields.Many2one('res.company', string=u'公司', required=True,
                                  domain=lambda self: self.env['archives.organization'].get_company_organization())
-    staff_id = fields.Many2one('archives.staff', string=u'销售员', require=True)
+    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
     store_id = fields.Many2one('archives.store', string=u'仓库',
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
-    department_id = fields.Many2one('archives.department', string=u'部门', require=True,
+    department_id = fields.Many2one('archives.department', string=u'部门', required=True,
                                     domain=lambda self: self.env['archives.organization'].get_department_organization())
     remark = fields.Char(string=u'摘要')
 

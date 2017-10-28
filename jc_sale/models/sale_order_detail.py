@@ -24,7 +24,7 @@ class SaleOrderDetail(models.Model):
     main_unit_number = fields.Float(digits=(6, 2), string=u'主数量')
 
     price = fields.Float(digits=(6, 2), help="单价", string=u'单价')
-    money = fields.Float(digits=(6, 2), help="金额", string=u'金额')
+    money = fields.Float(digits=(6, 2), help="金额", string=u'金额', store=True)
 
     remark = fields.Char(string=u'备注')
 
