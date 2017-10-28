@@ -55,6 +55,25 @@ class SetCustomerSetting(models.TransientModel):
                 res['company_id'] = self.env['res.company']._company_default_get()
         return None
 
+    def set_default_if_empty(self, res, table, need_set_fields):
+        if not need_set_fields:
+            return None
+        setting = self.env["archives.customer_setting"].search(
+            [('user_id', '=', self.env.user.id), ('table', '=', table)])
+        if not setting:
+            return None
+        if not setting.customer_setting_detail:
+            return None
+        for f in need_set_fields:  # TODO:优化：将need_set_fields与setting.customer_setting_detail匹配起来后赋值
+            if res.has_key(f) and res[f]:
+                continue
+            for detail in setting.customer_setting_detail:
+                if detail.field == f:
+                    res[f] = detail.value
+            if f == 'company_id' and (not res.has_key('company_id') or not res['company_id']):
+                res['company_id'] = self.env['res.company']._company_default_get()
+        return None
+
     def send_and_open(self, need_set_fields, table, table_show_name):
         context = {
             'need_set_fields': need_set_fields,

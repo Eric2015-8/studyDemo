@@ -16,15 +16,15 @@ class CreateOrderWizard1(models.TransientModel):
 
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
-    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
+    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', require=True,
                                    domain=[('archive_name', '=', 1)])
 
-    company_id = fields.Many2one('res.company', string=u'公司', required=True,
+    company_id = fields.Many2one('res.company', string=u'公司', require=True,
                                  domain=lambda self: self.env['archives.organization'].get_company_organization())
-    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
+    staff_id = fields.Many2one('archives.staff', string=u'销售员', require=True)
     store_id = fields.Many2one('archives.store', string=u'仓库',
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
-    department_id = fields.Many2one('archives.department', string=u'部门', required=True,
+    department_id = fields.Many2one('archives.department', string=u'部门', require=True,
                                     domain=lambda self: self.env['archives.organization'].get_department_organization())
     remark = fields.Char(string=u'摘要')
 
@@ -130,6 +130,10 @@ class CreateOrderWizard1(models.TransientModel):
             'company_id': self.company_id.id,
             'remark': self.remark,
         }
+        table = u'jc_sale.sale_order'  # 使用销售订单的个性设置
+        need_set_fields = ['sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        # need_set_fields中的值，从个性设置中取值
+        self.env['archives.set_customer_setting'].set_default_if_empty(values, table, need_set_fields)
         order = self.env['jc_sale.sale_order'].create(values)
         for detail in self.wizard_detail:
             second_unit_number = None

@@ -145,30 +145,40 @@
             <field name="arch" type="xml">
                 <form string="手机订单" version="7.0">
                     <field invisible="1" name="state"/>
-                    <group states="step1">
-                        <field name="customer_id"/>
-                        <field name="remark"/>
-                        <field name="sale_type_id"/>
-                        <field name="company_id"/>
-                        <field name="staff_id"/>
-                        <field name="store_id"/>
-                        <field name="department_id"/>
-                    </group>
-                    <group states="step2">
-                        <group>
-                            <field name="goods_id"/>
-                            <field name="number"/>
-                            <field name="price"/>
+                    <sheet states="step1">
+                        <notebook>
+                            <page string="基础">
+                                <group>
+                                    <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="remark"/>
+                                </group>
+                            </page>
+                            <page string="其他">
+                                <group>
+                                    <field name="sale_type_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="staff_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="store_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="department_id" options="{'no_open':True,'no_create':True}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <sheet states="step2">
+                        <div>
+                            <field name="goods_id" placeholder="产品" options="{'no_open':True,'no_create':True}"/>
+                            <field name="number" placeholder="数量"/>
+                            <field name="price" placeholder="价格"/>
                             <button name="action_add" string="添加" type="object"/>
-                        </group>
+                        </div>
                         <field name="wizard_detail" mode="tree">
-                            <tree string="销售订单明细" editable="bottom">
+                            <tree string="销售订单明细" editable="bottom" create="0">
                                 <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
                                 <field name="main_unit_number"/>
                                 <field name="price"/>
                             </tree>
                         </field>
-                    </group>
+                    </sheet>
                     <footer states="step1">
                         <button name="action_next" string="下一步" type="object"/>
                     </footer>
@@ -188,10 +198,10 @@
                     target="new"
                     context="{'default_state': 'step1'}"/>
 
-        <menuitem name="手机订单" id="jc_sale.mobile_sale_order_action_wizard" parent="jc_sale_menu_root"
+        <menuitem name="订单向导" id="jc_sale.mobile_sale_order_action_wizard"
                   action="jc_sale_mobile_sale_order_action_wizard" sequence="1"/>
 
-        <menuitem name="销售订单" id="jc_sale.menu_sale_order" parent="jc_sale_menu_root"
+        <menuitem name="销售订单" id="jc_sale.menu_sale_order"
                   action="jc_sale_sale_order_action_window" sequence="2"/>
 
     </data>
