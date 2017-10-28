@@ -35,12 +35,15 @@
                                 class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 10)]}"/>
                         <button name="do_un_finish" string="撤销完毕" type="object"
                                 class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 20)]}"/>
+                        <button name="do_customer_setting" string="个性设置" type="object"
+                                attrs="{'invisible': [('bill_state', '!=', 1)]}"/>
                     </header>
                     <sheet>
                         <group name="group_top" string="销售订单" col="4">
                             <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
                             <field name="date"/>
-                            <field name="sale_type_id" domain="[('archive_name','=',1)]" options="{'no_open':True,'no_create':True}"/>
+                            <field name="sale_type_id" domain="[('archive_name','=',1)]"
+                                   options="{'no_open':True,'no_create':True}"/>
                             <field name="remark"/>
                         </group>
                         <notebook>
@@ -58,12 +61,47 @@
                                         <!--<field name="sale_forecast_detail_id" readonly="1" invisible="1"/>-->
                                         <field name="remark"/>
                                     </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="goods_id"/>
+                                        <field name="main_unit_number"/>
+                                        <field name="price"/>
+                                        <field name="money"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <strong>
+                                                                <span>
+                                                                    <t t-esc="record.goods_id.value"/>
+                                                                </span>
+                                                            </strong>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-8 text-muted">
+                                                            <span>
+                                                                <t t-esc="record.main_unit_number.value"/>
+                                                                <t t-esc="record.price.value"/>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-xs-4 text-muted">
+                                                            <span class="pull-right text-right">
+                                                                <t t-esc="record.money.value"/>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
                                 </field>
                             </page>
                             <page string="其它信息">
                                 <group name="group_other" col="4">
                                     <field name="company_id" options="{'no_open':True,'no_create':True}"/>
-                                    <field name="staff_id" domain="[('is_sale_man','=',True)]" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="staff_id" domain="[('is_sale_man','=',True)]"
+                                           options="{'no_open':True,'no_create':True}"/>
                                     <field name="store_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="department_id" options="{'no_open':True,'no_create':True}"/>
                                 </group>
@@ -92,13 +130,66 @@
             </field>
         </record>
 
-        <!-- actions opening views on models -->
+        <!--actions opening views on models-->
         <record model="ir.actions.act_window" id="jc_sale_sale_order_action_window">
             <field name="name">销售订单</field>
             <field name="res_model">jc_sale.sale_order</field>
             <field name="view_mode">tree,form</field>
             <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
         </record>
+
+        <record model="ir.ui.view" id="jc_sale_sale_order_wizard_step1">
+            <field name="name">手机订单第一步</field>
+            <field name="model">jc_sale.create.order.wizard1</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="手机订单" version="7.0">
+                    <field invisible="1" name="state"/>
+                    <group states="step1">
+                        <field name="customer_id"/>
+                        <field name="remark"/>
+                        <field name="sale_type_id"/>
+                        <field name="company_id"/>
+                        <field name="staff_id"/>
+                        <field name="store_id"/>
+                        <field name="department_id"/>
+                    </group>
+                    <group states="step2">
+                        <group>
+                            <field name="goods_id"/>
+                            <field name="number"/>
+                            <field name="price"/>
+                            <button name="action_add" string="添加" type="object"/>
+                        </group>
+                        <field name="wizard_detail" mode="tree">
+                            <tree string="销售订单明细" editable="bottom">
+                                <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
+                                <field name="main_unit_number"/>
+                                <field name="price"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer states="step1">
+                        <button name="action_next" string="下一步" type="object"/>
+                    </footer>
+                    <footer states="step2">
+                        <button name="action_previous" string="上一步" type="object"/>
+                        <button name="create_order" string="保存" type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="jc_sale_mobile_sale_order_action_wizard"
+                    name="手机订单"
+                    src_model="jc_sale.sale_order"
+                    res_model="jc_sale.create.order.wizard1"
+                    view_mode="form"
+                    target="new"
+                    context="{'default_state': 'step1'}"/>
+
+        <menuitem name="手机订单" id="jc_sale.mobile_sale_order_action_wizard" parent="jc_sale_menu_root"
+                  action="jc_sale_mobile_sale_order_action_wizard" sequence="1"/>
 
         <menuitem name="销售订单" id="jc_sale.menu_sale_order" parent="jc_sale_menu_root"
                   action="jc_sale_sale_order_action_window" sequence="2"/>
