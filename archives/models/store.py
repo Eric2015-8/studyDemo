@@ -25,7 +25,7 @@ class Store(models.Model):
     active_batch = fields.Boolean('启用批次')
 
     active_goods_position = fields.Boolean('启用货位')
-    default_goods_position_id = fields.Many2one('archives.goods_position', string=u'默认货位')
+    default_goods_position_id = fields.Many2one('archives.goods_position', string=u'默认货位') # TODO: 重命名
     goods_position_ids = fields.Many2many('archives.goods_position', string=u'货位')
 
     @api.model
@@ -65,7 +65,7 @@ class Store(models.Model):
         if values.has_key('default_goods_position_id'):
             default_goods_position_id = values['default_goods_position_id']
         if not default_goods_position_id:
-            raise ValidationError('请选择默认货位')
+            return
         if values.has_key('goods_position_ids'):  # 修改了货位，以修改后的货位为准
             position_ids = values['goods_position_ids'][0][2]  # 格式：goods_position_ids:[[6, False, [3, 2]]];
             if default_goods_position_id not in position_ids:
