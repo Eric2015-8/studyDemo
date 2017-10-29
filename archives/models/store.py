@@ -40,6 +40,20 @@ class Store(models.Model):
         self._check_goods_position(values)
         return super(Store, self).write(values)
 
+    @api.multi
+    def copy(self, default=None):
+        default = dict(default or {})
+
+        copied_count = self.search_count(
+            [('name', '=like', u"Copy of {}%".format(self.name))])
+        if not copied_count:
+            new_name = u"Copy of {}".format(self.name)
+        else:
+            new_name = u"Copy of {} ({})".format(self.name, copied_count)
+
+        default['name'] = new_name
+        return super(Store, self).copy(default)
+
     def _check_goods_position(self, values):
         if (not values.has_key('active_goods_position')) and not self.active_goods_position:  # 未启用货位，并且没有修改该值
             return

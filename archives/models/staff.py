@@ -53,6 +53,20 @@ class Staff(models.Model):
         utils.set_spell(values)
         return super(Staff, self).write(values)
 
+    @api.multi
+    def copy(self, default=None):
+        default = dict(default or {})
+
+        copied_count = self.search_count(
+            [('name', '=like', u"Copy of {}%".format(self.name))])
+        if not copied_count:
+            new_name = u"Copy of {}".format(self.name)
+        else:
+            new_name = u"Copy of {} ({})".format(self.name, copied_count)
+
+        default['name'] = new_name
+        return super(Staff, self).copy(default)
+
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
         args = args or []
@@ -60,10 +74,10 @@ class Staff(models.Model):
         recs = self.search(domain + args, limit=limit)
         return recs.name_get()
 
-    # value = fields.Integer()
-    # value2 = fields.Float(compute="_value_pc", store=True)
-    # description = fields.Text()
-    #
-    # @api.depends('value')
-    # def _value_pc(self):
-    #     self.value2 = float(self.value) / 100
+        # value = fields.Integer()
+        # value2 = fields.Float(compute="_value_pc", store=True)
+        # description = fields.Text()
+        #
+        # @api.depends('value')
+        # def _value_pc(self):
+        #     self.value2 = float(self.value) / 100

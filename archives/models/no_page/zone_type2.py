@@ -14,3 +14,17 @@ class ZoneType2(models.Model):
     ]
 
     name = fields.Char(string=u'地区分类2', required=True)
+
+    @api.multi
+    def copy(self, default=None):
+        default = dict(default or {})
+
+        copied_count = self.search_count(
+            [('name', '=like', u"Copy of {}%".format(self.name))])
+        if not copied_count:
+            new_name = u"Copy of {}".format(self.name)
+        else:
+            new_name = u"Copy of {} ({})".format(self.name, copied_count)
+
+        default['name'] = new_name
+        return super(ZoneType2, self).copy(default)

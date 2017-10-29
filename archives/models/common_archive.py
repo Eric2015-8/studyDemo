@@ -25,6 +25,7 @@ ARCHIVE_NAME = [
     (18, '入库类型'),
 ]
 
+
 # customer_organization_ids = fields.Many2many('archives.common_archive', 'archives_organization_customer_rel',
 #                                              string=u'客户权限', domain="[('archive_name','=',16)]")
 
@@ -57,6 +58,20 @@ class CommonArchive(models.Model):
     def write(self, values):
         utils.set_spell(values)
         return super(CommonArchive, self).write(values)
+
+    @api.multi
+    def copy(self, default=None):
+        default = dict(default or {})
+
+        copied_count = self.search_count(
+            [('archive_name', '=', self.archive_name), ('name', '=like', u"Copy of {}%".format(self.name))])
+        if not copied_count:
+            new_name = u"Copy of {}".format(self.name)
+        else:
+            new_name = u"Copy of {} ({})".format(self.name, copied_count)
+
+        default['name'] = new_name
+        return super(CommonArchive, self).copy(default)
 
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):

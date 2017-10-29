@@ -72,6 +72,20 @@ class Goods(models.Model):
         utils.set_spell(values)
         return super(Goods, self).write(values)
 
+    @api.multi
+    def copy(self, default=None):
+        default = dict(default or {})
+
+        copied_count = self.search_count(
+            [('name', '=like', u"Copy of {}%".format(self.name))])
+        if not copied_count:
+            new_name = u"Copy of {}".format(self.name)
+        else:
+            new_name = u"Copy of {} ({})".format(self.name, copied_count)
+
+        default['name'] = new_name
+        return super(Goods, self).copy(default)
+
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
         args = args or []
