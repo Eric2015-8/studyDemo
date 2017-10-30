@@ -134,11 +134,59 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="view_jc_sale_sale_order_kanban">
+            <field name="name">jc_sale.sale_order.kanban</field>
+            <field name="model">jc_sale.sale_order</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <!--<field name="name"/>-->
+                    <field name="customer_id"/>
+                    <field name="total_money"/>
+                    <field name="date"/>
+                    <field name="bill_state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong>
+                                            <span>
+                                                <t t-esc="record.customer_id.value"/>
+                                            </span>
+                                        </strong>
+                                    </div>
+                                    <div class="col-xs-6 pull-right text-right">
+                                        <strong>
+                                            <field name="total_money"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span>
+                                            <!--<t t-esc="record.name.value"/>-->
+                                            <t t-esc="record.date.value"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <span class="pull-right text-right">
+                                            <field name="bill_state" widget="kanban_label_selection"
+                                                   options="{'classes': {'1': 'default', '10': 'success', '20': 'success'}}"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
         <!--actions opening views on models-->
         <record model="ir.actions.act_window" id="jc_sale_sale_order_action_window">
             <field name="name">销售订单</field>
             <field name="res_model">jc_sale.sale_order</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,kanban,form</field>
             <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
         </record>
 
