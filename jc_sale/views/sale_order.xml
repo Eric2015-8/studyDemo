@@ -49,6 +49,32 @@
                         <notebook>
                             <page string="物料信息">
                                 <field name="sale_order_detail" mode="tree,kanban">
+                                    <form string="销售订单明细">
+                                        <group>
+                                            <field name="goods_id"
+                                                   context="{'second_unit_id':second_unit_id, 'main_unit_id':main_unit_id}"
+                                                   options="{'no_open':True,'no_create':True}"
+                                            />
+                                            <label for="second_unit_number" string="辅数量"/>
+                                            <div>
+                                                <field name="second_unit_number" class="oe_inline"/>
+                                                <field name="second_unit_id"
+                                                       class="oe_inline oe_no_button"
+                                                       options="{'no_open':True,'no_create':True}"
+                                                />
+                                            </div>
+                                            <label for="second_unit_number" string="主数量"/>
+                                            <div>
+                                                <field name="main_unit_number" class="oe_inline"/>
+                                                <field name="main_unit_id"
+                                                       class="oe_inline oe_no_button"
+                                                       options="{'no_open':True,'no_create':True}"
+                                                />
+                                            </div>
+                                            <field name="price"/>
+                                            <field name="money"/>
+                                        </group>
+                                    </form>
                                     <tree string="销售订单明细" editable="bottom">
                                         <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
                                         <field name="second_unit_id" readonly="1"/>
