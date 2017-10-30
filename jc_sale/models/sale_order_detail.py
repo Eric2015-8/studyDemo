@@ -86,3 +86,21 @@ class SaleOrderDetail(models.Model):
     def _onchange_goods(self):
         self.second_unit_id = self.goods_id.second_unit_id
         self.main_unit_id = self.goods_id.main_unit_id
+
+    @api.model
+    def create(self, values):
+        self._set_tmp_for_number(values)
+        return super(SaleOrderDetail, self).create(values)
+
+    def _set_tmp_for_number(self, values):
+        if 'second_unit_number' in values:
+            values['second_unit_number_tmp'] = str(values['second_unit_number'])
+        if 'main_unit_number' in values:
+            values['main_unit_number_tmp'] = str(values['main_unit_number'])
+        if 'price' in values:
+            values['price_tmp'] = str(values['price'])
+
+    @api.multi
+    def write(self, values):
+        self._set_tmp_for_number(values)
+        return super(SaleOrderDetail, self).write(values)
