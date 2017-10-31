@@ -8,7 +8,7 @@ class Setting(models.Model):
 
     name = fields.Char()
     res_model = fields.Char()
-    user_id = fields.Many2one(comodel_name='res.users', ondelete='cascade')
+    # user_id = fields.Many2one(comodel_name='res.users', ondelete='cascade')
     xml_id = fields.Char()
     columns = fields.Char()
 
@@ -16,12 +16,12 @@ class Setting(models.Model):
     def get_columns(self, args, vals):
         name = vals.get('name', '')
         res_model = vals.get('res_model', '')
-        user_id = vals.get('user_id', 0)
+        # user_id = vals.get('user_id', 0)
         xml_id = vals.get('xml_id', '')
         settings = self.env['max.web.select.list.view.column.setting']
         records = settings.search([('name', '=', name),
                                    ('res_model', '=', res_model),
-                                   ('user_id', '=', user_id),
+                                   # ('user_id', '=', user_id),
                                    ('xml_id', '=', xml_id)])
         if records:
             return records[0].columns.split(',')
@@ -32,13 +32,13 @@ class Setting(models.Model):
     def save_columns(self, args, vals, columns):
         name = vals.get('name', '')
         res_model = vals.get('res_model', '')
-        user_id = vals.get('user_id', 0)
+        # user_id = vals.get('user_id', 0)
         xml_id = vals.get('xml_id', '')
 
         settings = self.env['max.web.select.list.view.column.setting']
         records = settings.search([('name', '=', name),
                                    ('res_model', '=', res_model),
-                                   ('user_id', '=', user_id),
+                                   # ('user_id', '=', user_id),
                                    ('xml_id', '=', xml_id)])
         if records:
             records[0].columns = ','.join(columns)
@@ -46,7 +46,7 @@ class Setting(models.Model):
             settings.create({
                 'name': name,
                 'res_model': res_model,
-                'user_id': user_id,
+                # 'user_id': user_id,
                 'xml_id': xml_id,
                 'columns': ','.join(columns),
             })
@@ -57,13 +57,13 @@ class Setting(models.Model):
     def reset_columns(self, args, vals):
         name = vals.get('name', '')
         res_model = vals.get('res_model', '')
-        user_id = vals.get('user_id', 0)
+        # user_id = vals.get('user_id', 0)
         xml_id = vals.get('xml_id', '')
 
         self.env['max.web.select.list.view.column.setting']\
             .search([('name', '=', name),
                      ('res_model', '=', res_model),
-                     ('user_id', '=', user_id),
+                     # ('user_id', '=', user_id),
                      ('xml_id', '=', xml_id)]).unlink()
         return True
 

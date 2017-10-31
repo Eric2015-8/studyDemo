@@ -85,7 +85,7 @@ ListView.include({
                     'name': action_context.display_name,
                     'xml_id': action_context.xml_id,
                     'res_model': action_context.res_model,
-                    'user_id': self.dataset.context.uid
+                    // 'user_id': self.dataset.context.uid
                 }, column_ids, self.dataset.context]).then(function () {
                     return self.reload();
                 });
@@ -104,7 +104,7 @@ ListView.include({
             'name': action_context.display_name,
             'xml_id': action_context.xml_id,
             'res_model': action_context.res_model,
-            'user_id': self.dataset.context.uid
+            // 'user_id': self.dataset.context.uid
         },
             self.dataset.context]).then(function () {
             return self.reload();
@@ -121,7 +121,7 @@ ListView.include({
             'name': action_context.display_name,
             'xml_id': action_context.xml_id,
             'res_model': action_context.res_model,
-            'user_id': this.dataset.context.uid
+            // 'user_id': this.dataset.context.uid
         }]).then(function (stored_cols) {
             if (stored_cols.length > 0) {
                 self.visible_columns = _.filter(self.columns, function (column) {
