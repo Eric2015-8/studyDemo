@@ -110,7 +110,7 @@
         <menuitem name="库间" id="jc_storage.between_storage" parent="jc_storage_menu_root"/>
 
         <menuitem name="其它出库" id="jc_storage.menu_other_out_store" parent="jc_storage.between_storage"
-                  action="jc_storage_other_out_store_action_window" sequence="1"/>
+                  action="jc_storage_other_out_store_action_window" sequence="2"/>
 
     </data>
 </openerp>
