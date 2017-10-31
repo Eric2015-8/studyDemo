@@ -164,6 +164,10 @@
                     <field name="department_id"/>
                     <filter name="not_checked_bill" string="未审核"
                             domain="[('bill_state', '=', 1)]"/>
+                    <filter name="checked_bill" string="已审核"
+                            domain="[('bill_state', '=', 10)]"/>
+                    <filter name="finished_bill" string="已完毕"
+                            domain="[('bill_state', '=', 20)]"/>
                     <group string="Group By">
                         <filter name="by_bill_state" string="单据状态"
                                 context="{'group_by': 'bill_state'}"/>
