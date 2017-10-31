@@ -37,6 +37,7 @@
         'views/sale_forecast.xml',
         'print/sale_forecast_report.xml',
         'views/sale_order.xml',
+        'print/sale_order_report.xml',
         'report/report_sale_order.xml',
     ],
     # only loaded in demonstration mode
