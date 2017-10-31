@@ -87,5 +87,5 @@ class ClassPrice(models.Model):
     def default_get(self, fields_):
         res = super(ClassPrice, self).default_get(fields_)
         need_set_fields = ['company_id', 'department_id']
-        self.env['archives.set_customer_setting'].set_default(res, self._name, fields, need_set_fields)
+        self.env['archives.set_customer_setting'].set_default(res, self._name, fields_, need_set_fields)
         return res
