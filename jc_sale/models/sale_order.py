@@ -21,7 +21,8 @@ class SaleOrder(models.Model):
 
     forecast_id = fields.Many2one('jc_sale.sale_forecast', string=u'销售预报单ID')
 
-    customer_id = fields.Many2one('archives.customer', string=u'客户', required=True)
+    customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
+                                  domain=lambda self: self.env['archives.organization'].get_customer_organization())
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True)
     remark = fields.Char(string=u'摘要')
@@ -29,10 +30,12 @@ class SaleOrder(models.Model):
     sale_order_detail = fields.One2many('jc_sale.sale_order.detail', 'sale_order_id', string=u'销售订单明细', copy=True)
 
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
-                                 default=lambda self: self.env['res.company']._company_default_get())
+                                 domain=lambda self: self.env['archives.organization'].get_company_organization())
     staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
-    store_id = fields.Many2one('archives.store', string=u'仓库')
-    department_id = fields.Many2one('archives.department', string=u'部门', required=True)
+    store_id = fields.Many2one('archives.store', string=u'仓库',
+                               domain=lambda self: self.env['archives.organization'].get_store_organization())
+    department_id = fields.Many2one('archives.department', string=u'部门', required=True,
+                                    domain=lambda self: self.env['archives.organization'].get_department_organization())
 
     total_second_number = fields.Float(string='辅数量', store=True, readonly=True, compute='_amount_all',
                                        track_visibility='always')
