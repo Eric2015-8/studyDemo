@@ -1,0 +1,185 @@
+<openerp>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="jc_sale_sale_order_list">
+            <field name="name">分类价列表</field>
+            <field name="model">jc_sale.class_price</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="bill_state"/>
+                    <field name="price_type_id"/>
+                    <field name="date"/>
+                    <field name="company_id"/>
+                    <field name="department_id"/>
+                    <field name="remark"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="jc_sale_class_price_edit">
+            <field name="name">分类价新建</field>
+            <field name="model">jc_sale.class_price</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="id" attrs="{'invisible': True}"/>
+                        <label string="单据状态:"/>
+                        <field name="bill_state" readonly="1" attrs="{'invisible': [('id', '==', False)]}"/>
+                        <button name="do_check" string="审核" type="object" class="oe_highlight oe_read_only"
+                                attrs="{'invisible': ['|',('bill_state', '!=', 1),('id', '==', False)]}"/>
+                        <button name="do_un_check" string="撤销" type="object"
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 10)]}"/>
+                        <button name="do_finish" string="完毕" type="object"
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 10)]}"/>
+                        <button name="do_un_finish" string="撤销完毕" type="object"
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 20)]}"/>
+                        <button name="do_customer_setting" string="个性设置" type="object"
+                                attrs="{'invisible': [('bill_state', '!=', 1)]}"/>
+                    </header>
+                    <sheet>
+                        <group name="group_top" string="分类价" col="4">
+                            <field name="name"/>
+                            <field name="price_type_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="date"/>
+                            <field name="remark"/>
+                        </group>
+                        <notebook>
+                            <page string="物料信息">
+                                <field name="class_price_detail" mode="tree,kanban">
+                                    <form string="分类价明细">
+                                        <group>
+                                            <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
+                                            <!--<field name="price_tmp"/>-->
+                                            <!--<field name="second_unit_number" invisible="1"/>-->
+                                            <!--<field name="main_unit_number" invisible="1"/>-->
+                                            <field name="price"/>
+                                        </group>
+                                    </form>
+                                    <tree string="分类价明细" editable="bottom">
+                                        <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="price" widget="char"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="goods_id"/>
+                                        <field name="price"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                                    <div class="row">
+                                                        <div class="col-xs-8">
+                                                            <strong>
+                                                                <span>
+                                                                    <t t-esc="record.goods_id.value"/>
+                                                                </span>
+                                                            </strong>
+                                                        </div>
+                                                        <div class="col-xs-4 text-muted">
+                                                            <span class="pull-right text-right">
+                                                                <field name="price"/>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                            <page string="其它信息">
+                                <group name="group_other" col="4">
+                                    <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="department_id" options="{'no_open':True,'no_create':True}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="class_price_search_view">
+            <field name="name">class_price.search</field>
+            <field name="model">jc_sale.class_price</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="bill_state"/>
+                    <field name="price_type_id"/>
+                    <field name="company_id"/>
+                    <field name="department_id"/>
+                    <filter name="not_checked_bill" string="未审核"
+                            domain="[('bill_state', '=', 1)]"/>
+                    <filter name="checked_bill" string="已审核"
+                            domain="[('bill_state', '=', 10)]"/>
+                    <filter name="finished_bill" string="已完毕"
+                            domain="[('bill_state', '=', 20)]"/>
+                    <group string="Group By">
+                        <filter name="by_bill_state" string="单据状态"
+                                context="{'group_by': 'bill_state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_jc_sale_class_price_kanban">
+            <field name="name">jc_sale.class_price.kanban</field>
+            <field name="model">jc_sale.class_price</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="price_type_id"/>
+                    <field name="company_id"/>
+                    <field name="date"/>
+                    <field name="bill_state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong>
+                                            <span>
+                                                <t t-esc="record.name.value"/>
+                                            </span>
+                                        </strong>
+                                    </div>
+                                    <div class="col-xs-6 pull-right text-right">
+                                        <strong>
+                                            <field name="price_type_id"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span>
+                                            <t t-esc="record.date.value"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <span class="pull-right text-right">
+                                            <field name="bill_state" widget="kanban_label_selection"
+                                                   options="{'classes': {'1': 'default', '10': 'success', '20': 'success'}}"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!--actions opening views on models-->
+        <record model="ir.actions.act_window" id="jc_sale_class_price_action_window">
+            <field name="name">分类价</field>
+            <field name="res_model">jc_sale.class_price</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
+        </record>
+
+        <menuitem name="分类价" id="jc_sale.menu_class_price" parent="jc_sale_menu_root"
+                  action="jc_sale_class_price_action_window" sequence="10"/>
+
+    </data>
+</openerp>
