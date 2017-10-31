@@ -38,6 +38,7 @@
                                         <field name="zone_type2_id" class="oe_inline" placeholder="地区分类2"/>
                                     </div>
                                     <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="price_type_id" options="{'no_open':True,'no_create':True}"/>
                                 </group>
                             </page>
                             <page string="地址&amp;联系人">

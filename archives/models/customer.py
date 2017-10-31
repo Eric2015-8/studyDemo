@@ -32,6 +32,7 @@ class Customer(models.Model):
     zone_type1_id = fields.Many2one('archives.zone_type1', string=u'地区分类1')
     zone_type2_id = fields.Many2one('archives.zone_type2', string=u'地区分类2')
     company_id = fields.Many2one('res.company', string=u'公司', index=True)
+    price_type_id = fields.Many2one('archives.common_archive', string=u'价格分类', domain="[('archive_name','=',19)]")
 
     # 地址 & 联系人
 
