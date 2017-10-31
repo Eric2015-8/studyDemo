@@ -25,10 +25,14 @@
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
+        'data/ir_sequence_data.xml',
+
         'views/views.xml',
         'views/templates.xml',
         'views/other_in_store.xml',
         'views/other_out_store.xml',
+        'views/sale_out_store.xml',
+        'print/sale_out_store_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
