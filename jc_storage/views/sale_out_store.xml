@@ -230,7 +230,7 @@
             <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
         </record>
 
-        <record model="ir.ui.view" id="jc_storage_sale_out_store_wizard_step1">
+        <record model="ir.ui.view" id="jc_storage_sale_out_store_wizard_step">
             <field name="name">手机销售出库单第一步</field>
             <field name="model">jc_storage.create.sale.out.store.wizard1</field>
             <field name="type">form</field>

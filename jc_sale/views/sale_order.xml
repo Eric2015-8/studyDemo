@@ -232,7 +232,7 @@
             <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
         </record>
 
-        <record model="ir.ui.view" id="jc_sale_sale_order_wizard_step1">
+        <record model="ir.ui.view" id="jc_sale_sale_order_wizard_step">
             <field name="name">手机订单第一步</field>
             <field name="model">jc_sale.create.order.wizard1</field>
             <field name="type">form</field>
@@ -278,7 +278,7 @@
                     </footer>
                     <footer states="step2">
                         <button name="action_previous" string="上一步" type="object"/>
-                        <button name="create_order" string="保存" type="object"/>
+                        <button name="create_bill" string="保存" type="object"/>
                     </footer>
                 </form>
             </field>

@@ -54,15 +54,17 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
 
         return
 
-    def is_number(self, n):  # 是否为数字，包括整数和小数
+    @staticmethod
+    def is_number(n):  # 是否为数字，包括整数和小数
         a = n
         if isinstance(n, unicode):
             a = n.encode('utf-8')
         if a.isdigit():
             return True
-        return self._is_float(a)
+        return CreateSaleOutStoreWizard1._is_float(a)
 
-    def _is_float(self, n):
+    @staticmethod
+    def _is_float(n):
         value = re.compile(r'^[-+]?[0-9]+\.[0-9]+$')
         return value.match(n)
 
@@ -77,7 +79,8 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
             'target': 'new',
         }
 
-    def _open_bill(self, bill_id):
+    @staticmethod
+    def _open_bill(bill_id):
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'jc_storage.sale_out_store',
@@ -90,9 +93,9 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
     def _check_values(self):
         if not self.goods_id:
             raise ValidationError('请选择产品')
-        if self.number and not self.is_number(self.number):
+        if self.number and not CreateSaleOutStoreWizard1.is_number(self.number):
             raise ValidationError('{数量}并不是数字')
-        if self.price and not self.is_number(self.price):
+        if self.price and not CreateSaleOutStoreWizard1.is_number(self.price):
             raise ValidationError('{单价}并不是数字')
 
     def _set_empty(self):
@@ -102,20 +105,12 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
 
     @api.multi
     def action_next(self):
-        # your treatment to click  button next
-        # ...
-        # update state to  step2
         self.write({'state': 'step2', })
-        # return view
         return self._open_wizard()
 
     @api.multi
     def action_previous(self):
-        # your treatment to click  button previous
-        # ...
-        # update state to  step1
         self.write({'state': 'step1', })
-        # return view
         return self._open_wizard()
 
     @api.multi
@@ -149,7 +144,7 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
             if second_unit_number:
                 values['second_unit_number'] = second_unit_number
             self.env['jc_storage.sale_out_store.detail'].create(values)
-        return self._open_bill(order.id)
+        return CreateSaleOutStoreWizard1._open_bill(order.id)
 
     @api.model
     def default_get(self, fields_):

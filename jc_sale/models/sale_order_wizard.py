@@ -54,15 +54,17 @@ class CreateOrderWizard1(models.TransientModel):
 
         return
 
-    def is_number(self, n):  # 是否为数字，包括整数和小数
+    @staticmethod
+    def is_number(n):  # 是否为数字，包括整数和小数
         a = n
         if isinstance(n, unicode):
             a = n.encode('utf-8')
         if a.isdigit():
             return True
-        return self._is_float(a)
+        return CreateOrderWizard1._is_float(a)
 
-    def _is_float(self, n):
+    @staticmethod
+    def _is_float(n):
         value = re.compile(r'^[-+]?[0-9]+\.[0-9]+$')
         return value.match(n)
 
@@ -77,22 +79,23 @@ class CreateOrderWizard1(models.TransientModel):
             'target': 'new',
         }
 
-    def _open_order(self, id):
+    @staticmethod
+    def _open_bill(bill_id):
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'jc_sale.sale_order',
             'view_mode': 'form',
             'view_type': 'form',
-            'res_id': id,
+            'res_id': bill_id,
             'views': [(False, 'form')],
         }
 
     def _check_values(self):
         if not self.goods_id:
             raise ValidationError('请选择产品')
-        if self.number and not self.is_number(self.number):
+        if self.number and not CreateOrderWizard1.is_number(self.number):
             raise ValidationError('{数量}并不是数字')
-        if self.price and not self.is_number(self.price):
+        if self.price and not CreateOrderWizard1.is_number(self.price):
             raise ValidationError('{单价}并不是数字')
 
     def _set_empty(self):
@@ -119,7 +122,7 @@ class CreateOrderWizard1(models.TransientModel):
         return self._open_wizard()
 
     @api.multi
-    def create_order(self):
+    def create_bill(self):
         values = {
             'customer_id': self.customer_id.id,
             'date': datetime.datetime.today(),
@@ -149,14 +152,14 @@ class CreateOrderWizard1(models.TransientModel):
             if second_unit_number:
                 values['second_unit_number'] = second_unit_number
             self.env['jc_sale.sale_order.detail'].create(values)
-        return self._open_order(order.id)
+        return CreateOrderWizard1._open_bill(order.id)
 
     @api.model
-    def default_get(self, fields):
-        res = super(CreateOrderWizard1, self).default_get(fields)
+    def default_get(self, fields_):
+        res = super(CreateOrderWizard1, self).default_get(fields_)
         table = u'jc_sale.sale_order'  # 使用销售订单的个性设置
         need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
-        self.env['archives.set_customer_setting'].set_default(res, table, fields, need_set_fields)
+        self.env['archives.set_customer_setting'].set_default(res, table, fields_, need_set_fields)
         return res
 
 
