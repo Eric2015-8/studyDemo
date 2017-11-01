@@ -1,7 +1,7 @@
 <openerp>
     <data>
         <!-- explicit list view definition -->
-        <record model="ir.ui.view" id="jc_sale_sale_order_list">
+        <record model="ir.ui.view" id="jc_sale_class_price_list">
             <field name="name">分类价列表</field>
             <field name="model">jc_sale.class_price</field>
             <field name="arch" type="xml">
