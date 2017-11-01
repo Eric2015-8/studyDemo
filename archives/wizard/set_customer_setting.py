@@ -36,7 +36,7 @@ class SetCustomerSetting(models.TransientModel):
     def _is_show(self, field):
         return field in self.env.context['need_set_fields']
 
-    def set_default(self, res, table, fields, need_set_fields):
+    def set_default(self, res, table, fields_, need_set_fields):
         if not need_set_fields:
             return None
         setting = self.env["archives.customer_setting"].search(
@@ -46,11 +46,12 @@ class SetCustomerSetting(models.TransientModel):
         if not setting.customer_setting_detail:
             return None
         for f in need_set_fields:  # TODO:优化：将need_set_fields与setting.customer_setting_detail匹配起来后赋值
-            if f not in fields:
+            if f not in fields_:
                 continue
             for detail in setting.customer_setting_detail:
                 if detail.field == f:
                     res[f] = detail.value
+                    break
             if f == 'company_id' and (not res.has_key('company_id') or not res['company_id']):
                 res['company_id'] = self.env['res.company']._company_default_get()
         return None
@@ -70,6 +71,7 @@ class SetCustomerSetting(models.TransientModel):
             for detail in setting.customer_setting_detail:
                 if detail.field == f:
                     res[f] = detail.value
+                    break
             if f == 'company_id' and (not res.has_key('company_id') or not res['company_id']):
                 res['company_id'] = self.env['res.company']._company_default_get()
         return None

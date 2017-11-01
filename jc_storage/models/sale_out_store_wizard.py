@@ -6,7 +6,7 @@ import datetime
 
 
 class CreateSaleOutStoreWizard1(models.TransientModel):
-    """手机生成销售出库单 向导 """
+    """手机创建销售出库单 向导 """
     _name = "jc_storage.create.sale.out.store.wizard1"
     _description = u'手机创建销售出库单的向导'
 
@@ -77,13 +77,13 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
             'target': 'new',
         }
 
-    def _open_order(self, id):
+    def _open_bill(self, bill_id):
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'jc_storage.sale_out_store',
             'view_mode': 'form',
             'view_type': 'form',
-            'res_id': id,
+            'res_id': bill_id,
             'views': [(False, 'form')],
         }
 
@@ -119,7 +119,7 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
         return self._open_wizard()
 
     @api.multi
-    def create_order(self):
+    def create_bill(self):
         values = {
             'customer_id': self.customer_id.id,
             'date': datetime.datetime.today(),
@@ -149,7 +149,7 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
             if second_unit_number:
                 values['second_unit_number'] = second_unit_number
             self.env['jc_storage.sale_out_store.detail'].create(values)
-        return self._open_order(order.id)
+        return self._open_bill(order.id)
 
     @api.model
     def default_get(self, fields_):
