@@ -121,8 +121,8 @@ class SaleOrder(models.Model):
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name)
 
     @api.model
-    def default_get(self, fields):
-        res = super(SaleOrder, self).default_get(fields)
+    def default_get(self, fields_):
+        res = super(SaleOrder, self).default_get(fields_)
         need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
-        self.env['archives.set_customer_setting'].set_default(res, self._name, fields, need_set_fields)
+        self.env['archives.set_customer_setting'].set_default(res, self._name, fields_, need_set_fields)
         return res
