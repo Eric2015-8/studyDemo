@@ -1,2 +1,7 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_jc_finance_jc_finance,jc_finance.jc_finance,model_jc_finance_jc_finance,,1,0,0,0
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+sale_account_manager,sale_account manager,model_jc_finance_sale_account,finance_group_manager,1,1,1,1
+sale_account_detail_manager,sale_account_detail manager,model_jc_finance_sale_account_detail,finance_group_manager,1,1,1,1
+sale_account_only_self,sale_account only_self,model_jc_finance_sale_account,,0,0,0,0
+sale_account_detail_only_self,sale_account_detail only_self,model_jc_finance_sale_account_detail,,0,0,0,0
+sale_account_read,sale_account read,model_jc_finance_sale_account,finance_group_read,1,0,0,0
+sale_account_detail_read,sale_account_detail read,model_jc_finance_sale_account_detail,finance_group_read,1,0,0,0
