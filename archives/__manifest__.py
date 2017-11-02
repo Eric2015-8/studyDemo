@@ -45,6 +45,7 @@
         'views/organization_group.xml',
         'views/res_users.xml',
         'wizard/set_customer_setting.xml',
+        'views/setting_center.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

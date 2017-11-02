@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_setting_center" model="ir.ui.view">
+        <field name="name">设置中心</field>
+        <field name="model">setting_center</field>
+        <field name="arch" type="xml">
+            <form string="设置中心" class="oe_form_configuration">
+                <header>
+                    <button string="保存" type="object" name="execute" class="oe_highlight"/>
+                    <button string="取消" type="object" name="cancel" class="oe_link" special="cancel"/>
+                </header>
+                <separator string="设置中心"/>
+                <sheet>
+                    <notebook>
+                        <page string="通用">
+                            <!--<group>-->
+                                <!--<label for="company_id" string="公司" name="email_label"/>-->
+                                <!--<div>-->
+                                    <!--<div>-->
+                                        <!--<field name="company_id"/>-->
+                                        <!--<label for="company_id"/>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</group>-->
+                        </page>
+                    </notebook>
+                </sheet>
+
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_setting_center" model="ir.actions.act_window">
+        <field name="name">设置中心</field>
+        <field name="res_model">setting_center</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <menuitem
+            id="menu_setting_center"
+            name="设置中心"
+            parent="base.menu_administration"
+            sequence="1"
+            action="action_setting_center"
+            groups="base.group_system"/>
+
+</odoo>
