@@ -19,6 +19,10 @@ class SaleOrderDetail(models.Model):
 
     goods_id = fields.Many2one('archives.goods', string=u'产品', required=True,
                                domain=lambda self: self.env['archives.organization'].get_goods_organization())
+    need_second_change = fields.Selection([
+        ('1', '是'),
+        ('0', '否')
+    ], related='goods_id.need_second_change', string=u'辅单位是否换算', default='1')
     second_unit_id = fields.Many2one('archives.unit', string=u'辅单位', compute='_set_second', store=True)
     second_unit_number = fields.Float(digits=(6, 2), string=u'辅数量')
     second_unit_number_tmp = fields.Char(string=u'辅数量')
@@ -41,6 +45,11 @@ class SaleOrderDetail(models.Model):
     def _set_second(self):
         for record in self:
             record.second_unit_id = record.goods_id.second_unit_id
+
+    @api.depends('goods_id')
+    def _set_change(self):
+        for record in self:
+            record.need_second_change = record.goods_id.need_second_change
 
     @api.onchange('second_unit_number_tmp')
     def _onchange_for_second_unit_number_from_tmp(self):
