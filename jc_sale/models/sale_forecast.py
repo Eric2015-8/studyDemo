@@ -15,7 +15,7 @@ class SaleForecast(models.Model):
         string=u'单据状态', require=True, default=1, readonly=True
     )
 
-    name = fields.Char(string=u'预报编号', required=True, copy=False, readonly=True,
+    name = fields.Char(string=u'单据编号', required=True, copy=False, readonly=True,
                        index=True, default=lambda self: _('新建'))
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())

@@ -16,7 +16,7 @@ class SaleOrder(models.Model):
         string=u'单据状态', require=True, default=1, readonly=True
     )
 
-    name = fields.Char(string=u'订单编号', required=True, copy=False, readonly=True,
+    name = fields.Char(string=u'单据编号', required=True, copy=False, readonly=True,
                        index=True, default=lambda self: _('新建'))
 
     forecast_id = fields.Many2one('jc_sale.sale_forecast', string=u'销售预报单ID')

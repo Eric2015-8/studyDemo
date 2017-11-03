@@ -16,7 +16,7 @@ class OtherInStore(models.Model):
         string=u'单据状态', require=True, default=1, readonly=True
     )
 
-    name = fields.Char(string=u'订单编号', required=True, copy=False, readonly=True,
+    name = fields.Char(string=u'单据编号', required=True, copy=False, readonly=True,
                        index=True, default=lambda self: _('新建'))
 
     store_id = fields.Many2one('archives.store', string=u'仓库', required=True,
