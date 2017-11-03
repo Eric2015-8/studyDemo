@@ -17,6 +17,7 @@
                         <field name="is_show_staff_id" attrs="{'invisible':True}"/>
                         <field name="is_show_store_id" attrs="{'invisible':True}"/>
                         <field name="is_show_department_id" attrs="{'invisible':True}"/>
+                        <field name="is_show_in_store_type_id" attrs="{'invisible':True}"/>
                         <field name="customer_id" options="{'no_open':True,'no_create':True}"
                                attrs="{'invisible':[('is_show_customer_id','!=',True)]}"/>
                         <field name="sale_type_id" options="{'no_open':True,'no_create':True}"
@@ -29,12 +30,14 @@
                                attrs="{'invisible':[('is_show_store_id','!=',True)]}"/>
                         <field name="department_id" options="{'no_open':True,'no_create':True}"
                                attrs="{'invisible':[('is_show_department_id','!=',True)]}"/>
+                        <field name="in_store_type_id" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible':[('is_show_in_store_type_id','!=',True)]}"/>
                     </group>
                     <footer>
                         <button name="subscribe" type="object"
-                                string="Save" class="oe_highlight"/>
+                                string="保存" class="oe_highlight"/>
                         or
-                        <button special="cancel" string="Cancel"/>
+                        <button special="取消" string="Cancel"/>
                     </footer>
                 </form>
             </field>

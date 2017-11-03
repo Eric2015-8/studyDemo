@@ -7,6 +7,7 @@ from odoo.exceptions import ValidationError
 class OtherOutStore(models.Model):
     _name = 'jc_storage.other_out_store'
     _description = u'仓储：其它出库'
+    _order = 'id desc'
 
     _inherit = ['ir.needaction_mixin']
 
@@ -25,6 +26,14 @@ class OtherOutStore(models.Model):
     staff_id = fields.Many2one('archives.staff', string=u'经办人')
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     remark = fields.Char(string=u'摘要')
+
+    customer_id = fields.Many2one('archives.customer', string=u'往来单位', required=True,
+                                  domain=lambda self: self.env['archives.organization'].get_customer_organization())
+    staff_id = fields.Many2one('archives.staff', string=u'员工', required=True)
+    company_id = fields.Many2one('res.company', string=u'公司', required=True,
+                                 domain=lambda self: self.env['archives.organization'].get_company_organization())
+    department_id = fields.Many2one('archives.department', string=u'部门', required=True,
+                                    domain=lambda self: self.env['archives.organization'].get_department_organization())
 
     other_out_store_detail = fields.One2many('jc_storage.other_out_store.detail', 'other_out_store_id',
                                              string=u'其它入库明细', copy=True)
@@ -100,13 +109,13 @@ class OtherOutStore(models.Model):
     @api.multi
     def do_customer_setting(self):
         table = u'jc_storage.other_out_store'
-        table_show_name = u'其它入库'
-        need_set_fields = ['store_id', 'in_store_type_id', 'staff_id']
+        table_show_name = u'其它出库'
+        need_set_fields = ['store_id', 'in_store_type_id', 'staff_id', 'customer_id', 'company_id', 'department_id']
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name)
 
     @api.model
-    def default_get(self, fields):
-        res = super(OtherOutStore, self).default_get(fields)
-        need_set_fields = ['store_id', 'in_store_type_id', 'staff_id']
-        self.env['archives.set_customer_setting'].set_default(res, self._name, fields, need_set_fields)
+    def default_get(self, fields_):
+        res = super(OtherOutStore, self).default_get(fields_)
+        need_set_fields = ['store_id', 'in_store_type_id', 'staff_id', 'customer_id', 'company_id', 'department_id']
+        self.env['archives.set_customer_setting'].set_default(res, self._name, fields_, need_set_fields)
         return res

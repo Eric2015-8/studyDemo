@@ -15,25 +15,30 @@ class SetCustomerSetting(models.TransientModel):
 
     customer_id = fields.Many2one('archives.customer', string=u'客户',
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
-    is_show_customer_id = fields.Boolean('是否显示客户', default=lambda self: self._is_show('customer_id'))
+    is_show_customer_id = fields.Boolean(u'是否显示客户', default=lambda self: self._is_show('customer_id'))
 
     sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', domain=[('archive_name', '=', 1)])
-    is_show_sale_type_id = fields.Boolean('是否显示销售类型', default=lambda self: self._is_show('sale_type_id'))
+    is_show_sale_type_id = fields.Boolean(u'是否显示销售类型', default=lambda self: self._is_show('sale_type_id'))
 
     company_id = fields.Many2one('res.company', string=u'公司',
                                  default=lambda self: self.env['res.company']._company_default_get())
-    is_show_company_id = fields.Boolean('是否显示公司', default=lambda self: self._is_show('company_id'))
+    is_show_company_id = fields.Boolean(u'是否显示公司', default=lambda self: self._is_show('company_id'))
 
     staff_id = fields.Many2one('archives.staff', string=u'销售员')
-    is_show_staff_id = fields.Boolean('是否显示销售员', default=lambda self: self._is_show('staff_id'))
+    is_show_staff_id = fields.Boolean(u'是否显示销售员', default=lambda self: self._is_show('staff_id'))
 
     store_id = fields.Many2one('archives.store', string=u'仓库')
-    is_show_store_id = fields.Boolean('是否显示仓库', default=lambda self: self._is_show('store_id'))
+    is_show_store_id = fields.Boolean(u'是否显示仓库', default=lambda self: self._is_show('store_id'))
 
     department_id = fields.Many2one('archives.department', string=u'部门')
-    is_show_department_id = fields.Boolean('是否显示部门', default=lambda self: self._is_show('department_id'))
+    is_show_department_id = fields.Boolean(u'是否显示部门', default=lambda self: self._is_show('department_id'))
+
+    in_store_type_id = fields.Many2one('archives.common_archive', string=u'入库类型', domain=[('archive_name', '=', 18)])
+    is_show_in_store_type_id = fields.Boolean(u'是否显示入库类型', default=lambda self: self._is_show('in_store_type_id'))
 
     def _is_show(self, field):
+        if 'need_set_fields' not in self.env.context:  # 之所以添加这个判断，是因为添加新字段后升级，会报错
+            return False
         return field in self.env.context['need_set_fields']
 
     def set_default(self, res, table, fields_, need_set_fields):
@@ -125,6 +130,8 @@ class SetCustomerSetting(models.TransientModel):
             self.create_setting_detail(setting.id, 'store_id', self.store_id.id)
         if self.is_show_department_id:
             self.create_setting_detail(setting.id, 'department_id', self.department_id.id)
+        if self.is_show_in_store_type_id:
+            self.create_setting_detail(setting.id, 'in_store_type_id', self.in_store_type_id.id)
 
     def create_setting_detail(self, setting_id, field, value):
         values = {

@@ -13,6 +13,9 @@
                     <field name="in_store_type_id"/>
                     <field name="staff_id"/>
                     <field name="date"/>
+                    <field name="customer_id"/>
+                    <field name="company_id"/>
+                    <field name="department_id"/>
                     <field name="remark"/>
                 </tree>
             </field>
@@ -42,7 +45,6 @@
                         <group name="group_top" string="其它出库" col="4">
                             <field name="store_id" options="{'no_open':True,'no_create':True}"/>
                             <field name="in_store_type_id" options="{'no_open':True,'no_create':True}"/>
-                            <field name="staff_id" options="{'no_open':True,'no_create':True}"/>
                             <field name="date"/>
                             <field name="remark" col="4"/>
                         </group>
@@ -70,9 +72,11 @@
                             </page>
                             <page string="其它信息">
                                 <group name="group_other" col="4">
-                                    <!--<field name="company_id" options="{'no_open':True,'no_create':True}"/>-->
-                                    <!--<field name="staff_id" domain="[('is_sale_man','=',True)]"-->
-                                           <!--options="{'no_open':True,'no_create':True}" readonly="0"/>-->
+                                    <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="staff_id" domain="[('is_sale_man','=',True)]"
+                                           options="{'no_open':True,'no_create':True}" readonly="0"/>
+                                    <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="department_id" options="{'no_open':True,'no_create':True}"/>
                                 </group>
                             </page>
                         </notebook>
