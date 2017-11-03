@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!--这个应该放在别的地方:添加系统自带数据的地方。可以考虑新建一个模块来处理-->
-    <record id="paperformat_chn__a4_lowmargin" model="report.paperformat">
-        <field name="name">Chinese A4 low margin</field>
-        <field name="default" eval="True"/>
-        <field name="format">A4</field>
-        <field name="page_height">0</field>
-        <field name="page_width">0</field>
-        <field name="orientation">Portrait</field>
-        <field name="margin_top">5</field>
-        <field name="margin_bottom">15</field>
-        <field name="margin_left">5</field>
-        <field name="margin_right">5</field>
-        <field name="header_line" eval="False"/>
-        <field name="header_spacing">0</field>
-        <field name="dpi">80</field>
-    </record>
 
     <report
             id="report_sale_forecast"
@@ -24,7 +8,7 @@
             report_type="qweb-html"
             file="jc_sale.report_pdf_sale_forecast_file"
             name="jc_sale.report_pdf_sale_forecast"
-            paperformat="jc_sale.paperformat_chn__a4_lowmargin"
+            paperformat="archives.paperformat_chn__a4_lowmargin"
     />
 
     <template id="report_pdf_sale_forecast">

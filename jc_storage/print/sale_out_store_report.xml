@@ -7,7 +7,7 @@
             report_type="qweb-html"
             file="jc_storage.report_pdf_sale_out_store_file"
             name="jc_storage.report_pdf_sale_out_store"
-            paperformat="jc_sale.paperformat_chn__a4_lowmargin"
+            paperformat="archives.paperformat_chn__a4_lowmargin"
     />
 
     <template id="report_pdf_sale_out_store">

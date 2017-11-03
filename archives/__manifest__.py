@@ -19,10 +19,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base',
+                'report'
+                ],
 
     # always loaded
     'data': [
+        'print/print_format.xml',
+
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/no_page/duty.xml',
