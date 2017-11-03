@@ -4,7 +4,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 
-class TransferIn(models.Model):
+class TransferInDetail(models.Model):
     _name = 'jc_storage.transfer_in.detail'
     _description = u'仓储：调拨入库明细'
 
