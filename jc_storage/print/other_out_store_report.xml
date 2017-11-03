@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+            id="report_other_out_store"
+            string="其它出库单"
+            model="jc_storage.other_out_store"
+            report_type="qweb-html"
+            file="jc_storage.report_pdf_other_out_store_file"
+            name="jc_storage.report_pdf_other_out_store"
+            paperformat="archives.paperformat_chn__a4_lowmargin"
+    />
+
+    <template id="report_pdf_other_out_store">
+        <t t-call="report.html_container">
+            <t t-set="data_report_margin_top" t-value="45"/>
+            <t t-set="data_report_header_spacing" t-value="40"/>
+            <t t-call="report.external_layout">
+                <t t-set="o" t-value="docs[0]"/>
+                <t t-foreach="docs" t-as="quotation">
+                    <div class="page">
+                        <div id="introduction"
+                             class="text-center"><!--page-header:在下面加了淡淡的下划线，从最左边，到最右边-->
+                            <h1>
+                                <em t-field="quotation.company_id"/>
+                            </h1>
+                        </div>
+                        <div id="introduction" class="text-center">
+                            <h4>
+                                其它出库单
+                                <em t-esc="quotation.name"/>
+                            </h4>
+                        </div>
+                        <!-- 表头 -->
+                        <div class="row mt32">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="row">
+                                    <label class="col-sm-4 col-xs-4 text-right">客户:</label>
+                                    <div class="col-sm-8 col-xs-8">
+                                        <div t-field="quotation.customer_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="row">
+                                    <label class="col-sm-5 col-xs-5 text-right">日期:</label>
+                                    <div class="col-sm-7 col-xs-7">
+                                        <span t-field="quotation.date"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="row">
+                                    <label class="col-sm-4 col-xs-4 text-right">销售类型:</label>
+                                    <div class="col-sm-8 col-xs-8">
+                                        <div t-field="quotation.sale_type_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="row">
+                                    <label class="col-sm-5 col-xs-5 text-right">摘要:</label>
+                                    <div class="col-sm-7 col-xs-7">
+                                        <span t-field="quotation.remark"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="oe_structure"/>
+                        <!--明细-->
+                        <t t-call="jc_storage.other_out_store_detail_layout"/>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!--自定义打印页面：其它出库单明细-->
+    <template id="other_out_store_detail_layout" name="detail">
+        <div id="quote">
+            <table class="table wq-table mt32">
+                <thead>
+                    <tr class="active">
+                        <th>存货</th>
+                        <th>辅数量</th>
+                        <th>主数量</th>
+                        <th>单价</th>
+                        <th>金额</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="quotation.other_out_store_detail" t-as="detail">
+                        <tr>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.goods_id.name"/>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-if="detail.goods_id.need_second_change == '1'">
+                                    <t t-esc="round(detail.second_unit_number,2)"/>
+                                    <t t-esc="detail.second_unit_id.name"/>
+                                </t>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.main_unit_number"/>
+                                <t t-esc="detail.main_unit_id.name"/>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.price"/>
+                                <!--<t t-esc="detail['price']"/>-->
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="round(detail.money,2)"/>
+                                <!--<t t-esc="detail['money']"/>-->
+                            </td>
+                        </tr>
+                    </t>
+                    <tr>
+                        <td>
+                            合计
+                        </td>
+                        <td>
+                            <t t-esc="quotation.total_second_number"/>
+                        </td>
+                        <td>
+                            <t t-esc="quotation.total_main_number"/>
+                        </td>
+                        <td></td>
+                        <td>
+                            <t t-esc="round(quotation.total_money,2)"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </template>
+
+</odoo>
