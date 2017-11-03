@@ -23,7 +23,6 @@ class OtherOutStore(models.Model):
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
     in_store_type_id = fields.Many2one('archives.common_archive', string=u'入库类型', required=True,
                                        domain="[('archive_name','=',18)]")
-    staff_id = fields.Many2one('archives.staff', string=u'经办人')
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     remark = fields.Char(string=u'摘要')
 
