@@ -33,7 +33,7 @@ class Goods(models.Model):
     need_second_change = fields.Selection([
         ('1', '是'),
         ('0', '否')
-    ], string=u'辅单位是否换算', default='1')
+    ], string=u'辅单位是否换算', default='1')  # 不要直接使用本字段判断，使用need_change方法
 
     # 物料分类
     goods_type_id = fields.Many2one('archives.common_archive', string=u'物料分类')
@@ -51,6 +51,10 @@ class Goods(models.Model):
 
     # 权限
     organization_id = fields.Many2one('archives.common_archive', string=u'存货权限', domain="[('archive_name','=',17)]")
+
+    @api.model
+    def need_change(self):
+        return self.need_second_change == '1'
 
     @api.depends('second_rate_string')
     def _compute_second_rate(self):

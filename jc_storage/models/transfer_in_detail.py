@@ -38,20 +38,20 @@ class TransferIn(models.Model):
 
     @api.onchange('second_unit_number')
     def _onchange_second(self):
-        if not self.goods_id.need_second_change:
+        if not self.goods_id.need_change():
             return
         self.main_unit_number = self.goods_id.second_rate * self.second_unit_number
 
     @api.onchange('main_unit_number')
     def _onchange_main(self):
-        if not self.goods_id.need_second_change:
+        if not self.goods_id.need_change():
             return
         if self.goods_id.second_rate != 0:
             self.second_unit_number = self.main_unit_number / self.goods_id.second_rate
 
     @api.onchange('goods_id')
     def _onchange_goods(self):
-        if self.goods_id.need_second_change:
+        if self.goods_id.need_change():
             self.second_unit_id = self.goods_id.second_unit_id
         else:
             self.second_unit_id = None

@@ -42,14 +42,14 @@ class AddGoodsDetail(models.TransientModel):
     #
     # @api.onchange('second_unit_number')
     # def _onchange_second(self):
-    #     if not self.goods_id.need_second_change:
+    #     if not self.goods_id.need_change():
     #         return
     #     if self.goods_id.second_rate != 0:
     #         self.main_unit_number = self.goods_id.second_rate * self.second_unit_number
     #
     # @api.onchange('main_unit_number')
     # def _onchange_main(self):
-    #     if not self.goods_id.need_second_change:
+    #     if not self.goods_id.need_change():
     #         return
     #     if self.goods_id.second_rate != 0:
     #         self.second_unit_number = self.main_unit_number / self.goods_id.second_rate

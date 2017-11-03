@@ -44,7 +44,10 @@ class SaleOrderDetail(models.Model):
     @api.depends('goods_id')
     def _set_second(self):
         for record in self:
-            record.second_unit_id = record.goods_id.second_unit_id
+            if record.goods_id.need_change():
+                record.second_unit_id = record.goods_id.second_unit_id
+            else:
+                record.second_unit_id = None
 
     @api.depends('goods_id')
     def _set_change(self):
@@ -54,7 +57,7 @@ class SaleOrderDetail(models.Model):
     @api.onchange('second_unit_number_tmp')
     def _onchange_for_second_unit_number_from_tmp(self):
         self.second_unit_number = float(self.second_unit_number_tmp)
-        if not self.goods_id.need_second_change:
+        if not self.goods_id.need_change():
             return
         self.main_unit_number = self.goods_id.second_rate * self.second_unit_number
         self.main_unit_number_tmp = str(self.main_unit_number)
@@ -64,7 +67,7 @@ class SaleOrderDetail(models.Model):
     def _onchange_for_main_unit_number_from_tmp(self):
         self.main_unit_number = float(self.main_unit_number_tmp)
         self.money = self.price * self.main_unit_number
-        if not self.goods_id.need_second_change:
+        if not self.goods_id.need_change():
             return
         if self.goods_id.second_rate != 0:
             self.second_unit_number = self.main_unit_number / self.goods_id.second_rate
@@ -81,20 +84,23 @@ class SaleOrderDetail(models.Model):
 
     @api.onchange('second_unit_number')
     def _onchange_second(self):
-        if not self.goods_id.need_second_change:
+        if not self.goods_id.need_change():
             return
         self.main_unit_number = self.goods_id.second_rate * self.second_unit_number
 
     @api.onchange('main_unit_number')
     def _onchange_main(self):
-        if not self.goods_id.need_second_change:
+        if not self.goods_id.need_change():
             return
         if self.goods_id.second_rate != 0:
             self.second_unit_number = self.main_unit_number / self.goods_id.second_rate
 
     @api.onchange('goods_id')
     def _onchange_goods(self):
-        self.second_unit_id = self.goods_id.second_unit_id
+        if self.goods_id.need_change():
+            self.second_unit_id = self.goods_id.second_unit_id
+        else:
+            self.second_unit_id = None
         self.main_unit_id = self.goods_id.main_unit_id
 
     @api.model

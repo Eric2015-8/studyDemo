@@ -195,7 +195,10 @@ class SaleForecastDetail(models.Model):
     @api.depends('goods_id')
     def _set_second(self):
         for record in self:
-            record.second_unit_id = record.goods_id.second_unit_id
+            if record.goods_id.need_change():
+                record.second_unit_id = record.goods_id.second_unit_id
+            else:
+                record.second_unit_id = None
 
     @api.onchange('price', 'main_unit_number')
     def _onchange_for_money(self):
@@ -203,21 +206,22 @@ class SaleForecastDetail(models.Model):
 
     @api.onchange('second_unit_number')
     def _onchange_second(self):
-        if not self.goods_id.need_second_change:
+        if not self.goods_id.need_change():
             return
         if self.goods_id.second_rate != 0:
             self.main_unit_number = self.goods_id.second_rate * self.second_unit_number
 
     @api.onchange('main_unit_number')
     def _onchange_main(self):
-        if not self.goods_id.need_second_change:
+        if not self.goods_id.need_change():
             return
         if self.goods_id.second_rate != 0:
             self.second_unit_number = self.main_unit_number / self.goods_id.second_rate
 
     @api.onchange('goods_id')
     def _onchange_goods(self):
-        # self.second_unit_id = self.env['archives.goods'].second_unit_id
-        # self.main_unit_id = self.env['archives.goods'].main_unit_id
-        self.second_unit_id = self.goods_id.second_unit_id
+        if self.goods_id.need_change():
+            self.second_unit_id = self.goods_id.second_unit_id
+        else:
+            self.second_unit_id = None
         self.main_unit_id = self.goods_id.main_unit_id

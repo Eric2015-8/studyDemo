@@ -44,13 +44,13 @@ class GoodsNumber(models.Model):
 
     @api.onchange('second_unit_number')
     def _onchange_second(self):
-        if not self.need_second_change:
+        if not self.need_change():
             return
         self.main_unit_number = self.second_rate * self.second_unit_number
 
     @api.onchange('main_unit_number')
     def _onchange_main(self):
-        if not self.need_second_change:
+        if not self.need_change():
             return
         if self.second_rate != 0:
             self.second_unit_number = self.main_unit_number / self.second_rate

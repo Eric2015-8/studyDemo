@@ -140,7 +140,7 @@ class CreateOrderWizard1(models.TransientModel):
         order = self.env['jc_sale.sale_order'].create(values)
         for detail in self.wizard_detail:
             second_unit_number = None
-            if detail.goods_id.need_second_change and detail.goods_id.second_rate != 0:
+            if detail.goods_id.need_change() and detail.goods_id.second_rate != 0:
                 second_unit_number = detail.main_unit_number / detail.goods_id.second_rate
             values = {
                 'sale_order_id': order.id,
