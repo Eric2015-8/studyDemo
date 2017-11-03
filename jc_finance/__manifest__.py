@@ -30,6 +30,7 @@
         'views/views.xml',
         'views/templates.xml',
         'views/sale_account.xml',
+        'print/sale_account_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
