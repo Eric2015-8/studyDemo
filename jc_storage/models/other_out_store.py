@@ -34,8 +34,34 @@ class OtherOutStore(models.Model):
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
                                     domain=lambda self: self.env['archives.organization'].get_department_organization())
 
+    total_second_number = fields.Float(string='辅数量', store=True, readonly=True, compute='_amount_all',
+                                       track_visibility='always')
+    total_main_number = fields.Float(string='主数量', store=True, readonly=True, compute='_amount_all',
+                                     track_visibility='always')
+    total_money = fields.Float(string='金额', store=True, readonly=True, compute='_amount_all', track_visibility='always')
+
     other_out_store_detail = fields.One2many('jc_storage.other_out_store.detail', 'other_out_store_id',
                                              string=u'其它入库明细', copy=True)
+
+    @api.depends('other_out_store_detail.second_unit_number', 'other_out_store_detail.main_unit_number',
+                 'other_out_store_detail.money')
+    def _amount_all(self):
+        """
+        Compute the total amounts of the OtherOutStore.
+        """
+        for bill in self:
+            total_second = 0.0
+            total_main = 0.0
+            total_money = 0.0
+            for line in bill.other_out_store_detail:
+                total_second += line.second_unit_number
+                total_main += line.main_unit_number
+                total_money += line.money
+            bill.update({
+                'total_second_number': total_second,
+                'total_main_number': total_main,
+                'total_money': total_money,
+            })
 
     @api.model
     def _needaction_domain_get(self):
