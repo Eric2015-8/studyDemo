@@ -112,9 +112,7 @@
             <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
         </record>
 
-        <menuitem name="库间" id="jc_storage.between_storage" parent="jc_storage_menu_root"/>
-
-        <menuitem name="其它出库" id="jc_storage.menu_other_out_store" parent="jc_storage.between_storage"
+        <menuitem name="其它出库" id="jc_storage.menu_other_out_store" parent="jc_storage_menu_root"
                   action="jc_storage_other_out_store_action_window" sequence="2"/>
 
     </data>

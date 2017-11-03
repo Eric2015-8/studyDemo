@@ -120,7 +120,7 @@
         </record>
 
         <menuitem name="调拨入库" id="jc_storage.menu_transfer_in" parent="jc_storage_menu_root"
-                  action="jc_storage_transfer_in_action_window" sequence="1"/>
+                  action="jc_storage_transfer_in_action_window" sequence="5"/>
 
     </data>
 </openerp>
