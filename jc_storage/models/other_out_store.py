@@ -27,7 +27,7 @@ class OtherOutStore(models.Model):
     remark = fields.Char(string=u'摘要')
 
     other_out_store_detail = fields.One2many('jc_storage.other_out_store.detail', 'other_out_store_id',
-                                            string=u'其它入库明细', copy=True)
+                                             string=u'其它入库明细', copy=True)
 
     @api.model
     def _needaction_domain_get(self):
