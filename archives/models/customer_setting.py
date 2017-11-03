@@ -19,7 +19,7 @@ class CustomerSetting(models.Model):
 
     user_id = fields.Many2one('res.users', string=u'用户', required=True, ondelete='cascade')
 
-    table = fields.Char(string=u'表名')
+    table = fields.Char(string=u'表名', index=True)
 
     table_name = fields.Char(string=u'表名')
 
