@@ -28,11 +28,15 @@
                             <field name="short_name" placeholder="用于报表显示"/>
                             <field name="address"/>
                             <field name="company_id"/>
-                            <field name="active_batch"/>
-                            <field name="active_goods_position"/>
-                            <field name="default_goods_position_id"/>
-                            <field name="goods_position_ids"/>
+                            <!--<field name="active_batch"/>-->
+                            <!--<field name="active_goods_position"/>-->
+                            <!--<field name="default_goods_position_id" options="{'no_open':True,'no_create':True}"/>-->
                         </group>
+                        <!--<field name="goods_position_detail" mode="tree">-->
+                            <!--<tree string="仓库明细" editable="bottom">-->
+                                <!--<field name="goods_position_id"/>-->
+                            <!--</tree>-->
+                        <!--</field>-->
                     </sheet>
                 </form>
             </field>
@@ -43,7 +47,8 @@
             <field name="model">archives.store</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="name" filter_domain="['|', '|', ('spell', 'ilike', self), ('short_name', 'ilike', self), ('name', 'ilike', self)]"/>
+                    <field name="name"
+                           filter_domain="['|', '|', ('spell', 'ilike', self), ('short_name', 'ilike', self), ('name', 'ilike', self)]"/>
                 </search>
             </field>
         </record>

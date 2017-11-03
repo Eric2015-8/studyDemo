@@ -25,20 +25,34 @@ class Store(models.Model):
     active_batch = fields.Boolean('启用批次')
 
     active_goods_position = fields.Boolean('启用货位')
-    default_goods_position_id = fields.Many2one('archives.goods_position', string=u'默认货位') # TODO: 重命名
-    goods_position_ids = fields.Many2many('archives.goods_position', string=u'货位')
+    default_goods_position_id = fields.Many2one('archives.goods_position', string=u'默认货位')  # TODO: 重命名
+    goods_position_detail = fields.One2many('archives.store.goods_position.detail', 'store_id', string=u'仓库_货位明细',
+                                            copy=True)
 
     @api.model
     def create(self, values):
         utils.set_spell(values)
-        self._check_goods_position(values)
-        return super(Store, self).create(values)
+        result = super(Store, self).create(values)
+        self._check_goods_position()
+        return result
 
     @api.multi
     def write(self, values):
         utils.set_spell(values)
-        self._check_goods_position(values)
-        return super(Store, self).write(values)
+        result = super(Store, self).write(values)
+        self._check_goods_position()
+        return result
+
+    def _check_goods_position(self):
+        if not self.active_goods_position:
+            if self.default_goods_position_id:
+                self.d = None
+            return
+        if not self.default_goods_position_id:
+            return
+        if self.default_goods_position_id not in self.goods_position_detail.mapped('goods_position_id'):
+            raise ValidationError('{默认货位}必须在{货位}中')
+        return
 
     @api.multi
     def copy(self, default=None):
@@ -53,27 +67,6 @@ class Store(models.Model):
 
         default['name'] = new_name
         return super(Store, self).copy(default)
-
-    def _check_goods_position(self, values):
-        if (not values.has_key('active_goods_position')) and not self.active_goods_position:  # 未启用货位，并且没有修改该值
-            return
-        if values.has_key('active_goods_position') and not values['active_goods_position']:  # 修改启用货位值，并且改为不启用
-            return
-        default_goods_position_id = 0
-        if self.default_goods_position_id:
-            default_goods_position_id = self.default_goods_position_id.id
-        if values.has_key('default_goods_position_id'):
-            default_goods_position_id = values['default_goods_position_id']
-        if not default_goods_position_id:
-            return
-        if values.has_key('goods_position_ids'):  # 修改了货位，以修改后的货位为准
-            position_ids = values['goods_position_ids'][0][2]  # 格式：goods_position_ids:[[6, False, [3, 2]]];
-            if default_goods_position_id not in position_ids:
-                raise ValidationError('{默认货位}必须在{货位}中')
-        else:
-            if default_goods_position_id not in self.goods_position_ids.ids:
-                raise ValidationError('{默认货位}必须在{货位}中')
-        return
 
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):

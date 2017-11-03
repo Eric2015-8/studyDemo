@@ -7,6 +7,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="id"/>
+                    <field name="name"/>
                     <field name="bill_state"/>
                     <field name="store_id"/>
                     <field name="in_store_type_id"/>
@@ -53,6 +54,8 @@
                                 </div>
                                 <field name="other_in_store_detail" mode="tree,kanban">
                                     <tree string="其它入库明细" editable="bottom">
+                                        <!--<field name="store_id"/>-->
+                                        <!--<field name="active_goods_position" invisible="1"/>-->
                                         <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
                                         <field name="second_unit_id" readonly="1"/>
                                         <field name="second_unit_number"/>
@@ -60,7 +63,8 @@
                                         <field name="main_unit_number"/>
                                         <field name="price"/>
                                         <field name="money"/>
-                                        <field name="goods_position_id"/>
+                                        <!--<field name="goods_position_id" options="{'no_open':True,'no_create':True}"-->
+                                               <!--attrs="{'readonly': [ ('active_goods_position', '=', False)]}"/>-->
                                         <!--<field name="goods_batch_id"/>-->
                                         <field name="remark"/>
                                     </tree>
@@ -70,7 +74,7 @@
                                 <group name="group_other" col="4">
                                     <!--<field name="company_id" options="{'no_open':True,'no_create':True}"/>-->
                                     <!--<field name="staff_id" domain="[('is_sale_man','=',True)]"-->
-                                           <!--options="{'no_open':True,'no_create':True}" readonly="0"/>-->
+                                    <!--options="{'no_open':True,'no_create':True}" readonly="0"/>-->
                                 </group>
                             </page>
                         </notebook>

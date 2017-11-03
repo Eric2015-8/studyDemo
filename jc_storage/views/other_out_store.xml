@@ -1,12 +1,13 @@
 <openerp>
     <data>
         <!-- explicit list view definition -->
-        <record model="ir.ui.view" id="jc_storage_other_in_store_list">
+        <record model="ir.ui.view" id="jc_storage_other_out_store_list">
             <field name="name">其它出库列表</field>
-            <field name="model">jc_storage.other_in_store</field>
+            <field name="model">jc_storage.other_out_store</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="id"/>
+                    <field name="name"/>
                     <field name="bill_state"/>
                     <field name="store_id"/>
                     <field name="in_store_type_id"/>
@@ -61,7 +62,7 @@
                                         <field name="price"/>
                                         <field name="cost" attrs="{'invisible': True}"/>
                                         <field name="money"/>
-                                        <field name="goods_position_id"/>
+                                        <!--<field name="goods_position_id"/>-->
                                         <!--<field name="goods_batch_id"/>-->
                                         <field name="remark"/>
                                     </tree>

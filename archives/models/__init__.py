@@ -14,3 +14,4 @@ from . import customer_setting
 from . import customer_setting_detail
 from . import utils
 from . import setting_center
+from . import store_goods_position_detail

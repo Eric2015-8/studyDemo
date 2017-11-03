@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
+    <data>
 
         <!-- 销售出库单 -->
         <record id="seq_sale_order" model="ir.sequence">
             <field name="name">销售出库单</field>
             <field name="code">jc_storage.sale_out_store</field>
+            <field name="prefix">%(year)s/%(month)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- 其他入库单 -->
+        <record id="seq_other_in_store" model="ir.sequence">
+            <field name="name">其他入库单</field>
+            <field name="code">jc_storage.other_in_store</field>
+            <field name="prefix">%(year)s/%(month)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- 其他出库单 -->
+        <record id="seq_other_out_store" model="ir.sequence">
+            <field name="name">其他出库单</field>
+            <field name="code">jc_storage.other_out_store</field>
             <field name="prefix">%(year)s/%(month)s/</field>
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>

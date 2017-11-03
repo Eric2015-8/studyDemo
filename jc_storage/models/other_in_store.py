@@ -15,6 +15,9 @@ class OtherInStore(models.Model):
         string=u'单据状态', require=True, default=1, readonly=True
     )
 
+    name = fields.Char(string=u'订单编号', required=True, copy=False, readonly=True,
+                       index=True, default=lambda self: _('新建'))
+
     store_id = fields.Many2one('archives.store', string=u'仓库', required=True,
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
     in_store_type_id = fields.Many2one('archives.common_archive', string=u'入库类型', required=True,
@@ -59,9 +62,23 @@ class OtherInStore(models.Model):
             return True
         return False
 
+    # def _check_goods_position(self):
+    #     if self.store_id.active_goods_position:
+    #         for detail in self.other_in_store_detail:
+    #             if not detail.goods_position_id:
+    #                 raise ValidationError(u'{货位}不允许为空：' + detail.goods_id.name)
+    #     else:
+    #         for detail in self.other_in_store_detail:
+    #             if detail.goods_position_id:
+    #                 detail.goods_position_id = None
+    #     return
+
     @api.model
     def create(self, values):
+        if values.get('name', '新建') == '新建':
+            values['name'] = self.env['ir.sequence'].next_by_code('jc_storage.other_in_store') or '新建'
         result = super(OtherInStore, self).create(values)
+        # self._check_goods_position()
         return result
 
     @api.multi
@@ -74,7 +91,9 @@ class OtherInStore(models.Model):
     def write(self, values):
         if self.bill_state > 1 and not OtherInStore._is_bill_state_change(values):
             raise ValidationError(_('只有未审核单据才能编辑.'))
-        return super(OtherInStore, self).write(values)
+        result = super(OtherInStore, self).write(values)
+        # self._check_goods_position()
+        return result
 
     @api.multi
     def do_check(self):

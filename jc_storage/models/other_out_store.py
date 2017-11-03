@@ -15,6 +15,9 @@ class OtherOutStore(models.Model):
         string=u'单据状态', require=True, default=1, readonly=True
     )
 
+    name = fields.Char(string=u'订单编号', required=True, copy=False, readonly=True,
+                       index=True, default=lambda self: _('新建'))
+
     store_id = fields.Many2one('archives.store', string=u'仓库', required=True,
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
     in_store_type_id = fields.Many2one('archives.common_archive', string=u'入库类型', required=True,
@@ -61,6 +64,8 @@ class OtherOutStore(models.Model):
 
     @api.model
     def create(self, values):
+        if values.get('name', '新建') == '新建':
+            values['name'] = self.env['ir.sequence'].next_by_code('jc_storage.other_out_store') or '新建'
         result = super(OtherOutStore, self).create(values)
         return result
 
