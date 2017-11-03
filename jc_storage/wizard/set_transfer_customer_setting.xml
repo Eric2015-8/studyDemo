@@ -1,0 +1,36 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="archives_set_transfer_customer_setting_wizard">
+            <field name="name">个性设置</field>
+            <field name="model">jc_storage.set_transfer_customer_setting</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group colspan="4">
+                        <field name="user_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="table_show_name"/>
+                        <field name="table" attrs="{'invisible':True}"/>
+                    </group>
+                    <group colspan="4">
+                        <field name="out_store_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="in_store_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="transfer_out_type_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="transfer_in_type_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="out_unit_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="in_unit_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="out_staff_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="int_staff_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="department_id" options="{'no_open':True,'no_create':True}"/>`
+                    </group>
+                    <footer>
+                        <button name="subscribe" type="object"
+                                string="保存" class="oe_highlight"/>
+                        or
+                        <button special="取消" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

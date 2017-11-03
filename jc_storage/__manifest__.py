@@ -27,6 +27,8 @@
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
 
+        'wizard/set_transfer_customer_setting.xml',
+
         'views/views.xml',
         'views/templates.xml',
         'views/other_in_store.xml',
@@ -35,6 +37,8 @@
         'print/other_out_store_report.xml',
         'views/sale_out_store.xml',
         'print/sale_out_store_report.xml',
+        'views/transfer_in.xml',
+        'print/transfer_in_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
