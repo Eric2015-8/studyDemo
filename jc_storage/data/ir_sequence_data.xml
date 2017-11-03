@@ -29,6 +29,15 @@
             <field name="company_id" eval="False"/>
         </record>
 
+        <!-- 调拨出库 -->
+        <record id="seq_transfer_out" model="ir.sequence">
+            <field name="name">调拨出库单</field>
+            <field name="code">jc_storage.transfer_out</field>
+            <field name="prefix">%(year)s/%(month)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
         <!-- 调拨入库 -->
         <record id="seq_transfer_in" model="ir.sequence">
             <field name="name">调拨入库单</field>

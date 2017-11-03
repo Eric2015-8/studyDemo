@@ -37,6 +37,8 @@
         'print/other_out_store_report.xml',
         'views/sale_out_store.xml',
         'print/sale_out_store_report.xml',
+        'views/transfer_out.xml',
+        'print/transfer_out_report.xml',
         'views/transfer_in.xml',
         'print/transfer_in_report.xml',
     ],
