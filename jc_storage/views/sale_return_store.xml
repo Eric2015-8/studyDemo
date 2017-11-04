@@ -43,9 +43,7 @@
                     </header>
                     <sheet>
                         <group name="group_top" string="销售退库" col="4">
-                            <field name="store_id" options="{'no_open':True,'no_create':True}"/>
-                            <field name="sale_return_type_id" options="{'no_open':True,'no_create':True}"/>
-                            <field name="date"/>
+                            <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
                             <field name="remark" col="4"/>
                         </group>
                         <notebook>
@@ -69,10 +67,12 @@
                             </page>
                             <page string="其它信息">
                                 <group name="group_other" col="4">
-                                    <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="date"/>
+                                    <field name="sale_return_type_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="company_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="staff_id" domain="[('is_sale_man','=',True)]"
                                            options="{'no_open':True,'no_create':True}" readonly="0"/>
-                                    <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="store_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="department_id" options="{'no_open':True,'no_create':True}"/>
                                 </group>
                             </page>
