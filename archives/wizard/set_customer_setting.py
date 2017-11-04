@@ -36,7 +36,7 @@ class SetCustomerSetting(models.TransientModel):
     in_store_type_id = fields.Many2one('archives.common_archive', string=u'入库类型', domain=[('archive_name', '=', 18)])
     is_show_in_store_type_id = fields.Boolean(u'是否显示入库类型', default=lambda self: self._is_show('in_store_type_id'))
 
-    sale_return_type_id = fields.Many2one('archives.common_archive', string=u'销售退货类型', required=True,
+    sale_return_type_id = fields.Many2one('archives.common_archive', string=u'销售退货类型',
                                           domain="[('archive_name','=',22)]")
     is_show_sale_return_type_id = fields.Boolean(u'是否显示销售退货类型',
                                                  default=lambda self: self._is_show('sale_return_type_id'))
