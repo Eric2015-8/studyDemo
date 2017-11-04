@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+            id="report_stock_check"
+            string="库存盘点"
+            model="jc_storage.stock_check"
+            report_type="qweb-html"
+            file="jc_storage.report_pdf_stock_check_file"
+            name="jc_storage.report_pdf_stock_check"
+            paperformat="archives.paperformat_chn__a4_lowmargin"
+    />
+
+    <template id="report_pdf_stock_check">
+        <t t-call="report.html_container">
+            <t t-set="data_report_margin_top" t-value="45"/>
+            <t t-set="data_report_header_spacing" t-value="40"/>
+            <t t-call="report.external_layout">
+                <t t-set="o" t-value="docs[0]"/>
+                <t t-foreach="docs" t-as="quotation">
+                    <div class="page">
+                        <div id="introduction"
+                             class="text-center"><!--page-header:在下面加了淡淡的下划线，从最左边，到最右边-->
+                            <h1>
+                                <em t-field="quotation.company_id"/>
+                            </h1>
+                        </div>
+                        <div id="introduction" class="text-center">
+                            <h4>
+                                库存盘点
+                                <em t-esc="quotation.name"/>
+                            </h4>
+                        </div>
+                        <!-- 表头 -->
+                        <div class="row mt32">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="row">
+                                    <label class="col-sm-4 col-xs-4 text-right">仓库:</label>
+                                    <div class="col-sm-8 col-xs-8">
+                                        <div t-field="quotation.store_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="row">
+                                    <label class="col-sm-5 col-xs-5 text-right">库存日期:</label>
+                                    <div class="col-sm-7 col-xs-7">
+                                        <span t-field="quotation.stock_date"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="row">
+                                    <label class="col-sm-4 col-xs-4 text-right">经办人:</label>
+                                    <div class="col-sm-8 col-xs-8">
+                                        <div t-field="quotation.staff_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="row">
+                                    <label class="col-sm-5 col-xs-5 text-right">日期:</label>
+                                    <div class="col-sm-7 col-xs-7">
+                                        <span t-field="quotation.date"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <div class="row">
+                                    <label class="col-sm-2 col-xs-2 text-right">摘要:</label>
+                                    <div class="col-sm-10 col-xs-10">
+                                        <span t-field="quotation.remark"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="oe_structure"/>
+                        <!--明细-->
+                        <t t-call="jc_storage.stock_check_detail_layout"/>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!--自定义打印页面：库存盘点明细-->
+    <template id="stock_check_detail_layout" name="detail">
+        <div id="quote">
+            <table class="table wq-table mt32">
+                <thead>
+                    <tr class="active">
+                        <th>存货</th>
+                        <th>账存辅数量</th>
+                        <th>账存主数量</th>
+                        <th>盘点辅数量</th>
+                        <th>盘点主数量</th>
+                        <th>备注</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="quotation.stock_check_detail" t-as="detail">
+                        <tr>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.goods_id.name"/>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-if="detail.goods_id.need_second_change == '1'">
+                                    <t t-esc="round(detail.second_unit_number_compute,2)"/>
+                                    <t t-esc="detail.second_unit_id.name"/>
+                                </t>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.main_unit_number_compute"/>
+                                <t t-esc="detail.main_unit_id.name"/>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-if="detail.goods_id.need_second_change == '1'">
+                                    <t t-esc="round(detail.second_unit_number,2)"/>
+                                    <t t-esc="detail.second_unit_id.name"/>
+                                </t>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.main_unit_number"/>
+                                <t t-esc="detail.main_unit_id.name"/>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.remark"/>
+                                <!--<t t-esc="detail['remark']"/>-->
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
+        </div>
+    </template>
+
+</odoo>

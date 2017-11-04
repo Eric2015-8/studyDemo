@@ -43,6 +43,8 @@
         'print/transfer_in_report.xml',
         'views/sale_return_store.xml',
         'print/sale_return_store_report.xml',
+        'views/stock_check.xml',
+        'print/stock_check_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
