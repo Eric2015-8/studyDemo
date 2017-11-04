@@ -4,9 +4,9 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 
-class SaleOutStore(models.Model):
-    _name = 'jc_storage.sale_out_store'
-    _description = u'仓储：销售出库单'
+class SaleReturnStore(models.Model):
+    _name = 'jc_storage.sale_return_store'
+    _description = u'仓储：销售退库'
     _order = 'id desc'
 
     _inherit = ['ir.needaction_mixin']
@@ -22,8 +22,8 @@ class SaleOutStore(models.Model):
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
-    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
-                                   domain="[('archive_name','=',1)]")
+    sale_return_type_id = fields.Many2one('archives.common_archive', string=u'销售退货类型', required=True,
+                                          domain="[('archive_name','=',22)]")
     remark = fields.Char(string=u'摘要')
 
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
@@ -40,11 +40,12 @@ class SaleOutStore(models.Model):
                                      track_visibility='always')
     total_money = fields.Float(string='金额', store=True, readonly=True, compute='_amount_all', track_visibility='always')
 
-    sale_out_store_detail = fields.One2many('jc_storage.sale_out_store.detail', 'sale_out_store_id', string=u'销售出库单明细',
-                                            copy=True)
+    sale_return_store_detail = fields.One2many('jc_storage.sale_return_store.detail', 'sale_return_store_id',
+                                               string=u'销售退库明细',
+                                               copy=True)
 
-    @api.depends('sale_out_store_detail.second_unit_number', 'sale_out_store_detail.main_unit_number',
-                 'sale_out_store_detail.money')
+    @api.depends('sale_return_store_detail.second_unit_number', 'sale_return_store_detail.main_unit_number',
+                 'sale_return_store_detail.money')
     def _amount_all(self):
         """
         Compute the total amounts of the SO.
@@ -53,7 +54,7 @@ class SaleOutStore(models.Model):
             total_second = 0.0
             total_main = 0.0
             total_money = 0.0
-            for line in bill.sale_out_store_detail:
+            for line in bill.sale_return_store_detail:
                 total_second += line.second_unit_number
                 total_main += line.main_unit_number
                 total_money += line.money
@@ -81,21 +82,21 @@ class SaleOutStore(models.Model):
     def unlink(self):
         if self.bill_state > 1:
             raise ValidationError(_('只有未审核的单据才能删除.'))
-        return super(SaleOutStore, self).unlink()
+        return super(SaleReturnStore, self).unlink()
 
     @api.model
     def create(self, values):
         if values.get('name', '新建') == '新建':
-            values['name'] = self.env['ir.sequence'].next_by_code('jc_storage.sale_out_store') or '新建'
+            values['name'] = self.env['ir.sequence'].next_by_code('jc_storage.sale_return_store') or '新建'
 
-        result = super(SaleOutStore, self).create(values)
+        result = super(SaleReturnStore, self).create(values)
         return result
 
     @api.multi
     def write(self, values):
-        if self.bill_state > 1 and not SaleOutStore._is_bill_state_change(values):
+        if self.bill_state > 1 and not SaleReturnStore._is_bill_state_change(values):
             raise ValidationError(_('只有未审核单据才能编辑.'))
-        return super(SaleOutStore, self).write(values)
+        return super(SaleReturnStore, self).write(values)
 
     @api.multi
     def do_check(self):
@@ -115,14 +116,14 @@ class SaleOutStore(models.Model):
 
     @api.multi
     def do_customer_setting(self):
-        table = u'jc_storage.sale_out_store'
-        table_show_name = u'销售出库单'
-        need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        table = u'jc_storage.sale_return_store'
+        table_show_name = u'销售退库'
+        need_set_fields = ['customer_id', 'sale_return_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name)
 
     @api.model
     def default_get(self, fields_):
-        res = super(SaleOutStore, self).default_get(fields_)
-        need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        res = super(SaleReturnStore, self).default_get(fields_)
+        need_set_fields = ['customer_id', 'sale_return_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         self.env['archives.set_customer_setting'].set_default(res, self._name, fields_, need_set_fields)
         return res

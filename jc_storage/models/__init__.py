@@ -12,3 +12,5 @@ from . import transfer_out
 from . import transfer_out_detail
 from . import transfer_in
 from . import transfer_in_detail
+from . import sale_return_store
+from . import sale_return_store_detail

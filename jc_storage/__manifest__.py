@@ -41,6 +41,8 @@
         'print/transfer_out_report.xml',
         'views/transfer_in.xml',
         'print/transfer_in_report.xml',
+        'views/sale_return_store.xml',
+        'print/sale_return_store_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
