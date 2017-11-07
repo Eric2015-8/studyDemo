@@ -15,3 +15,48 @@ class SaleSettingCenter(models.TransientModel):
                                                       string=u'订单生成出库方式')
     out_store_2_account_type_default = fields.Selection(create_type, default=10, readonly=True,
                                                         string=u'出库生成账单方式')
+
+    @api.model
+    def get_default_forecast_2_oder_type_default(self, fields_):
+        data = self.env["ir.config_parameter"].get_param("jc_sale.forecast_2_oder_type_default", default=1)
+        if data:
+            data = int(data)
+        return {'forecast_2_oder_type_default': data or 1}
+
+    @api.multi
+    def set_forecast_2_oder_type_default(self):
+        for record in self:
+            self.env['ir.config_parameter'].set_param("jc_sale.forecast_2_oder_type_default",
+                                                      record.forecast_2_oder_type_default or 1)
+
+    @api.model
+    def get_default_order_2_out_store_type_default(self, fields_):
+        data = self.env["ir.config_parameter"].get_param("jc_sale.order_2_out_store_type_default", default=10)
+        if data:
+            data = int(data)
+        return {'order_2_out_store_type_default': data or 10}
+
+    @api.multi
+    def set_order_2_out_store_type_default(self):
+        for record in self:
+            self.env['ir.config_parameter'].set_param("jc_sale.order_2_out_store_type_default",
+                                                      record.order_2_out_store_type_default or 10)
+
+    @api.model
+    def get_default_out_store_2_account_type_default(self, fields_):
+        data = self.env["ir.config_parameter"].get_param("jc_sale.out_store_2_account_type_default", default=10)
+        if data:
+            data = int(data)
+        return {'out_store_2_account_type_default': data or 10}
+
+    @api.multi
+    def set_out_store_2_account_type_default(self):
+        for record in self:
+            self.env['ir.config_parameter'].set_param("jc_sale.out_store_2_account_type_default",
+                                                      record.out_store_2_account_type_default or 10)
+
+    def query_sale_type_2_bill_default(self):
+        a = self.get_default_forecast_2_oder_type_default(None)
+        b = self.get_default_order_2_out_store_type_default(None)
+        c = self.get_default_out_store_2_account_type_default(None)
+        return a, b, c
