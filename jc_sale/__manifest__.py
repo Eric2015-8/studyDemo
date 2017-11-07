@@ -29,6 +29,7 @@
         'security/security.xml',
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
+        # 'data/sale_setting_center.xml',
         # 'wizard/add_goods.xml',
 
         'views/views.xml',
@@ -40,6 +41,8 @@
         'print/sale_order_report.xml',
         'report/report_sale_order.xml',
         'views/class_price.xml',
+        'views/sale_setting_center.xml',
+        'views/sale_setting_center_sale_type.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

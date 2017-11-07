@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_setting_center_sale" model="ir.ui.view">
+        <field name="name">设置中心_销售</field>
+        <field name="model">setting_center</field>
+        <field name="inherit_id" ref="archives.view_setting_center"/>
+        <field name="arch" type="xml">
+            <xpath expr='//notebook[last()]' position='inside'>
+                <page string="销售">
+                    <group>
+                        <label string="销售流程"/>
+                        <div>
+                            <div>
+                                <label for="forecast_2_oder_type_default"/>
+                                <label string=":"/>
+                                <field name="forecast_2_oder_type_default"/>
+                            </div>
+                            <div>
+                                <label for="order_2_out_store_type_default"/>
+                                <label string=":"/>
+                                <field name="order_2_out_store_type_default"/>
+                            </div>
+                            <div>
+                                <label for="out_store_2_account_type_default"/>
+                                <label string=":"/>
+                                <field name="out_store_2_account_type_default"/>
+                            </div>
+                            <div>
+                                <label string="说明：以上设置为销售类型未设置时的默认操作。"/>
+                                <button type="action" name="%(jc_sale.setting_center_sale_type_action_window)d"
+                                        string="点这里进行设置" icon="fa-cogs" class="oe_inline oe_link"/>
+                            </div>
+                        </div>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
