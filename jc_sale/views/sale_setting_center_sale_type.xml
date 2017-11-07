@@ -7,7 +7,9 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="sale_type_id"/>
-                    <field name="type"/>
+                    <field name="forecast_2_oder_type"/>
+                    <field name="order_2_out_store_type"/>
+                    <field name="out_store_2_account_type"/>
                 </tree>
             </field>
         </record>
@@ -21,7 +23,9 @@
                         <group name="group_top" string="销售订单" col="4">
                             <field name="sale_type_id" attrs="{'readonly':[('sale_type_id','!=',False),('id','>',0)]}"
                                    options="{'no_open':True,'no_create':True}"/>
-                            <field name="type"/>
+                            <field name="forecast_2_oder_type"/>
+                            <field name="order_2_out_store_type"/>
+                            <field name="out_store_2_account_type"/>
                             <field name="id" attrs="{'invisible':True}"/>
                         </group>
                     </sheet>
@@ -35,10 +39,20 @@
             <field name="arch" type="xml">
                 <search>
                     <field name="sale_type_id"/>
-                    <field name="type"/>
+                    <field name="forecast_2_oder_type"/>
+                    <field name="order_2_out_store_type"/>
+                    <field name="out_store_2_account_type"/>
                     <group string="Group By">
-                        <filter name="by_type" string="生成方式"
-                                context="{'group_by': 'type'}"/>
+                        <filter name="by_forecast_2_oder_type" string="预报生成订单方式"
+                                context="{'group_by': 'forecast_2_oder_type'}"/>
+                    </group>
+                    <group string="Group By">
+                        <filter name="by_order_2_out_store_type" string="订单生成出库方式"
+                                context="{'group_by': 'order_2_out_store_type'}"/>
+                    </group>
+                    <group string="Group By">
+                        <filter name="by_out_store_2_account_type" string="出库生成账单方式"
+                                context="{'group_by': 'out_store_2_account_type'}"/>
                     </group>
                 </search>
             </field>
