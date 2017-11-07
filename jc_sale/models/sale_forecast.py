@@ -108,12 +108,27 @@ class SaleForecast(models.Model):
                 'remark': detail.remark,
             }
             self.env['jc_sale.sale_order.detail'].create(values)
+        return order
 
     def _delete_order(self):
         orders = self.env["jc_sale.sale_order"].search([('forecast_id', '=', self.id)])
         if orders:
             for bill in orders:
                 bill.unlink()
+
+    def _check_logic(self):
+        if not self.sale_type_id:
+            raise ValidationError(u'未选择{销售类型}')
+        setting = self.env['setting_center.sale_type'].query_type(self.sale_type_id.id)
+        if not setting:
+            raise ValidationError(u'请到【设置中心】“销售”下设置“销售流程”！')
+        _type = setting[0]
+        if _type == 1:
+            return
+        order = self._create_order()
+        if _type == 20:
+            order.do_check()
+        return
 
     @api.model
     def create(self, values):
@@ -137,7 +152,7 @@ class SaleForecast(models.Model):
 
     @api.multi
     def do_check(self):
-        self._create_order()
+        self._check_logic()
         self.bill_state = 10
 
     @api.multi
