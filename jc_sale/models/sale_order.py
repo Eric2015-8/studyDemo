@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from . import bill_define
 
 
 class SaleOrder(models.Model):
@@ -11,6 +12,9 @@ class SaleOrder(models.Model):
 
     _inherit = ['ir.needaction_mixin']
 
+    source_bill_type = fields.Selection(bill_define.BILL_TYPE, string=u'来源单据类型', readonly=True, copy=False)
+    source_bill_id = fields.Integer(string="来源单据号", readonly=True, copy=False, default=0)
+
     bill_state = fields.Selection(
         [(1, '未审核'), (10, '已审核'), (20, '已完毕')],
         string=u'单据状态', require=True, default=1, readonly=True
@@ -18,8 +22,6 @@ class SaleOrder(models.Model):
 
     name = fields.Char(string=u'单据编号', required=True, copy=False, readonly=True,
                        index=True, default=lambda self: _('新建'))
-
-    forecast_id = fields.Many2one('jc_sale.sale_forecast', string=u'销售预报单ID')
 
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())

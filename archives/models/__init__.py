@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from . import bill_define
 from . import department
 from . import staff
 from . import store

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from . import bill_define
+
 from . import models
 from . import sale_forecast
 from . import sale_order

@@ -82,7 +82,8 @@ class SaleForecast(models.Model):
 
     def _create_order(self):
         values = {
-            'forecast_id': self.id,
+            'source_bill_id': self.id,
+            'source_bill_type': 1,  # 销售预报
             'customer_id': self.customer_id.id,
             'date': self.date,
             'sale_type_id': self.sale_type_id.id,
@@ -96,8 +97,9 @@ class SaleForecast(models.Model):
         for detail in self.sale_forecast_detail:
             values = {
                 'sale_order_id': order.id,
-                'forecast_id': self.id,
-                'forecast_detail_id': detail.id,
+                'source_bill_type': 1,  # 销售预报
+                'source_bill_id': self.id,
+                'source_detail_id': detail.id,
                 'goods_id': detail.goods_id.id,
                 'second_unit_id': detail.second_unit_id.id,
                 'second_unit_number': detail.second_unit_number,
@@ -111,7 +113,7 @@ class SaleForecast(models.Model):
         return order
 
     def _delete_order(self):
-        orders = self.env["jc_sale.sale_order"].search([('forecast_id', '=', self.id)])
+        orders = self.env["jc_sale.sale_order"].search([('source_bill_id', '=', self.id), ('source_bill_type', '=', 1)])
         if orders:
             for bill in orders:
                 bill.unlink()

@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from . import bill_define
 
 
 class SaleOrderDetail(models.Model):
     _name = 'jc_sale.sale_order.detail'
     _description = u'销售：销售订单明细'
 
-    # sale_forecast_detail_id = fields.Many2one('jc_sale.sale_forecast',string=u'销售预报')
-    # sale_forecast_id = fields.Integer(string=u'预报单号')
-    # sale_forecast_detail_id = fields.Integer(string=u'预报明细号')
-
     sale_order_id = fields.Many2one('jc_sale.sale_order', string='销售订单引用', required=True,
                                     ondelete='cascade', index=True, copy=False)
 
-    forecast_id = fields.Many2one('jc_sale.sale_forecast', string=u'销售预报单ID')
-    forecast_detail_id = fields.Many2one('jc_sale.sale_forecast.detail', string=u'销售预报单明细ID')
+    source_bill_type = fields.Selection(bill_define.BILL_TYPE, string=u'来源单据类型', readonly=True, copy=False)
+    source_bill_id = fields.Integer(string="来源单据号", readonly=True, copy=False, default=0)
+    source_detail_id = fields.Integer(string="来源单据明细号", readonly=True, copy=False, default=0)
 
     goods_id = fields.Many2one('archives.goods', string=u'产品', required=True,
                                domain=lambda self: self.env['archives.organization'].get_goods_organization())
