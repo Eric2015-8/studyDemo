@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from . import bill_define
 
 
 class SaleOutStoreDetail(models.Model):
@@ -9,6 +10,10 @@ class SaleOutStoreDetail(models.Model):
 
     sale_out_store_id = fields.Many2one('jc_storage.sale_out_store', string='销售出库单引用', required=True,
                                         ondelete='cascade', index=True, copy=False)
+
+    source_bill_type = fields.Selection(bill_define.BILL_TYPE, string=u'来源单据类型', readonly=True, copy=False)
+    source_bill_id = fields.Integer(string="来源单据号", readonly=True, copy=False, default=0)
+    source_detail_id = fields.Integer(string="来源单据明细号", readonly=True, copy=False, default=0)
 
     goods_id = fields.Many2one('archives.goods', string=u'产品', required=True,
                                domain=lambda self: self.env['archives.organization'].get_goods_organization())

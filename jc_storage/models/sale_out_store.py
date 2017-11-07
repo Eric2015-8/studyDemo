@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from . import bill_define
 
 
 class SaleOutStore(models.Model):
@@ -10,6 +11,9 @@ class SaleOutStore(models.Model):
     _order = 'id desc'
 
     _inherit = ['ir.needaction_mixin']
+
+    source_bill_type = fields.Selection(bill_define.BILL_TYPE, string=u'来源单据类型', readonly=True, copy=False)
+    source_bill_id = fields.Integer(string="来源单据号", readonly=True, copy=False, default=0)
 
     bill_state = fields.Selection(
         [(1, '未审核'), (10, '已审核'), (20, '已完毕')],

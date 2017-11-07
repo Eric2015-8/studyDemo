@@ -99,8 +99,82 @@ class SaleOrder(models.Model):
             raise ValidationError(_('只有未审核单据才能编辑.'))
         return super(SaleOrder, self).write(values)
 
+    def _create_out_store(self):
+        values = {
+            'source_bill_id': self.id,
+            'source_bill_type': 2,  # 销售订单
+            'customer_id': self.customer_id.id,
+            'date': self.date,
+            'sale_type_id': self.sale_type_id.id,
+            'staff_id': self.staff_id.id,
+            'department_id': self.department_id.id,
+            'store_id': self.store_id.id,
+            'company_id': self.company_id.id,
+            'remark': self.remark,
+            'total_main_number': self.total_main_number,
+            'total_second_number': self.total_second_number,
+            'total_money': self.total_money,
+        }
+        bill = self.env['jc_storage.sale_out_store'].create(values)
+        for detail in self.sale_order_detail:
+            main, second, price = SaleOrder.get_str_tuple_from_number(detail)
+            values = {
+                'sale_out_store_id': bill.id,
+                'source_bill_type': 2,  # 销售订单
+                'source_bill_id': self.id,
+                'source_detail_id': detail.id,
+                'goods_id': detail.goods_id.id,
+                'second_unit_id': detail.second_unit_id.id,
+                'second_unit_number': detail.second_unit_number,
+                'second_unit_number_tmp': main,
+                'main_unit_id': detail.main_unit_id.id,
+                'main_unit_number': detail.main_unit_number,
+                'main_unit_number_tmp': second,
+                'price': detail.price,
+                'price_tmp': price,
+                'money': detail.money,
+                'remark': detail.remark,
+            }
+            self.env['jc_storage.sale_out_store.detail'].create(values)
+        return bill
+
+    @staticmethod
+    def get_str_tuple_from_number(detail):
+        second = ''
+        if detail.second_unit_number:
+            second = str(detail.second_unit_number)
+        main = ''
+        if detail.main_unit_number:
+            main = str(detail.main_unit_number)
+        price = ''
+        if detail.price:
+            price = str(detail.price)
+        return main, second, price
+
+    def _delete_out_store(self):
+        bills = self.env["jc_storage.sale_out_store"].search(
+            [('source_bill_id', '=', self.id), ('source_bill_type', '=', 2)])
+        if bills:
+            for bill in bills:
+                bill.unlink()
+
+    def _check_logic(self):
+        if not self.sale_type_id:
+            raise ValidationError(u'未选择{销售类型}')
+        setting = self.env['setting_center.sale_type'].query_type(self.sale_type_id.id)
+        if not setting:
+            raise ValidationError(u'请到【设置中心】“销售”下设置“销售流程”！')
+        _type = setting[0]
+        if _type == 1:
+            return
+        bill = self._create_out_store()
+        if _type == 20:
+            bill.do_check()
+        return
+
     @api.multi
     def do_check(self):
+        self._check_logic()
         self.bill_state = 10
 
     @api.multi
@@ -113,6 +187,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def do_un_check(self):
+        self._delete_out_store()
         self.bill_state = 1
 
     @api.multi
