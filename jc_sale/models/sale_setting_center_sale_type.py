@@ -38,7 +38,7 @@ class SaleSettingCenterSaleType(models.Model):
         if not sale_type_id_:
             return None
 
-        result = self.env['setting_center.sale_type'].search([('sale_type_id', '=', sale_type_id_)])
+        result = self.search([('sale_type_id', '=', sale_type_id_)])
         if result:
             return result[0].forecast_2_oder_type, \
                    result[0].order_2_out_store_type, \
