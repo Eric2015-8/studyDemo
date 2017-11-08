@@ -88,6 +88,7 @@
 
         <!-- actions -->
         <menuitem name="数据权限组" id="archives.menu_organization_group" parent="base.menu_users"
-                  action="archives_common_organization_group_action_window" sequence="6"/>
+                  action="archives_common_organization_group_action_window" sequence="6"
+                  groups="archives.group_organization_manager"/>
     </data>
 </openerp>

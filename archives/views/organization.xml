@@ -92,6 +92,7 @@
 
         <!-- actions -->
         <menuitem name="数据权限" id="archives.menu_organization" parent="base.menu_users"
-                  action="archives_common_organization_action_window" sequence="5"/>
+                  action="archives_common_organization_action_window" sequence="5"
+                  groups="archives.group_organization_manager"/>
     </data>
 </openerp>

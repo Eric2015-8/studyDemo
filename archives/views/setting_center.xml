@@ -6,7 +6,8 @@
         <field name="arch" type="xml">
             <form string="设置中心" class="oe_form_configuration">
                 <header>
-                    <button string="保存" type="object" name="execute" class="oe_highlight"/>
+                    <button string="保存" type="object" name="execute" class="oe_highlight"
+                            groups="archives.group_setting_center"/>
                     <button string="取消" type="object" name="cancel" class="oe_link" special="cancel"/>
                 </header>
                 <separator string="设置中心"/>
@@ -14,13 +15,13 @@
                     <notebook>
                         <page string="通用">
                             <!--<group>-->
-                                <!--<label for="company_id" string="公司" name="email_label"/>-->
-                                <!--<div>-->
-                                    <!--<div>-->
-                                        <!--<field name="company_id"/>-->
-                                        <!--<label for="company_id"/>-->
-                                    <!--</div>-->
-                                <!--</div>-->
+                            <!--<label for="company_id" string="公司" name="email_label"/>-->
+                            <!--<div>-->
+                            <!--<div>-->
+                            <!--<field name="company_id"/>-->
+                            <!--<label for="company_id"/>-->
+                            <!--</div>-->
+                            <!--</div>-->
                             <!--</group>-->
                         </page>
                     </notebook>
@@ -44,6 +45,6 @@
             parent="base.menu_administration"
             sequence="1"
             action="action_setting_center"
-            groups="base.group_system"/>
+            groups="archives.group_setting_center"/>
 
 </odoo>

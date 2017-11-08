@@ -1,25 +1,64 @@
-<odoo>
-    <data>
-        <record id="group_manager" model="res.groups">
-            <field name="name">档案 / 管理</field>
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <!--
+        为了满足用户界面的权限设置需要，将用户组分成这些功能类别
+        -->
+
+        <!-- 通用类别 -->
+        <record model="ir.module.category" id="jc_core_setting">
+            <field name="name">通用</field>
+            <field name="sequence">1</field>
+        </record>
+        <!-- 以下为功能模块相关，给每个主菜单设置一个组便于理解 -->
+        <record model="ir.module.category" id="jc_archive">
+            <field name="name">档案</field>
+            <field name="sequence">2</field>
+        </record>
+        <record model="ir.module.category" id="jc_sale">
+            <field name="name">销售</field>
+            <field name="sequence">3</field>
+        </record>
+        <record model="ir.module.category" id="jc_storage">
+            <field name="name">仓库</field>
+            <field name="sequence">4</field>
+        </record>
+        <record model="ir.module.category" id="jc_finance">
+            <field name="name">财务</field>
+            <field name="sequence">5</field>
+        </record>
+        <record model="ir.module.category" id="jc_price">
+            <field name="name">价格</field>
+            <field name="sequence">6</field>
         </record>
 
+        <!--用户组-->
         <record id="group_organization_manager" model="res.groups">
-            <field name="name">权限 / 管理</field>
+            <field name="name">数据权限</field>
+            <field name='category_id' ref="jc_core_setting"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="comment">用于显示【数据权限】菜单。</field>
+        </record>
+        <record id="group_setting_center" model="res.groups">
+            <field name="name">设置中心</field>
+            <field name='category_id' ref="jc_core_setting"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="comment">用于显示【设置中心】菜单。</field>
         </record>
 
-        <!--<record id="only_responsible_can_modify" model="ir.rule">-->
-            <!--<field name="name">Only Responsible can modify Course</field>-->
-            <!--<field name="model_id" ref="model_openacademy_course"/>-->
-            <!--<field name="groups" eval="[(4, ref('openacademy.group_manager'))]"/>-->
-            <!--<field name="perm_read" eval="0"/>-->
-            <!--<field name="perm_write" eval="1"/>-->
-            <!--<field name="perm_create" eval="0"/>-->
-            <!--<field name="perm_unlink" eval="1"/>-->
-            <!--<field name="domain_force">-->
-                <!--['|', ('responsible_id','=',False),-->
-                <!--('responsible_id','=',user.id)]-->
-            <!--</field>-->
-        <!--</record>-->
+        <record id="group_archive_access" model="res.groups">
+            <field name="name">访问</field>
+            <field name='category_id' ref="jc_archive"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="comment">用于访问档案。普通用户需要选择此项设置</field>
+        </record>
+
+        <record id="group_archive_manager" model="res.groups">
+            <field name="name">管理</field>
+            <field name='category_id' ref="jc_archive"/>
+            <field name="implied_ids" eval="[(4, ref('group_archive_access'))]"/>
+            <field name="comment">用于管理档案。建议管理员选择此项设置</field>
+        </record>
+
     </data>
-</odoo>
+</openerp>
