@@ -7,6 +7,7 @@ from odoo.exceptions import ValidationError
 class SaleForecast(models.Model):
     _name = 'jc_sale.sale_forecast'
     _description = u'销售：销售预报'
+    _order = 'id desc'
 
     _inherit = ['ir.needaction_mixin']
 
