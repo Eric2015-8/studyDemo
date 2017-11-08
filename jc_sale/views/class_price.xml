@@ -179,7 +179,8 @@
         </record>
 
         <menuitem name="分类价" id="jc_sale.menu_class_price" parent="jc_sale_menu_root"
-                  action="jc_sale_class_price_action_window" sequence="10"/>
+                  action="jc_sale_class_price_action_window" sequence="10"
+                  groups="jc_sale.jc_group_sale_price_manager"/>
 
     </data>
 </openerp>
