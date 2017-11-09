@@ -1,10 +1,18 @@
 <odoo>
     <data>
-        <record id="finance_group_manager" model="res.groups">
-            <field name="name">财务 / 管理</field>
+        <record id="jc_group_finance_all" model="res.groups">
+            <field name="name">管理</field>
+            <field name="category_id" ref="archives.jc_finance"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">用户可以访问所有人做的财务单据;拥有审核权限.</field>
         </record>
-        <record id="finance_group_read" model="res.groups">
-            <field name="name">财务 / 只读</field>
+
+        <record id="jc_rule_sale_account_all" model="ir.rule">
+            <field name="name">全部销售账单</field>
+            <field ref="model_jc_finance_sale_account" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('jc_finance.jc_group_finance_all'))]"/>
         </record>
+
     </data>
 </odoo>
