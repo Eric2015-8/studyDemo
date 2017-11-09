@@ -59,6 +59,13 @@
                     <field name='sale_type_id' string='销售类型' filter_domain="[('sale_type_id', 'ilike', self)]"/>
                     <field name='remark' string='摘要' filter_domain="[('remark', 'ilike', self)]"/>
 
+                    <filter name="today" string="本日" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter name="yesterday" string="昨日"
+                            domain="[('date', '=',(context_today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+                    <filter string="本月" domain="[('date', '&gt;=', time.strftime('%%Y-%%m-01'))]"/>
+                    <filter string="本年" name="year"
+                            domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+
                     <group expand="0" string="Group By">
                         <filter string="产品" context="{'group_by':'goods_id'}"/>
                         <filter string="客户" context="{'group_by':'customer_id'}"/>
@@ -82,7 +89,8 @@
         </record>
 
         <!-- 销售订单分析表 menu -->
-        <menuitem id="menu_report_sale_order" name="销售订单分析表" action="report_sale_order_action" parent="jc_sale_menu_report" sequence="11"/>
+        <menuitem id="menu_report_sale_order" name="销售订单分析表" action="report_sale_order_action"
+                  parent="jc_sale_menu_report" sequence="11"/>
         <!--<menuitem id="menu_report_sale_order" name="销售订单分析表" action="report_sale_order_action" sequence="10"/>-->
 
         <!--<record id="procurement_order_view_form_inherit_purchase" model="ir.ui.view">-->
