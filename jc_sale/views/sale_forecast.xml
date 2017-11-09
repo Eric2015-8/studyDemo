@@ -28,13 +28,17 @@
                         <label string="单据状态:"/>
                         <field name="bill_state" readonly="1" attrs="{'invisible': [('id', '==', False)]}"/>
                         <button name="do_check" string="审核" type="object" class="oe_highlight oe_read_only"
-                                attrs="{'invisible': ['|',('bill_state', '!=', 1),('id', '==', False)]}"/>
+                                attrs="{'invisible': ['|',('bill_state', '!=', 1),('id', '==', False)]}"
+                                groups="jc_sale.jc_group_sale_all"/>
                         <button name="do_un_check" string="撤销" type="object"
-                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 10)]}"/>
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 10)]}"
+                                groups="jc_sale.jc_group_sale_all"/>
                         <button name="do_finish" string="完毕" type="object"
-                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 10)]}"/>
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 10)]}"
+                                groups="jc_sale.jc_group_sale_all"/>
                         <button name="do_un_finish" string="撤销完毕" type="object"
-                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 20)]}"/>
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 20)]}"
+                                groups="jc_sale.jc_group_sale_all"/>
                         <button name="do_customer_setting" string="个性设置" type="object"
                                 attrs="{'invisible': [('bill_state', '!=', 1)]}"/>
                     </header>
@@ -90,8 +94,10 @@
                     <filter name="not_checked_bill" string="未审核"
                             domain="[('bill_state', '=', 1)]"/>
                     <separator/>
-                    <filter name="last_24h" string="本日" domain="[('date','&gt;', (context_today() - datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d') )]"/>
-                    <filter name="last_week" string="7天内" domain="[('date','&gt;', (context_today() - datetime.timedelta(weeks=1)).strftime('%%Y-%%m-%%d') )]"/>
+                    <filter name="last_24h" string="本日"
+                            domain="[('date','&gt;', (context_today() - datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d') )]"/>
+                    <filter name="last_week" string="7天内"
+                            domain="[('date','&gt;', (context_today() - datetime.timedelta(weeks=1)).strftime('%%Y-%%m-%%d') )]"/>
                     <group string="Group By">
                         <filter name="by_bill_state" string="单据状态"
                                 context="{'group_by': 'bill_state'}"/>
