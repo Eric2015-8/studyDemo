@@ -8,10 +8,10 @@
         </record>
 
         <record id="jc_group_sale_all" model="res.groups">
-            <field name="name">经理</field>
+            <field name="name">管理</field>
             <field name="category_id" ref="archives.jc_sale"/>
             <field name="implied_ids" eval="[(4, ref('jc_group_sale_self'))]"/>
-            <field name="comment">用户可以访问所有人做的销售单据.</field>
+            <field name="comment">用户可以访问所有人做的销售单据;拥有审核权限.</field>
         </record>
 
         <record id="jc_rule_sale_order_all" model="ir.rule">
