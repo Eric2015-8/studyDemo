@@ -1,10 +1,60 @@
 <odoo>
     <data>
-        <record id="store_group_manager" model="res.groups">
-            <field name="name">仓储 / 管理</field>
+        <record id="jc_group_storage_all" model="res.groups">
+            <field name="name">管理</field>
+            <field name="category_id" ref="archives.jc_storage"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">用户可以访问所有人做的仓储单据;拥有审核权限.</field>
         </record>
-        <record id="store_group_read" model="res.groups">
-            <field name="name">仓储 / 只读</field>
+
+        <record id="jc_rule_other_in_store_all" model="ir.rule">
+            <field name="name">全部其它入库单</field>
+            <field ref="model_jc_storage_other_in_store" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('jc_storage.jc_group_storage_all'))]"/>
         </record>
+
+        <record id="jc_rule_other_out_store_all" model="ir.rule">
+            <field name="name">全部其它出库单</field>
+            <field ref="model_jc_storage_other_out_store" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('jc_storage.jc_group_storage_all'))]"/>
+        </record>
+
+        <record id="jc_rule_sale_out_store_all" model="ir.rule">
+            <field name="name">全部销售出库单</field>
+            <field ref="model_jc_storage_sale_out_store" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('jc_storage.jc_group_storage_all'))]"/>
+        </record>
+
+        <record id="jc_rule_sale_return_store_all" model="ir.rule">
+            <field name="name">全部销售退库</field>
+            <field ref="model_jc_storage_sale_return_store" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('jc_storage.jc_group_storage_all'))]"/>
+        </record>
+
+        <record id="jc_rule_stock_check_all" model="ir.rule">
+            <field name="name">全部库存盘点单</field>
+            <field ref="model_jc_storage_stock_check" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('jc_storage.jc_group_storage_all'))]"/>
+        </record>
+
+        <record id="jc_rule_transfer_in_all" model="ir.rule">
+            <field name="name">全部调拨入库单</field>
+            <field ref="model_jc_storage_transfer_in" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('jc_storage.jc_group_storage_all'))]"/>
+        </record>
+
+        <record id="jc_rule_transfer_out_all" model="ir.rule">
+            <field name="name">全部调拨出库单</field>
+            <field ref="model_jc_storage_transfer_out" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('jc_storage.jc_group_storage_all'))]"/>
+        </record>
+
     </data>
 </odoo>
