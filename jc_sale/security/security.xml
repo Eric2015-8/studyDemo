@@ -1,14 +1,14 @@
 <odoo>
     <data>
         <record id="jc_group_sale_self" model="res.groups">
-            <field name="name">仅自己</field>
+            <field name="name">业务员</field>
             <field name="category_id" ref="archives.jc_sale"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
             <field name="comment">用户只能访问自己做的销售单据.</field>
         </record>
 
         <record id="jc_group_sale_all" model="res.groups">
-            <field name="name">全部</field>
+            <field name="name">经理</field>
             <field name="category_id" ref="archives.jc_sale"/>
             <field name="implied_ids" eval="[(4, ref('jc_group_sale_self'))]"/>
             <field name="comment">用户可以访问所有人做的销售单据.</field>
