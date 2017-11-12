@@ -89,10 +89,14 @@
                                         <field name="main_unit_id" readonly="1"/>
                                         <field name="main_unit_number" widget="char"/>
                                         <field name="price" widget="char"/>
+                                        <field name="transfer_price" widget="char"/>
                                         <field name="money"/>
                                         <!--<field name="sale_forecast_id" readonly="1"/>-->
                                         <!--<field name="sale_forecast_detail_id" readonly="1" invisible="1"/>-->
                                         <field name="remark"/>
+                                        <field name="price_type_id" readonly="1"/>
+                                        <field name="class_price_id" readonly="1"/>
+                                        <field name="origin_price" widget="char"/>
                                     </tree>
                                     <kanban class="o_kanban_mobile">
                                         <field name="goods_id"/>

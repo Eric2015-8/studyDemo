@@ -28,11 +28,19 @@ class SaleOrderDetail(models.Model):
     main_unit_number = fields.Float(digits=(6, 2), string=u'主数量')
     main_unit_number_tmp = fields.Char(string=u'主数量')
 
+    price_type_id = fields.Many2one('archives.common_archive', string=u'价类', domain="[('archive_name','=',19)]")
+    class_price_id = fields.Many2one('jc_sale.class_price', string='价格单号')
+    origin_price = fields.Float(digits=(6, 2), help="原价", string=u'原价')
+    transfer_price = fields.Float(digits=(6, 2), help="运价", string=u'运价')
+
     price = fields.Float(digits=(6, 2), help="单价", string=u'单价')
     price_tmp = fields.Char(string=u'单价')
     money = fields.Float(digits=(6, 2), help="金额", string=u'金额', store=True)
 
     remark = fields.Char(string=u'备注')
+
+    def _compute_money(self):
+        self.money = (self.price + self.transfer_price) * self.main_unit_number
 
     @api.depends('goods_id')
     def _set_main(self):
@@ -59,12 +67,12 @@ class SaleOrderDetail(models.Model):
             return
         self.main_unit_number = self.goods_id.second_rate * self.second_unit_number
         self.main_unit_number_tmp = str(self.main_unit_number)
-        self.money = self.price * self.main_unit_number
+        self._compute_money()
 
     @api.onchange('main_unit_number_tmp')
     def _onchange_for_main_unit_number_from_tmp(self):
         self.main_unit_number = float(self.main_unit_number_tmp)
-        self.money = self.price * self.main_unit_number
+        self._compute_money()
         if not self.goods_id.need_change():
             return
         if self.goods_id.second_rate != 0:
@@ -74,11 +82,11 @@ class SaleOrderDetail(models.Model):
     @api.onchange('price_tmp')
     def _onchange_for_price_from_tmp(self):
         self.price = float(self.price_tmp)
-        self.money = self.price * self.main_unit_number
+        self._compute_money()
 
-    @api.onchange('price', 'main_unit_number')
+    @api.onchange('price', 'main_unit_number', 'transfer_price')
     def _onchange_for_money(self):
-        self.money = self.price * self.main_unit_number
+        self._compute_money()
 
     @api.onchange('second_unit_number')
     def _onchange_second(self):
