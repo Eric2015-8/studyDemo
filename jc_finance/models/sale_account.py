@@ -39,6 +39,7 @@ class SaleAccount(models.Model):
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
                                     domain=lambda self: self.env['archives.organization'].get_department_organization())
+    out_store_date = fields.Date(string=u'出库日期', required=True, default=fields.Date.today)
 
     total_second_number = fields.Float(string='辅数量', store=True, readonly=True, compute='_amount_all',
                                        track_visibility='always')

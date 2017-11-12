@@ -35,6 +35,7 @@ class SaleForecast(models.Model):
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
                                     domain=lambda self: self.env['archives.organization'].get_department_organization())
+    out_store_date = fields.Date(string=u'出库日期', required=True, default=fields.Date.today)
 
     @api.onchange('customer_id')
     def _onchange_for_staff(self):
@@ -87,6 +88,7 @@ class SaleForecast(models.Model):
             'source_bill_type': 1,  # 销售预报
             'customer_id': self.customer_id.id,
             'date': self.date,
+            'out_store_date': self.out_store_date,
             'sale_type_id': self.sale_type_id.id,
             'staff_id': self.staff_id.id,
             'department_id': self.department_id.id,

@@ -13,6 +13,7 @@
                     <field name="date"/>
                     <field name="sale_type_id"/>
                     <field name="department_id"/>
+                    <field name="out_store_date"/>
                     <field name="remark"/>
                 </tree>
             </field>
@@ -75,6 +76,7 @@
                                            options="{'no_open':True,'no_create':True}" readonly="0"/>
                                     <field name="store_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="department_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="out_store_date"/>
                                 </group>
                             </page>
                         </notebook>

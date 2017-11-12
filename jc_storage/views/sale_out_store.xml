@@ -13,6 +13,7 @@
                     <field name="date"/>
                     <field name="sale_type_id"/>
                     <field name="department_id"/>
+                    <field name="out_store_date"/>
                     <field name="remark"/>
                 </tree>
             </field>
@@ -45,6 +46,7 @@
                     <sheet>
                         <group name="group_top" string="销售出库单" col="4">
                             <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="out_store_date"/>
                             <field name="remark"/>
                         </group>
                         <notebook>

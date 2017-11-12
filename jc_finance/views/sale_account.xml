@@ -13,6 +13,7 @@
                     <field name="date"/>
                     <field name="sale_type_id"/>
                     <field name="department_id"/>
+                    <field name="out_store_date"/>
                     <field name="remark"/>
                 </tree>
             </field>
@@ -141,6 +142,7 @@
                             <page string="其它信息">
                                 <group name="group_other" col="4">
                                     <field name="date"/>
+                                    <field name="out_store_date"/>
                                     <field name="sale_type_id" domain="[('archive_name','=',1)]"
                                            options="{'no_open':True,'no_create':True}"/>
                                     <field name="company_id" options="{'no_open':True,'no_create':True}"/>
