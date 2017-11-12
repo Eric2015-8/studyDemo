@@ -26,9 +26,9 @@ class OtherOutStore(models.Model):
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     remark = fields.Char(string=u'摘要')
 
-    customer_id = fields.Many2one('archives.customer', string=u'往来单位', required=True,
+    customer_id = fields.Many2one('archives.customer', string=u'往来单位',
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
-    staff_id = fields.Many2one('archives.staff', string=u'员工', required=True)
+    staff_id = fields.Many2one('archives.staff', string=u'员工')
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
                                  domain=lambda self: self.env['archives.organization'].get_company_organization())
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,

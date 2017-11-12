@@ -64,10 +64,10 @@
                                         <!--<field name="active_goods_position" invisible="1"/>-->
                                         <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
                                         <field name="second_unit_id" readonly="1"/>
-                                        <field name="second_unit_number"/>
+                                        <field name="second_unit_number" widget="char"/>
                                         <field name="main_unit_id" readonly="1"/>
-                                        <field name="main_unit_number"/>
-                                        <field name="price"/>
+                                        <field name="main_unit_number" widget="char"/>
+                                        <field name="price" widget="char"/>
                                         <field name="money"/>
                                         <!--<field name="goods_position_id" options="{'no_open':True,'no_create':True}"-->
                                         <!--attrs="{'readonly': [ ('active_goods_position', '=', False)]}"/>-->

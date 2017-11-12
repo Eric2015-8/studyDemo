@@ -30,13 +30,13 @@ class TransferOut(models.Model):
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     remark = fields.Char(string=u'摘要')
 
-    out_unit_id = fields.Many2one('archives.customer', string=u'调出单位', required=True,
+    out_unit_id = fields.Many2one('archives.customer', string=u'调出单位',
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
-    in_unit_id = fields.Many2one('archives.customer', string=u'调入单位', required=True,
+    in_unit_id = fields.Many2one('archives.customer', string=u'调入单位',
                                  domain=lambda self: self.env['archives.organization'].get_customer_organization())
 
     out_staff_id = fields.Many2one('archives.staff', string=u'调出员工')
-    int_staff_id = fields.Many2one('archives.staff', string=u'调入员工', required=True)
+    int_staff_id = fields.Many2one('archives.staff', string=u'调入员工')
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
                                  domain=lambda self: self.env['archives.organization'].get_company_organization())
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
