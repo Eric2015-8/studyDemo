@@ -45,6 +45,9 @@
         'print/sale_return_store_report.xml',
         'views/stock_check.xml',
         'print/stock_check_report.xml',
+
+        'views/storage_setting_center_transfer_out_type.xml',
+        'views/storage_setting_center.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

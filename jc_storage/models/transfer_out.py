@@ -103,8 +103,69 @@ class TransferOut(models.Model):
         # self._check_goods_position()
         return result
 
+    def _create_transfer_in(self):
+        values = {
+            'source_bill_id': self.id,
+            'source_bill_type': 26,  # 调拨出库
+            'out_store_id': self.out_store_id.id,
+            'in_store_id': self.in_store_id.id,
+            'transfer_out_type_id': self.transfer_out_type_id.id,
+            'transfer_in_type_id': self.transfer_in_type_id.id,
+            'date': self.date,
+            'out_unit_id': self.out_unit_id.id,
+            'in_unit_id': self.in_unit_id.id,
+            'out_staff_id': self.out_staff_id.id,
+            'int_staff_id': self.int_staff_id.id,
+            'company_id': self.company_id.id,
+            'department_id': self.department_id.id,
+            'remark': self.remark,
+            'total_main_number': self.total_main_number,
+            'total_second_number': self.total_second_number,
+            'total_money': self.total_money,
+        }
+        bill = self.env['jc_storage.transfer_in'].create(values)
+        for detail in self.transfer_out_detail:
+            values = {
+                'transfer_in_id': bill.id,
+                'source_bill_type': 26,  # 调拨出库
+                'source_bill_id': self.id,
+                'source_detail_id': detail.id,
+                'goods_id': detail.goods_id.id,
+                'second_unit_id': detail.second_unit_id.id,
+                'second_unit_number': detail.second_unit_number,
+                'main_unit_id': detail.main_unit_id.id,
+                'main_unit_number': detail.main_unit_number,
+                'price': detail.price,
+                'money': detail.money,
+                'remark': detail.remark,
+            }
+            self.env['jc_storage.transfer_in.detail'].create(values)
+        return bill
+
+    def _delete_transfer_out(self):
+        bills = self.env["jc_storage.transfer_in"].search(
+            [('source_bill_id', '=', self.id), ('source_bill_type', '=', 26)])
+        if bills:
+            for bill in bills:
+                bill.unlink()
+
+    def _check_logic(self):
+        if not self.transfer_out_type_id:
+            raise ValidationError(u'未选择{调出类型}')
+        setting = self.env['setting_center.transfer_out_type'].query_type(self.transfer_out_type_id.id)
+        if not setting:
+            raise ValidationError(u'请到【设置中心】“仓储”下设置“调拨流程”！')
+        _type = setting
+        if _type == 1:
+            return
+        bill = self._create_transfer_in()
+        if _type == 20:
+            bill.do_check()
+        return
+
     @api.multi
     def do_check(self):
+        self._check_logic()
         self.bill_state = 10
 
     @api.multi
@@ -117,6 +178,7 @@ class TransferOut(models.Model):
 
     @api.multi
     def do_un_check(self):
+        self._delete_transfer_out()
         self.bill_state = 1
 
     @api.multi

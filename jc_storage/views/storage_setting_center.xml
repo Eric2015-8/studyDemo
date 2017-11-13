@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_setting_center_storage" model="ir.ui.view">
+        <field name="name">设置中心_仓储</field>
+        <field name="model">setting_center</field>
+        <field name="inherit_id" ref="archives.view_setting_center"/>
+        <field name="arch" type="xml">
+            <xpath expr='//notebook[last()]' position='inside'>
+                <page string="仓储">
+                    <group>
+                        <label string="调拨流程"/>
+                        <div>
+                            <div>
+                                <label for="transfer_out_2_in_type_default"/>
+                                <label string=":"/>
+                                <field name="transfer_out_2_in_type_default"/>
+                            </div>
+                            <div>
+                                <label string="说明：以上设置为调出类型未设置时的默认操作。"/>
+                                <button type="action" name="%(jc_storage.setting_center_transfer_out_type_action_window)d"
+                                        string="点这里进行设置" icon="fa-cogs" class="oe_inline oe_link"/>
+                            </div>
+                        </div>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

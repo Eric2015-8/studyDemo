@@ -18,3 +18,6 @@ from . import sale_return_store
 from . import sale_return_store_detail
 from . import stock_check
 from . import stock_check_detail
+
+from . import storage_setting_center
+from . import storage_setting_center_transfer_out_type
