@@ -26,7 +26,7 @@ class SaleAccount(models.Model):
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
-    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True)
+    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型')
     remark = fields.Char(string=u'摘要')
 
     sale_account_detail = fields.One2many('jc_finance.sale_account.detail', 'sale_account_id',

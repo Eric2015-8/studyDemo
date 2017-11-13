@@ -11,5 +11,6 @@ from . import class_price
 from . import class_price_detail
 from . import sale_setting_center
 from . import sale_setting_center_sale_type
+from . import sale_setting_center_return_type
 
 from . import no_page

@@ -41,8 +41,9 @@
         'print/sale_order_report.xml',
         'report/report_sale_order.xml',
         'views/class_price.xml',
-        'views/sale_setting_center.xml',
         'views/sale_setting_center_sale_type.xml',
+        'views/sale_setting_center_return_type.xml',
+        'views/sale_setting_center.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
