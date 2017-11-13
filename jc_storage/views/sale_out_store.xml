@@ -296,8 +296,8 @@
                     target="new"
                     context="{'default_state': 'step1'}"/>
 
-        <menuitem name="出库向导" id="jc_storage.mobile_sale_out_store_action_wizard"
-                  action="jc_storage_mobile_sale_out_store_action_wizard" sequence="2"/>
+        <!--<menuitem name="出库向导" id="jc_storage.mobile_sale_out_store_action_wizard"-->
+                  <!--action="jc_storage_mobile_sale_out_store_action_wizard" sequence="2"/>-->
 
         <menuitem name="销售出库单" id="jc_storage.menu_sale_out_store" parent="jc_storage_menu_root"
                   action="jc_storage_sale_out_store_action_window" sequence="3"/>

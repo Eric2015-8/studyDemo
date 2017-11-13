@@ -304,11 +304,11 @@
                     target="new"
                     context="{'default_state': 'step1'}"/>
 
-        <menuitem name="订单向导" id="jc_sale.mobile_sale_order_action_wizard"
-                  action="jc_sale_mobile_sale_order_action_wizard" sequence="1"/>
+        <!--<menuitem name="订单向导" id="jc_sale.mobile_sale_order_action_wizard"-->
+                  <!--action="jc_sale_mobile_sale_order_action_wizard" sequence="1"/>-->
 
-        <menuitem name="销售订单" id="jc_sale.menu_sale_order"
-                  action="jc_sale_sale_order_action_window" sequence="2"/>
+        <!--<menuitem name="销售订单" id="jc_sale.menu_sale_order"-->
+                  <!--action="jc_sale_sale_order_action_window" sequence="2"/>-->
         <menuitem name="销售订单" id="jc_sale.menu_sale_order2" parent="jc_sale_menu_root"
                   action="jc_sale_sale_order_action_window" sequence="2"/>
 
