@@ -10,6 +10,7 @@
                     <field name="name"/>
                     <field name="bill_state"/>
                     <field name="customer_id"/>
+                    <field name="staff_id"/>
                     <field name="date"/>
                     <field name="sale_type_id"/>
                     <field name="department_id"/>
