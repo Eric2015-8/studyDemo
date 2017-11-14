@@ -35,10 +35,6 @@ class ReportSaleOrder(models.Model):
     money = fields.Float(digits=dp.get_precision('Amount'), string=u'金额')
     remark_detail = fields.Char(string=u'备注')
 
-    @api.multi
-    def test(self):
-        return
-
     def init(self):
         cr = self._cr
         tools.drop_view_if_exists(cr, 'jc_sale_report_sale_order')
