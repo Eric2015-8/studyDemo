@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 class OtherOutStore(models.Model):
     _name = 'jc_storage.other_out_store'
-    _description = u'仓储：其它出库'
+    _description = u'仓储：其他出库'
     _order = 'id desc'
 
     _inherit = ['ir.needaction_mixin']
@@ -41,7 +41,7 @@ class OtherOutStore(models.Model):
     total_money = fields.Float(string='金额', store=True, readonly=True, compute='_amount_all', track_visibility='always')
 
     other_out_store_detail = fields.One2many('jc_storage.other_out_store.detail', 'other_out_store_id',
-                                             string=u'其它入库明细', copy=True)
+                                             string=u'其他入库明细', copy=True)
 
     @api.depends('other_out_store_detail.second_unit_number', 'other_out_store_detail.main_unit_number',
                  'other_out_store_detail.money')
@@ -134,7 +134,7 @@ class OtherOutStore(models.Model):
     @api.multi
     def do_customer_setting(self):
         table = u'jc_storage.other_out_store'
-        table_show_name = u'其它出库'
+        table_show_name = u'其他出库'
         need_set_fields = ['store_id', 'in_store_type_id', 'staff_id', 'customer_id', 'company_id', 'department_id']
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name)
 

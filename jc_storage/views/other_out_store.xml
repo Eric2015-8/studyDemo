@@ -2,7 +2,7 @@
     <data>
         <!-- explicit list view definition -->
         <record model="ir.ui.view" id="jc_storage_other_out_store_list">
-            <field name="name">其它出库列表</field>
+            <field name="name">其他出库列表</field>
             <field name="model">jc_storage.other_out_store</field>
             <field name="arch" type="xml">
                 <tree>
@@ -22,7 +22,7 @@
         </record>
 
         <record model="ir.ui.view" id="jc_storage_other_out_store_edit">
-            <field name="name">其它出库新建</field>
+            <field name="name">其他出库新建</field>
             <field name="model">jc_storage.other_out_store</field>
             <field name="arch" type="xml">
                 <form>
@@ -46,7 +46,7 @@
                                 attrs="{'invisible': [('bill_state', '!=', 1)]}"/>
                     </header>
                     <sheet>
-                        <group name="group_top" string="其它出库" col="4">
+                        <group name="group_top" string="其他出库" col="4">
                             <field name="store_id" options="{'no_open':True,'no_create':True}"/>
                             <field name="in_store_type_id" options="{'no_open':True,'no_create':True}"/>
                             <field name="date"/>
@@ -59,7 +59,7 @@
                                             class="oe_highlight oe_edit_only"/>
                                 </div>
                                 <field name="other_out_store_detail" mode="tree,kanban">
-                                    <tree string="其它出库明细" editable="bottom">
+                                    <tree string="其他出库明细" editable="bottom">
                                         <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
                                         <field name="second_unit_id" readonly="1"/>
                                         <field name="second_unit_number" widget="char"/>
@@ -110,13 +110,13 @@
 
         <!-- actions opening views on models -->
         <record model="ir.actions.act_window" id="jc_storage_other_out_store_action_window">
-            <field name="name">其它出库</field>
+            <field name="name">其他出库</field>
             <field name="res_model">jc_storage.other_out_store</field>
             <field name="view_mode">tree,form</field>
             <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
         </record>
 
-        <menuitem name="其它出库" id="jc_storage.menu_other_out_store" parent="jc_storage_menu_root"
+        <menuitem name="其他出库" id="jc_storage.menu_other_out_store" parent="jc_storage_menu_root"
                   action="jc_storage_other_out_store_action_window" sequence="2"/>
 
     </data>

@@ -6,9 +6,9 @@ from odoo.exceptions import ValidationError
 
 class OtherInStoreDetail(models.Model):
     _name = 'jc_storage.other_out_store.detail'
-    _description = u'仓储：其它入库明细'
+    _description = u'仓储：其他入库明细'
 
-    other_out_store_id = fields.Many2one('jc_storage.other_out_store', string='其它入库引用', required=True,
+    other_out_store_id = fields.Many2one('jc_storage.other_out_store', string='其他入库引用', required=True,
                                         ondelete='cascade', index=True, copy=False)
 
     goods_id = fields.Many2one('archives.goods', string=u'产品', required=True)
