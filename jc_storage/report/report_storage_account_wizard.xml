@@ -1,0 +1,26 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="jc_storage_report_storage_account_wizard_wizard">
+            <field name="name">库存账查询</field>
+            <field name="model">jc_storage.report_storage_account_wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group colspan="4">
+                        <field name="user_id" invisible="1"/>
+                    </group>
+                    <group colspan="4">
+                        <field name="store_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                        <field name="unit_id" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                    <footer>
+                        <button name="query" type="object"
+                                string="查询" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

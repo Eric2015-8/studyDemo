@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- 库存账 tree 视图 -->
+        <record id="report_storage_account_tree" model="ir.ui.view">
+            <field name="name">storage.account.tree</field>
+            <field name="model">jc_storage.report_storage_account_result</field>
+            <field name="arch" type="xml">
+                <tree string="库存账" create="false" delete="false">
+                    <field name="goods_id"/>
+                    <field name="unit_id"/>
+                    <field name='number_start' sum="期初合计"/>
+                    <field name='number_add' sum="本期增加合计"/>
+                    <field name='number_sub' sum="本期减少合计"/>
+                    <field name='number_end' sum="期末合计"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- 库存账 graph 视图 -->
+        <record id='report_storage_account_result_graph' model='ir.ui.view'>
+            <field name='name'>storage account graph</field>
+            <field name='model'>jc_storage.report_storage_account_result</field>
+            <field name='arch' type='xml'>
+                <pivot string="库存账">
+                    <field name='goods_id' type='row'/>
+                    <field name='number_start' type='measure' sum="期初合计"/>
+                    <field name='number_add' type='measure' sum="本期增加合计"/>
+                    <field name="number_sub" type='measure' sum="本期减少合计"/>
+                    <field name="number_end" type='measure' sum="期末合计"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- 库存账 search 视图 -->
+        <record id='report_storage_account_result_search' model='ir.ui.view'>
+            <field name='name'>report_storage_account_result.search</field>
+            <field name='model'>jc_storage.report_storage_account_result</field>
+            <field name='arch' type='xml'>
+                <search string='库存账'>
+                    <field name='goods_id' string='产品' filter_domain="[('goods_id', 'ilike', self)]"/>
+                    <!--<filter name="today" string="本日" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>-->
+                    <!--<filter name="yesterday" string="昨日"-->
+                    <!--domain="[('date', '=',(context_today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d'))]"/>-->
+                    <!--<filter string="本月" domain="[('date', '&gt;=', time.strftime('%%Y-%%m-01'))]"/>-->
+                    <!--<filter string="本年" name="year"-->
+                    <!--domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>-->
+
+                    <group expand="0" string="Group By">
+                        <filter string="产品" context="{'group_by':'goods_id'}"/>
+                        <filter string="单位" context="{'group_by': 'unit_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <act_window id="jc_storage_storage_account_wizard"
+                    name="库存账"
+                    src_model="jc_storage.report_storage_account_result"
+                    res_model="jc_storage.report_storage_account_wizard"
+                    view_mode="form"
+                    target="new"
+                    context="{'default_user_id': uid}"/>
+
+        <!-- 库存账 action -->
+        <record id='report_storage_account_action' model='ir.actions.act_window'>
+            <field name='name'>库存账</field>
+            <field name='res_model'>jc_storage.report_storage_account_result</field>
+            <field name='view_mode'>tree,pivot</field>
+            <field name='view_id' ref='report_storage_account_tree'/>
+        </record>
+
+        <!-- 库存账 menu -->
+        <menuitem id="menu_report_storage_account_result" name="库存账" action="jc_storage_storage_account_wizard"
+                  parent="jc_storage_menu_root" sequence="11"/>
+
+    </data>
+</openerp>

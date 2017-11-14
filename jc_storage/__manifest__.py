@@ -6,7 +6,7 @@
         库存相关""",
 
     'description': """
-        与库存相关的单据，如：其它入库、销售出库，其使用对象为仓库人员
+        与库存相关的单据，如：其他入库、销售出库，其使用对象为仓库人员
     """,
 
     'author': "xxb开发",
@@ -48,6 +48,9 @@
 
         'views/storage_setting_center_transfer_out_type.xml',
         'views/storage_setting_center.xml',
+
+        'report/report_storage_account.xml',
+        'report/report_storage_account_wizard.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
