@@ -60,7 +60,7 @@
                                             />
                                             <label for="second_unit_number" string="辅数量"/>
                                             <div>
-                                                <field name="second_unit_number_tmp" class="oe_inline"/>
+                                                <field name="second_unit_number_tmp" class="oe_inline" widget="number"/>
                                                 <field name="second_unit_id"
                                                        class="oe_inline oe_no_button"
                                                        options="{'no_open':True,'no_create':True}"
@@ -68,14 +68,14 @@
                                             </div>
                                             <label for="main_unit_number" string="主数量"/>
                                             <div>
-                                                <field name="main_unit_number_tmp" class="oe_inline"/>
+                                                <field name="main_unit_number_tmp" class="oe_inline" widget="number"/>
                                                 <field name="main_unit_id"
                                                        class="oe_inline oe_no_button"
                                                        options="{'no_open':True,'no_create':True}"
                                                 />
                                             </div>
-                                            <field name="price_tmp"/>
-                                            <field name="money"/>
+                                            <field name="price_tmp" widget="number"/>
+                                            <field name="money" widget="number"/>
                                             <field name="second_unit_number" invisible="1"/>
                                             <field name="main_unit_number" invisible="1"/>
                                             <field name="price" invisible="1"/>
@@ -85,19 +85,19 @@
                                         <field name="need_second_change" invisible="1"/>
                                         <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
                                         <field name="second_unit_id" readonly="1"/>
-                                        <field name="second_unit_number" widget="char"
+                                        <field name="second_unit_number" widget="number"
                                                attrs="{'readonly':[('need_second_change','=',0)]}"/>
                                         <field name="main_unit_id" readonly="1"/>
-                                        <field name="main_unit_number" widget="char"/>
-                                        <field name="price" widget="char"/>
-                                        <field name="transfer_price" widget="char"/>
+                                        <field name="main_unit_number" widget="number"/>
+                                        <field name="price" widget="number"/>
+                                        <field name="transfer_price" widget="number"/>
                                         <field name="money"/>
                                         <!--<field name="sale_forecast_id" readonly="1"/>-->
                                         <!--<field name="sale_forecast_detail_id" readonly="1" invisible="1"/>-->
                                         <field name="remark"/>
                                         <field name="price_type_id" readonly="1"/>
                                         <field name="class_price_id" readonly="1"/>
-                                        <field name="origin_price" widget="char"/>
+                                        <field name="origin_price" widget="number"/>
                                     </tree>
                                     <kanban class="o_kanban_mobile">
                                         <field name="goods_id"/>
@@ -111,29 +111,33 @@
                                             <t t-name="kanban-box">
                                                 <div t-attf-class="oe_kanban_card oe_kanban_global_click">
                                                     <div class="row">
-                                                        <div class="col-xs-12">
+                                                        <div class="col-xs-9" style="padding:0;">
                                                             <strong>
                                                                 <span>
                                                                     <t t-esc="record.goods_id.value"/>
                                                                 </span>
                                                             </strong>
                                                         </div>
+                                                        <div class="col-xs-3 text-muted" style="padding:0;">
+                                                            <span class="pull-right text-right">
+                                                                <field name="price"/>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-xs-5 text-muted">
+                                                        <div class="col-xs-4 text-muted" style="padding:0;">
                                                             <span>
                                                                 <field name="second_unit_number"/>
                                                                 <field name="second_unit_id"/>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-xs-4 text-muted" style="padding:0;">
+                                                            <span>
                                                                 <field name="main_unit_number"/>
                                                                 <field name="main_unit_id"/>
                                                             </span>
                                                         </div>
-                                                        <div class="col-xs-3 text-muted">
-                                                            <span class="pull-right text-right">
-                                                                <field name="price" widget="char"/>
-                                                            </span>
-                                                        </div>
-                                                        <div class="col-xs-4 text-muted">
+                                                        <div class="col-xs-4 text-muted" style="padding:0;">
                                                             <span class="pull-right text-right">
                                                                 <field name="money"/>
                                                             </span>
@@ -144,9 +148,24 @@
                                         </templates>
                                     </kanban>
                                 </field>
-                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
-                                    <field name="total_money"/>
-                                </group>
+                                <div>
+                                    <div class="col-xs-4 text-muted" style="padding:0;">
+                                        <span>
+                                            合计：
+                                            <field name="total_second_number"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-4 text-muted" style="padding:0;">
+                                        <span>
+                                            <field name="total_main_number"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-4 text-muted" style="padding:0;">
+                                        <span class="pull-right text-right">
+                                            <field name="total_money"/>
+                                        </span>
+                                    </div>
+                                </div>
                             </page>
                             <page string="其它信息">
                                 <group name="group_other" col="4">
@@ -306,10 +325,10 @@
                     context="{'default_state': 'step1'}"/>
 
         <!--<menuitem name="订单向导" id="jc_sale.mobile_sale_order_action_wizard"-->
-                  <!--action="jc_sale_mobile_sale_order_action_wizard" sequence="1"/>-->
+        <!--action="jc_sale_mobile_sale_order_action_wizard" sequence="1"/>-->
 
         <!--<menuitem name="销售订单" id="jc_sale.menu_sale_order"-->
-                  <!--action="jc_sale_sale_order_action_window" sequence="2"/>-->
+        <!--action="jc_sale_sale_order_action_window" sequence="2"/>-->
         <menuitem name="销售订单" id="jc_sale.menu_sale_order2" parent="jc_sale_menu_root"
                   action="jc_sale_sale_order_action_window" sequence="2"/>
 
