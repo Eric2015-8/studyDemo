@@ -12,33 +12,33 @@ class SaleSettingCenterSaleType(models.Model):
     name = fields.Char(string=u'单据编号', required=True, copy=False, readonly=True,
                        index=True, default=lambda self: '新建')
 
-    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
+    type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
                                    domain=[('archive_name', '=', 1)])
     forecast_2_oder_type = fields.Selection(create_type, default=1, string=u'预报生成订单方式', required=True)
     order_2_out_store_type = fields.Selection(create_type, default=10, string=u'订单生成出库方式', required=True)
     out_store_2_account_type = fields.Selection(create_type, default=10, string=u'出库生成账单方式', required=True)
 
     def _set_name(self, values):
-        values['name'] = self.env['archives.common_archive'].browse(values['sale_type_id']).name
+        values['name'] = self.env['archives.common_archive'].browse(values['type_id']).name
 
     @api.model
     def create(self, values):
-        self._check_not_same_create(values['sale_type_id'])
+        self._check_not_same_create(values['type_id'])
         self._set_name(values)
         result = super(SaleSettingCenterSaleType, self).create(values)
         return result
 
-    def _check_not_same_create(self, sale_type_id):
-        count = self.search_count([('sale_type_id', '=', sale_type_id)])
+    def _check_not_same_create(self, type_id):
+        count = self.search_count([('type_id', '=', type_id)])
         if count:
             raise ValidationError(u"销售类型已设置过")
         return
 
-    def query_type(self, sale_type_id_):
-        if not sale_type_id_:
+    def query_type(self, type_id_):
+        if not type_id_:
             return None
 
-        result = self.search([('sale_type_id', '=', sale_type_id_)])
+        result = self.search([('type_id', '=', type_id_)])
         if result:
             return result[0].forecast_2_oder_type, \
                    result[0].order_2_out_store_type, \

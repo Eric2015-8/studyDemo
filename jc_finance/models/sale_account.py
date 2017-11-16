@@ -26,7 +26,7 @@ class SaleAccount(models.Model):
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
-    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型')
+    type_id = fields.Many2one('archives.common_archive', string=u'销售类型')
     remark = fields.Char(string=u'摘要')
 
     sale_account_detail = fields.One2many('jc_finance.sale_account.detail', 'sale_account_id',
@@ -120,12 +120,12 @@ class SaleAccount(models.Model):
     @api.multi
     def do_customer_setting(self):
         table_show_name = u'销售账单'
-        need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, self._name, table_show_name)
 
     @api.model
     def default_get(self, fields_):
         res = super(SaleAccount, self).default_get(fields_)
-        need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         self.env['archives.set_customer_setting'].set_default(res, self._name, fields_, need_set_fields)
         return res

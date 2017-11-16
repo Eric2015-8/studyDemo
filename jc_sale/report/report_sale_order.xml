@@ -56,7 +56,7 @@
                     <field name='department_id' string='部门' filter_domain="[('department_id', 'ilike', self)]"/>
                     <!--<field name='lot' string='批号' filter_domain="[('lot', 'ilike', self)]" groups='goods.batch_groups' />-->
                     <field name='store_id' string='仓库' filter_domain="[('store_id', 'ilike', self)]"/>
-                    <field name='sale_type_id' string='销售类型' filter_domain="[('sale_type_id', 'ilike', self)]"/>
+                    <field name='type_id' string='销售类型' filter_domain="[('type_id', 'ilike', self)]"/>
                     <field name='remark' string='摘要' filter_domain="[('remark', 'ilike', self)]"/>
 
                     <filter name="today" string="本日" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>

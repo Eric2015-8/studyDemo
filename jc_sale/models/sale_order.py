@@ -26,7 +26,7 @@ class SaleOrder(models.Model):
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
-    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True)
+    type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True)
     remark = fields.Char(string=u'摘要')
 
     sale_order_detail = fields.One2many('jc_sale.sale_order.detail', 'sale_order_id', string=u'销售订单明细', copy=True)
@@ -107,7 +107,7 @@ class SaleOrder(models.Model):
             'customer_id': self.customer_id.id,
             'date': self.date,
             'out_store_date': self.out_store_date,
-            'sale_type_id': self.sale_type_id.id,
+            'type_id': self.type_id.id,
             'staff_id': self.staff_id.id,
             'department_id': self.department_id.id,
             'store_id': self.store_id.id,
@@ -161,9 +161,9 @@ class SaleOrder(models.Model):
                 bill.unlink()
 
     def _check_logic(self):
-        if not self.sale_type_id:
+        if not self.type_id:
             raise ValidationError(u'未选择{销售类型}')
-        setting = self.env['setting_center.sale_type'].query_type(self.sale_type_id.id)
+        setting = self.env['setting_center.sale_type'].query_type(self.type_id.id)
         if not setting:
             raise ValidationError(u'请到【设置中心】“销售”下设置“销售流程”！')
         _type = setting[0]
@@ -196,12 +196,12 @@ class SaleOrder(models.Model):
     def do_customer_setting(self):
         table = u'jc_sale.sale_order'
         table_show_name = u'销售订单'
-        need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name)
 
     @api.model
     def default_get(self, fields_):
         res = super(SaleOrder, self).default_get(fields_)
-        need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         self.env['archives.set_customer_setting'].set_default(res, self._name, fields_, need_set_fields)
         return res

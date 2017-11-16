@@ -17,8 +17,8 @@ class SetCustomerSetting(models.TransientModel):
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
     is_show_customer_id = fields.Boolean(u'是否显示客户', default=lambda self: self._is_show('customer_id'))
 
-    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', domain=[('archive_name', '=', 1)])
-    is_show_sale_type_id = fields.Boolean(u'是否显示销售类型', default=lambda self: self._is_show('sale_type_id'))
+    type_id = fields.Many2one('archives.common_archive', string=u'销售类型', domain=[('archive_name', '=', 1)])
+    is_show_type_id = fields.Boolean(u'是否显示销售类型', default=lambda self: self._is_show('type_id'))
 
     company_id = fields.Many2one('res.company', string=u'公司',
                                  default=lambda self: self.env['res.company']._company_default_get())
@@ -125,8 +125,8 @@ class SetCustomerSetting(models.TransientModel):
         setting = self.env['archives.customer_setting'].create(values)
         if self.is_show_customer_id:
             self.create_setting_detail(setting.id, 'customer_id', self.customer_id.id)
-        if self.is_show_sale_type_id:
-            self.create_setting_detail(setting.id, 'sale_type_id', self.sale_type_id.id)
+        if self.is_show_type_id:
+            self.create_setting_detail(setting.id, 'type_id', self.type_id.id)
         if self.is_show_company_id:
             self.create_setting_detail(setting.id, 'company_id', self.company_id.id)
         if self.is_show_staff_id:

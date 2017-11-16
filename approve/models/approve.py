@@ -3,6 +3,13 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
 
+def get_id(bill, field):
+    attr = getattr(bill, field, False)
+    if attr:
+        return attr.id
+    return False
+
+
 class Approve(models.AbstractModel):
     '''
     针对系统内的单据增加审批流程控制
@@ -29,12 +36,21 @@ class Approve(models.AbstractModel):
     _approve_state = fields.Char(u'审批状态',
                                  compute='_get_approve_state')
 
-    def __get_groups__(self, process_rows):
+    """[(审批组,序号)]"""
+
+    def __get_groups__(self, process_bill):
+        """
+        得到当前审批流的审批组与序号
+        :param process_bill:审批流
+        :return:[(审批组,序号)]
+        """
         groups = []
-        if process_rows:
+        if process_bill:
             [groups.append((line.group_id, line.sequence)) for line in self.env['approve.process_line'].search(
-                [('process_id', '=', process_rows.id)], order='sequence')]
+                [('process_id', '=', process_bill.id)], order='sequence')]
         return groups
+
+    """[(用户，审批组序号，审批组)]"""
 
     def __get_users__(self, groups):
         users = []
@@ -43,12 +59,12 @@ class Approve(models.AbstractModel):
              for user in group.users]
         return users
 
-    def __get_user_manager__(self, thread_row, process_rows):
+    def __get_user_manager__(self, thread_row, process_bill):
         '''
         如此流程需要记录创建者的部门经理审批，取得部门经理用户
         '''
         return_vals = False  # TODO:增加对部门经理的支持
-        # if process_rows.is_department_approve:
+        # if process_bill.is_department_approve:
         #     staff_row = self.env['staff'].search([('user_id', '=', thread_row.create_uid.id)])
         #     if staff_row and getattr(staff_row, 'parent_id', False):
         #         return_vals = staff_row.parent_id.user_id
@@ -56,16 +72,16 @@ class Approve(models.AbstractModel):
 
     def __add_approver__(self, thread_row, model_name):
         # TODO 加上当前用户的部门经理
-        approver_rows = []
+        approver_bills = []
         users = []
-        process_rows = self.env['approve.process'].search(
-            [('model_id.model', '=', model_name), ('type', '=', getattr(thread_row, 'type', False))])
-        groups = self.__get_groups__(process_rows)
-        department_manager = self.__get_user_manager__(thread_row, process_rows)
+        process_bill = self.env['approve.process'].search(
+            [('model_id.model', '=', model_name), ('type_id', '=', get_id(thread_row, 'type_id'))])
+        groups = self.__get_groups__(process_bill)
+        department_manager = self.__get_user_manager__(thread_row, process_bill)
         if department_manager:
             users.append((department_manager, 0, False))
         users.extend(self.__get_users__(groups))
-        [approver_rows.append(self.env['approve.approver'].create(
+        [approver_bills.append(self.env['approve.approver'].create(
             {'user_id': user.id,
              'res_id': thread_row.id,
              'model_type': thread_row._description,
@@ -74,12 +90,12 @@ class Approve(models.AbstractModel):
              'sequence': sequence,
              'group_id': groud_id,
              'model': thread_row._name})) for user, sequence, groud_id in users]
-        return [{'id': row.id, 'display_name': row.user_id.name} for row in approver_rows]
+        return [{'id': row.id, 'display_name': row.user_id.name} for row in approver_bills]
 
-    def __good_approver_send_message__(self, active_id, active_model, message):
-        mode_row = self.env[active_model].browse(active_id)
-        user_row = self.env['res.users'].browse(self.env.uid)
-        message_text = u"%s %s %s %s" % (user_row.name, message, mode_row._name, mode_row.name)
+    def __get_approver_send_message__(self, active_id, active_model, operate):
+        bill = self.env[active_model].browse(active_id)
+        user = self.env['res.users'].browse(self.env.uid)
+        message_text = u"%s %s %s %s" % (user.name, operate, bill._name, bill.name)
         return message_text
 
     def __is_departement_manager__(self, department_row):
@@ -90,8 +106,8 @@ class Approve(models.AbstractModel):
 
     def __has_manager__(self, active_id, active_model):
         department_row = self.env['approve.approver'].search([('model', '=', active_model),
-                                                                   ('res_id', '=', active_id),
-                                                                   ('sequence', '=', 0), ('group_id', '=', False)])
+                                                              ('res_id', '=', active_id),
+                                                              ('sequence', '=', 0), ('group_id', '=', False)])
         return department_row
 
     @api.model
@@ -108,7 +124,7 @@ class Approve(models.AbstractModel):
             users, can_clean_groups = (self.__get_user_group__(active_id, active_model, manger_user, model_row))
             return_vals.extend(self.__remove_approver__(active_id, active_model, users, can_clean_groups))
             if return_vals:
-                message = self.__good_approver_send_message__(active_id, active_model, u'同意')
+                message = self.__get_approver_send_message__(active_id, active_model, u'同意')
             else:
                 return_vals = u'您不是这张单据的下一个审批者'
         else:
@@ -119,16 +135,16 @@ class Approve(models.AbstractModel):
     @api.model
     def process_refuse(self, active_id, active_model):
         message = ''
-        mode_row = self.env[active_model].browse(active_id)
-        users, groups = self.__get_user_group__(active_id, active_model, [], mode_row)
-        approver_rows = self.env['approve.approver'].search([('model', '=', active_model),
-                                                                  ('res_id', '=', active_id)])
-        if mode_row._approver_num == len(mode_row._to_approver_ids):
+        bill = self.env[active_model].browse(active_id)
+        users, groups = self.__get_user_group__(active_id, active_model, [], bill)
+        approver_bills = self.env['approve.approver'].search([('model', '=', active_model),
+                                                              ('res_id', '=', active_id)])
+        if bill._approver_num == len(bill._to_approver_ids):
             return_vals = u'您是第一批需要审批的人，无需拒绝！'
-        elif approver_rows and users:
-            approver_rows.unlink()
-            message = self.__good_approver_send_message__(active_id, active_model, u'拒绝')
-            return_vals = self.__add_approver__(mode_row, active_model)
+        elif approver_bills and users:
+            approver_bills.unlink()
+            message = self.__get_approver_send_message__(active_id, active_model, u'拒绝')
+            return_vals = self.__add_approver__(bill, active_model)
 
         else:
             return_vals = u'已经通过不能拒绝！'
@@ -167,7 +183,7 @@ class Approve(models.AbstractModel):
             if not len(th._to_approver_ids):
                 if not change_state:
                     raise ValidationError(u'已审批不可修改')
-                if change_state == 'draft':
+                if change_state == 1:
                     vals.update({
                         '_approver_num': len(self.__add_approver__(th, th._name)),
                     })
@@ -191,17 +207,17 @@ class Approve(models.AbstractModel):
                 approver.unlink()
         return super(Approve, self).unlink()
 
-    def __get_user_group__(self, active_id, active_model, users, mode_row):
+    def __get_user_group__(self, active_id, active_model, users, bill):
         all_groups = []
-        process_rows = self.env['approve.process'].search([('model_id.model', '=', active_model),
-                                                                ('type', '=', getattr(mode_row, 'type', False))])
+        process_bill = self.env['approve.process'].search([('model_id.model', '=', active_model),
+                                                           ('type_id', '=', get_id(bill, 'type_id'))])
         line_rows = self.env['approve.process_line'].search(
-            [('process_id', '=', process_rows.id)], order='sequence')
+            [('process_id', '=', process_bill.id)], order='sequence')
         least_num = 'default_vals'
         for line in line_rows:
             approver_s = self.env['approve.approver'].search([('model', '=', active_model),
-                                                                   ('group_id', '=', line.group_id.id),
-                                                                   ('res_id', '=', active_id)])
+                                                              ('group_id', '=', line.group_id.id),
+                                                              ('res_id', '=', active_id)])
 
             if least_num == 'default_vals' and approver_s:
                 least_num = line.sequence
@@ -306,17 +322,18 @@ class process(models.Model):
     _description = u'审批规则'
     _rec_name = 'model_id'
     model_id = fields.Many2one('ir.model', u'单据', required=True)
-    type = fields.Char(u'类型', help=u'有些单据根据type字段区分具体流程')
+    # type = fields.Char(u'类型', help=u'有些单据根据type字段区分具体流程')
+    type_id = fields.Many2one('archives.common_archive', string=u'类型', help=u'有些单据根据类型字段区分具体流程')
     is_department_approve = fields.Boolean(string=u'部门经理审批')
     line_ids = fields.One2many('approve.process_line', 'process_id', string=u'审批组')
     active = fields.Boolean(u'启用', default=True)
 
     @api.one
-    @api.constrains('model_id', 'type')
+    @api.constrains('model_id', 'type_id')
     def check_model_id(self):
         records = self.search([
             ('model_id', '=', self.model_id.id),
-            ('type', '=', self.type),
+            ('type_id', '=', self.type_id.id),
             ('id', '!=', self.id)])
         if records:
             raise ValidationError(u'同种单据的审批规则必须唯一')
@@ -328,7 +345,7 @@ class process(models.Model):
         """
         process_id = super(process, self).create(vals)
         model = self.env[process_id.model_id.model]
-        if hasattr(model, 'type') and not process_id.type:
+        if hasattr(model, 'type_id') and not process_id.type_id:
             raise ValidationError(u'请输入类型')
         return process_id
 

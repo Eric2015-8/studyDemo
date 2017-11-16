@@ -6,7 +6,7 @@
             <field name="model">setting_center.sale_type</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="sale_type_id"/>
+                    <field name="type_id"/>
                     <field name="forecast_2_oder_type"/>
                     <field name="order_2_out_store_type"/>
                     <field name="out_store_2_account_type"/>
@@ -21,7 +21,7 @@
                 <form>
                     <sheet>
                         <group name="group_top" col="4">
-                            <field name="sale_type_id" attrs="{'readonly':[('sale_type_id','!=',False),('id','>',0)]}"
+                            <field name="type_id" attrs="{'readonly':[('type_id','!=',False),('id','>',0)]}"
                                    options="{'no_open':True,'no_create':True}"/>
                             <field name="forecast_2_oder_type"/>
                             <field name="order_2_out_store_type"/>
@@ -38,7 +38,7 @@
             <field name="model">setting_center.sale_type</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="sale_type_id"/>
+                    <field name="type_id"/>
                     <field name="forecast_2_oder_type"/>
                     <field name="order_2_out_store_type"/>
                     <field name="out_store_2_account_type"/>

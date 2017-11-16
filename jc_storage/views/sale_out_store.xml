@@ -11,7 +11,7 @@
                     <field name="bill_state"/>
                     <field name="customer_id"/>
                     <field name="date"/>
-                    <field name="sale_type_id"/>
+                    <field name="type_id"/>
                     <field name="department_id"/>
                     <field name="out_store_date"/>
                     <field name="remark"/>
@@ -144,7 +144,7 @@
                             <page string="其它信息">
                                 <group name="group_other" col="4">
                                     <field name="date"/>
-                                    <field name="sale_type_id" domain="[('archive_name','=',1)]"
+                                    <field name="type_id" domain="[('archive_name','=',1)]"
                                            options="{'no_open':True,'no_create':True}"/>
                                     <field name="company_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="staff_id" domain="[('is_sale_man','=',True)]"
@@ -253,7 +253,7 @@
                             </page>
                             <page string="其他">
                                 <group>
-                                    <field name="sale_type_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="type_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="company_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="staff_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="store_id" options="{'no_open':True,'no_create':True}"/>

@@ -16,7 +16,7 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
 
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
-    sale_type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
+    type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
                                    domain=[('archive_name', '=', 1)])
 
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
@@ -118,7 +118,7 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
         values = {
             'customer_id': self.customer_id.id,
             'date': datetime.datetime.today(),
-            'sale_type_id': self.sale_type_id.id,
+            'type_id': self.type_id.id,
             'staff_id': self.staff_id.id,
             'department_id': self.department_id.id,
             'store_id': self.store_id.id,
@@ -126,7 +126,7 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
             'remark': self.remark,
         }
         table = u'jc_storage.sale_out_store'  # 使用销售销售出库单的个性设置
-        need_set_fields = ['sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        need_set_fields = ['type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         # need_set_fields中的值，从个性设置中取值
         self.env['archives.set_customer_setting'].set_default_if_empty(values, table, need_set_fields)
         order = self.env['jc_storage.sale_out_store'].create(values)
@@ -150,7 +150,7 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
     def default_get(self, fields_):
         res = super(CreateSaleOutStoreWizard1, self).default_get(fields_)
         table = u'jc_storage.sale_out_store'  # 使用销售出库单的个性设置
-        need_set_fields = ['customer_id', 'sale_type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
+        need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         self.env['archives.set_customer_setting'].set_default(res, table, fields_, need_set_fields)
         return res
 
