@@ -21,7 +21,7 @@
 {
     'name': 'ir_sequence_autoreset',
     'version': '0.1',
-    'category' : 'Others',
+    'category' : 'jc',
     'description': """
 
 Auto reset sequence by year,month,day

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 {
-    "name": "good_process",
+    "name": "approve",
     "version": '11.11',
-    "author": '上海开阖软件有限公司',
+    "author": 'xxb',
     "website": "http://www.osbzr.com",
-    "category": "gooderp",
+    "category": "jc",
     "description": """
     可配置的审批流程
     """,

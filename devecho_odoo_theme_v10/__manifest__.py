@@ -12,7 +12,7 @@
     'author': "n37r06u3",
     'website': "http://www.devecho.com",
 
-    'category': 'Theme',
+    'category': 'jc',
     'version': '0.1',
 
     'depends': ['web'],

@@ -12,7 +12,7 @@
 
     'author': "MAXodoo, Vnsoft, osbzr",
     'website': "http://www.maxodoo.com",
-    'category': 'web',
+    'category': 'jc',
     'version': '10.0.0.1',
     'depends': ['web','base'],
     'data': [
