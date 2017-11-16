@@ -3,7 +3,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
 
-class mail_thread(models.AbstractModel):
+class approve(models.AbstractModel):
     '''
     针对系统内的单据增加审批流程控制
     增加两个字段：_to_approver_ids 记录还有谁需要审批（用来判断审批是否结束）
@@ -136,7 +136,7 @@ class mail_thread(models.AbstractModel):
 
     @api.model
     def create(self, vals):
-        thread_row = super(mail_thread, self).create(vals)
+        thread_row = super(approve, self).create(vals)
         approvers = self.__add_approver__(thread_row, self._name)
         thread_row._approver_num = len(approvers)
         return thread_row
@@ -177,7 +177,7 @@ class mail_thread(models.AbstractModel):
                     raise ValidationError(u"审批后才能审核")
                 raise ValidationError(u"审批中不可修改")
 
-        thread_row = super(mail_thread, self).write(vals)
+        thread_row = super(approve, self).write(vals)
         return thread_row
 
     @api.multi
@@ -189,7 +189,7 @@ class mail_thread(models.AbstractModel):
                 raise ValidationError(u"审批中不可删除")
             for approver in th._to_approver_ids:
                 approver.unlink()
-        return super(mail_thread, self).unlink()
+        return super(approve, self).unlink()
 
     def __get_user_group__(self, active_id, active_model, users, mode_row):
         all_groups = []
