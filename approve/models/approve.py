@@ -292,10 +292,10 @@ class approver(models.Model):
     @api.model_cr
     def init(self):
         self._cr.execute(
-            """SELECT indexname FROM pg_indexes WHERE indexname = 'good_process_approver_model_res_id_idx'""")
+            """SELECT indexname FROM pg_indexes WHERE indexname = 'approve_approver_model_res_id_idx'""")
         if not self._cr.fetchone():
             self._cr.execute(
-                """CREATE INDEX good_process_approver_model_res_id_idx ON good_process_approver (model, res_id)""")
+                """CREATE INDEX approve_approver_model_res_id_idx ON approve_approver (model, res_id)""")
 
 
 class process(models.Model):
