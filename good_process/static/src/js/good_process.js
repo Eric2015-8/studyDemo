@@ -41,7 +41,7 @@ odoo.define('good.process', function(require) {
 
         good_refused: function() {
             var self = this;
-            new Model('mail.thread').call('good_process_refused', [self.view.datarecord.id, self.view.model]).then(
+            new Model('jc_approve').call('good_process_refused', [self.view.datarecord.id, self.view.model]).then(
                 function(result) {
                     if (result[0] && typeof(result[0]) == 'object') {
                         self.render_tag(result[0]);
@@ -71,7 +71,7 @@ odoo.define('good.process', function(require) {
         },
         good_approve: function() {
             var self = this;
-            new Model('mail.thread').call('good_process_approve', [self.view.datarecord.id, self.view.model]).then(
+            new Model('jc_approve').call('good_process_approve', [self.view.datarecord.id, self.view.model]).then(
                 function(result) {
                     if (result[0] && typeof(result[0]) == 'object') {
                         _.each(result[0], function(id) {

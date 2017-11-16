@@ -9,7 +9,7 @@ class mail_thread(models.AbstractModel):
     增加两个字段：_to_approver_ids 记录还有谁需要审批（用来判断审批是否结束）
                  _approver_num 整个流程涉及的审批者数量（用来判断审批是否开始）
     '''
-    _inherit = 'mail.thread'
+    _name = 'jc_approve'
 
     @api.one
     @api.depends('_to_approver_ids', '_approver_num')
