@@ -1,4 +1,4 @@
-odoo.define('good.process', function(require) {
+odoo.define('approve', function(require) {
     "use strict";
 
     var core = require('web.core');
@@ -9,11 +9,11 @@ odoo.define('good.process', function(require) {
     var _t = core._t;
     // var chat_manager = require('mail.chat_manager');
 
-    var FieldGoodProcess = form_relational.FieldMany2ManyTags.extend({
-        tag_template: "FieldGoodProcess",
+    var FieldApprove = form_relational.FieldMany2ManyTags.extend({
+        tag_template: "FieldApprove",
         events: {
-            'click .good_approve': 'good_approve',
-            'click .good_refused': 'good_refused',
+            'click .process_approve': 'process_approve',
+            'click .process_refuse': 'process_refuse',
         },
 
         start: function() {
@@ -39,9 +39,9 @@ odoo.define('good.process', function(require) {
             }
         },
 
-        good_refused: function() {
+        process_refuse: function() {
             var self = this;
-            new Model('jc_approve').call('good_process_refused', [self.view.datarecord.id, self.view.model]).then(
+            new Model('jc_approve').call('process_refuse', [self.view.datarecord.id, self.view.model]).then(
                 function(result) {
                     if (result[0] && typeof(result[0]) == 'object') {
                         self.render_tag(result[0]);
@@ -69,14 +69,14 @@ odoo.define('good.process', function(require) {
                 }
             });
         },
-        good_approve: function() {
+        process_approve: function() {
             var self = this;
-            new Model('jc_approve').call('good_process_approve', [self.view.datarecord.id, self.view.model]).then(
+            new Model('jc_approve').call('process_approve', [self.view.datarecord.id, self.view.model]).then(
                 function(result) {
                     if (result[0] && typeof(result[0]) == 'object') {
                         _.each(result[0], function(id) {
                             var remove_tags = self.$el.find('span[data-id="' + id + '"]');
-                            var remove_button = self.$el.find('.good_approve_div');
+                            var remove_button = self.$el.find('.approve_div');
                             $(remove_tags).addClass('o_hidden');
                             $(remove_button).addClass('o_hidden');
                         });
@@ -93,6 +93,6 @@ odoo.define('good.process', function(require) {
     /**
      * Registry of form fields
      */
-    core.form_widget_registry.add('goodprocess', FieldGoodProcess);
+    core.form_widget_registry.add('approve', FieldApprove);
 
 });

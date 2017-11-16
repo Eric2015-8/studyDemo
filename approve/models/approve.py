@@ -9,7 +9,7 @@ class Approve(models.AbstractModel):
     增加两个字段：_to_approver_ids 记录还有谁需要审批（用来判断审批是否结束）
                  _approver_num 整个流程涉及的审批者数量（用来判断审批是否开始）
     '''
-    _inherit = 'jc_approve'
+    _name = 'jc_approve'
 
     @api.one
     @api.depends('_to_approver_ids', '_approver_num')
@@ -23,7 +23,7 @@ class Approve(models.AbstractModel):
         else:
             self._approve_state = u'审批中'
 
-    _to_approver_ids = fields.One2many('good_process.approver', 'res_id', readonly='1',
+    _to_approver_ids = fields.One2many('approve.approver', 'res_id', readonly='1',
                                        domain=lambda self: [('model', '=', self._name)], auto_join=True, string='待审批人')
     _approver_num = fields.Integer(string='总审批人数')
     _approve_state = fields.Char(u'审批状态',
@@ -32,7 +32,7 @@ class Approve(models.AbstractModel):
     def __get_groups__(self, process_rows):
         groups = []
         if process_rows:
-            [groups.append((line.group_id, line.sequence)) for line in self.env['good_process.process_line'].search(
+            [groups.append((line.group_id, line.sequence)) for line in self.env['approve.process_line'].search(
                 [('process_id', '=', process_rows.id)], order='sequence')]
         return groups
 
@@ -58,14 +58,14 @@ class Approve(models.AbstractModel):
         # TODO 加上当前用户的部门经理
         approver_rows = []
         users = []
-        process_rows = self.env['good_process.process'].search(
+        process_rows = self.env['approve.process'].search(
             [('model_id.model', '=', model_name), ('type', '=', getattr(thread_row, 'type', False))])
         groups = self.__get_groups__(process_rows)
         department_manager = self.__get_user_manager__(thread_row, process_rows)
         if department_manager:
             users.append((department_manager, 0, False))
         users.extend(self.__get_users__(groups))
-        [approver_rows.append(self.env['good_process.approver'].create(
+        [approver_rows.append(self.env['approve.approver'].create(
             {'user_id': user.id,
              'res_id': thread_row.id,
              'model_type': thread_row._description,
@@ -89,13 +89,13 @@ class Approve(models.AbstractModel):
         return return_vals
 
     def __has_manager__(self, active_id, active_model):
-        department_row = self.env['good_process.approver'].search([('model', '=', active_model),
+        department_row = self.env['approve.approver'].search([('model', '=', active_model),
                                                                    ('res_id', '=', active_id),
                                                                    ('sequence', '=', 0), ('group_id', '=', False)])
         return department_row
 
     @api.model
-    def good_process_approve(self, active_id, active_model):
+    def process_approve(self, active_id, active_model):
         return_vals = []
         message = ''
         manger_row = self.__has_manager__(active_id, active_model)
@@ -117,11 +117,11 @@ class Approve(models.AbstractModel):
         return return_vals, message or ''
 
     @api.model
-    def good_process_refused(self, active_id, active_model):
+    def process_refuse(self, active_id, active_model):
         message = ''
         mode_row = self.env[active_model].browse(active_id)
         users, groups = self.__get_user_group__(active_id, active_model, [], mode_row)
-        approver_rows = self.env['good_process.approver'].search([('model', '=', active_model),
+        approver_rows = self.env['approve.approver'].search([('model', '=', active_model),
                                                                   ('res_id', '=', active_id)])
         if mode_row._approver_num == len(mode_row._to_approver_ids):
             return_vals = u'您是第一批需要审批的人，无需拒绝！'
@@ -193,13 +193,13 @@ class Approve(models.AbstractModel):
 
     def __get_user_group__(self, active_id, active_model, users, mode_row):
         all_groups = []
-        process_rows = self.env['good_process.process'].search([('model_id.model', '=', active_model),
+        process_rows = self.env['approve.process'].search([('model_id.model', '=', active_model),
                                                                 ('type', '=', getattr(mode_row, 'type', False))])
-        line_rows = self.env['good_process.process_line'].search(
+        line_rows = self.env['approve.process_line'].search(
             [('process_id', '=', process_rows.id)], order='sequence')
         least_num = 'default_vals'
         for line in line_rows:
-            approver_s = self.env['good_process.approver'].search([('model', '=', active_model),
+            approver_s = self.env['approve.approver'].search([('model', '=', active_model),
                                                                    ('group_id', '=', line.group_id.id),
                                                                    ('res_id', '=', active_id)])
 
@@ -253,7 +253,7 @@ class approver(models.Model):
     '''
     单据的待审批者
     '''
-    _name = 'good_process.approver'
+    _name = 'approve.approver'
     _rec_name = 'user_id'
     _order = 'model, res_id, sequence'
 
@@ -302,13 +302,13 @@ class process(models.Model):
     '''
     可供用户自定义的审批流程，可控制是否需部门经理审批。注意此规则只对修改之后新建（或被拒绝）的单据有效
     '''
-    _name = 'good_process.process'
+    _name = 'approve.process'
     _description = u'审批规则'
     _rec_name = 'model_id'
     model_id = fields.Many2one('ir.model', u'单据', required=True)
     type = fields.Char(u'类型', help=u'有些单据根据type字段区分具体流程')
     is_department_approve = fields.Boolean(string=u'部门经理审批')
-    line_ids = fields.One2many('good_process.process_line', 'process_id', string=u'审批组')
+    line_ids = fields.One2many('approve.process_line', 'process_id', string=u'审批组')
     active = fields.Boolean(u'启用', default=True)
 
     @api.one
@@ -337,11 +337,11 @@ class process_line(models.Model):
     '''
     可控制由哪些审批组审批，各自的审批顺序是什么，组内用户都需要审还是一位代表审批即可
     '''
-    _name = 'good_process.process_line'
+    _name = 'approve.process_line'
     _description = u'审批规则行'
     _order = 'sequence'
 
     sequence = fields.Integer(string='序号')
     group_id = fields.Many2one('res.groups', string=u'审批组', required=True)
     is_all_approve = fields.Boolean(string=u'是否需要本组用户全部审批')
-    process_id = fields.Many2one('good_process.process', u'审批规则')
+    process_id = fields.Many2one('approve.process', u'审批规则')

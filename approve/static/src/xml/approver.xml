@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
-    <t t-name="FieldGoodProcess">
+    <t t-name="FieldApprove">
         <div class="process">
            <span style="font-size:18px;" class="process_field_span"><t t-esc="filed_display_name"></t>:</span>
             <t t-foreach="elements" t-as="el">
@@ -10,11 +10,11 @@
                 </span>
             </t>
             <t t-if="button_invisible" >
-                <div class="good_approve_div">
-                     <button type="button" class="btn btn-sm btn-primary good_approve">
+                <div class="approve_div">
+                     <button type="button" class="btn btn-sm btn-primary process_approve">
                          同意
                      </button>
-                    <button class="btn btn-sm btn-link good_refused" type="button" >
+                    <button class="btn btn-sm btn-link process_refuse" type="button" >
                          拒绝
                     </button>
                 </div>

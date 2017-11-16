@@ -22,6 +22,7 @@
     'depends': ['archives',
                 'decimal_precision',
                 'report',
+                'approve',
                 'base'],
 
     # always loaded

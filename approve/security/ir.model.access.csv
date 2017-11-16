@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acceces_approve_approver_all,acceces_approve_approver_all,model_approve_approver,,1,1,1,1
+acceces_approve_process_all,acceces_approve_process_all,model_approve_process,,1,1,1,1
+acceces_approve_process_line_all,acceces_approve_process_line_all,model_approve_process_line,,1,1,1,1
+

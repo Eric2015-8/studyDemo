@@ -10,7 +10,7 @@
     """,
     "data": [
         'data/data.xml',
-        'views/good_process.xml',
+        'views/approve.xml',
         'security/ir.model.access.csv',
     ],
     "depends":[
