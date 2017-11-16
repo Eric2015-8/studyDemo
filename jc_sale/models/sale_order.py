@@ -10,7 +10,7 @@ class SaleOrder(models.Model):
     _description = u'销售：销售订单'
     _order = 'id desc'
 
-    _inherit = ['ir.needaction_mixin']
+    _inherit = ['ir.needaction_mixin', 'mail.thread']
 
     source_bill_type = fields.Selection(bill_define.BILL_TYPE, string=u'来源单据类型', readonly=True, copy=False)
     source_bill_id = fields.Integer(string="来源单据号", readonly=True, copy=False, default=0)
