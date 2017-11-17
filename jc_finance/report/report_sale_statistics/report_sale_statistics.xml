@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- 销售统计 tree 视图 -->
+        <record id="report_sale_statistics_result_tree" model="ir.ui.view">
+            <field name="name">jc_finance.report_sale_statistics.tree</field>
+            <field name="model">jc_finance.report_sale_statistics_result</field>
+            <field name="arch" type="xml">
+                <tree string="销售统计" create="false" delete="false">
+                    <field name="customer_id"/>
+                    <field name="staff_id"/>
+                    <field name="goods_id"/>
+                    <field name="second_unit_number" sum="金额合计"/>
+                    <field name="second_unit_id"/>
+                    <field name="main_unit_number" sum="金额合计"/>
+                    <field name='main_unit_id'/>
+                    <field name='money' sum="金额合计"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- 销售统计 graph 视图 -->
+        <record id='report_sale_statistics_result_result_graph' model='ir.ui.view'>
+            <field name='name'>jc_finance report_sale_statistics graph</field>
+            <field name='model'>jc_finance.report_sale_statistics_result</field>
+            <field name='arch' type='xml'>
+                <pivot string="销售统计">
+                    <field name='customer_id' type='row'/>
+                    <field name='staff_id' type='row'/>
+                    <field name='goods_id' type='row'/>
+                    <field name='date' type='row'/>
+                    <field name='second_unit_number' type='measure' sum="辅数量合计"/>
+                    <field name='main_unit_number' type='measure' sum="主数量增加合计"/>
+                    <field name="money" type='measure' sum="金额合计"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- 销售统计 search 视图 -->
+        <record id='report_sale_statistics_result_result_search' model='ir.ui.view'>
+            <field name='name'>report_sale_statistics_result_result.search</field>
+            <field name='model'>jc_finance.report_sale_statistics_result</field>
+            <field name='arch' type='xml'>
+                <search string='销售统计'>
+                    <field name='goods_id' string='产品' filter_domain="[('goods_id', 'ilike', self)]"/>
+                    <field name='customer_id' string='客户' filter_domain="[('customer_id', 'ilike', self)]"/>
+                    <field name='staff_id' string='销售员' filter_domain="[('staff_id', 'ilike', self)]"/>
+                    <filter name="today" string="本日" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter name="yesterday" string="昨日"
+                            domain="[('date', '=',(context_today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+                    <filter string="本月" domain="[('date', '&gt;=', time.strftime('%%Y-%%m-01'))]"/>
+                    <filter string="本年" name="year"
+                            domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="产品" context="{'group_by':'goods_id'}"/>
+                        <filter string="客户" context="{'group_by': 'customer_id'}"/>
+                        <filter string="销售员" context="{'group_by': 'staff_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <act_window id="jc_finance_sale_statistics_wizard"
+                    name="销售统计"
+                    src_model="jc_finance.report_sale_statistics_result"
+                    res_model="jc_finance.report_sale_statistics_wizard"
+                    view_mode="form"
+                    target="new"
+                    context="{'default_user_id': uid}"/>
+
+        <!-- 销售统计 action -->
+        <record id='report_sale_statistics_result_action' model='ir.actions.act_window'>
+            <field name='name'>销售统计</field>
+            <field name='res_model'>jc_finance.report_sale_statistics_result</field>
+            <field name='view_mode'>tree,pivot</field>
+            <field name='view_id' ref='report_sale_statistics_result_tree'/>
+        </record>
+
+        <!-- 销售统计 menu -->
+        <menuitem id="menu_report_sale_statistics_result" name="销售统计"
+                  action="jc_finance_sale_statistics_wizard"
+                  parent="jc_finance_menu_root" sequence="11"/>
+
+    </data>
+</openerp>
