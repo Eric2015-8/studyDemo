@@ -20,26 +20,6 @@ class ReportStorageAccountWizard(models.TransientModel):
         ('second', '辅单位')
     ], string=u'单位', default='main')
 
-    def send_and_open(self, table, table_show_name):
-        context = {
-            'default_user_id': self.env.user.id,
-            'default_table': table,
-            'default_table_show_name': table_show_name,
-        }
-        setting = self.env["archives.customer_setting"].search(
-            [('user_id', '=', self.env.user.id), ('table', '=', table)])
-        if setting and setting.customer_setting_detail:
-            for detail in setting.customer_setting_detail:
-                context['default_' + detail.field] = detail.value
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'jc_storage.set_transfer_customer_setting',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'target': 'new',
-            'context': context
-        }
-
     @api.multi
     def query(self):
         data = self.query_data()
@@ -142,29 +122,3 @@ class ReportStorageAccountWizard(models.TransientModel):
             },
             'res_model': action.res_model,
         }
-
-    def create_setting(self):
-        values = {
-            'user_id': self.user_id.id,
-            'table': self.table,
-            'table_show_name': self.table_show_name,
-        }
-        setting = self.env['archives.customer_setting'].create(values)
-        self.create_setting_detail(setting.id, 'out_store_id', self.out_store_id.id)
-        self.create_setting_detail(setting.id, 'in_store_id', self.in_store_id.id)
-        self.create_setting_detail(setting.id, 'transfer_out_type_id', self.transfer_out_type_id.id)
-        self.create_setting_detail(setting.id, 'transfer_in_type_id', self.transfer_in_type_id.id)
-        self.create_setting_detail(setting.id, 'company_id', self.company_id.id)
-        self.create_setting_detail(setting.id, 'out_unit_id', self.out_unit_id.id)
-        self.create_setting_detail(setting.id, 'in_unit_id', self.in_unit_id.id)
-        self.create_setting_detail(setting.id, 'out_staff_id', self.out_staff_id.id)
-        self.create_setting_detail(setting.id, 'int_staff_id', self.int_staff_id.id)
-        self.create_setting_detail(setting.id, 'department_id', self.department_id.id)
-
-    def create_setting_detail(self, setting_id, field, value):
-        values = {
-            'customer_setting_id': setting_id,
-            'field': field,
-            'value': value,
-        }
-        self.env['archives.customer_setting.detail'].create(values)
