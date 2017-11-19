@@ -19,7 +19,9 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['archives', 'base'],
+    'depends': ['archives',
+                'decimal_precision',
+                'base'],
 
     # always loaded
     'data': [
