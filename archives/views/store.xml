@@ -10,9 +10,9 @@
                     <field name="short_name"/>
                     <field name="address"/>
                     <field name="company_id"/>
-                    <field name="active_batch"/>
-                    <field name="active_goods_position"/>
-                    <field name="goods_position_id_default"/>
+                    <!--<field name="active_batch"/>-->
+                    <!--<field name="active_goods_position"/>-->
+                    <!--<field name="goods_position_id_default"/>-->
                 </tree>
             </field>
         </record>
