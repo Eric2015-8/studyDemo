@@ -25,7 +25,7 @@ class Store(models.Model):
     active_batch = fields.Boolean('启用批次')
 
     active_goods_position = fields.Boolean('启用货位')
-    default_goods_position_id = fields.Many2one('archives.goods_position', string=u'默认货位')  # TODO: 重命名
+    goods_position_id_default = fields.Many2one('archives.goods_position', string=u'默认货位')  # TODO: 重命名
     goods_position_detail = fields.One2many('archives.store.goods_position.detail', 'store_id', string=u'仓库_货位明细',
                                             copy=True)
 
@@ -45,12 +45,12 @@ class Store(models.Model):
 
     def _check_goods_position(self):
         if not self.active_goods_position:
-            if self.default_goods_position_id:
+            if self.goods_position_id_default:
                 self.d = None
             return
-        if not self.default_goods_position_id:
+        if not self.goods_position_id_default:
             return
-        if self.default_goods_position_id not in self.goods_position_detail.mapped('goods_position_id'):
+        if self.goods_position_id_default not in self.goods_position_detail.mapped('goods_position_id'):
             raise ValidationError('{默认货位}必须在{货位}中')
         return
 

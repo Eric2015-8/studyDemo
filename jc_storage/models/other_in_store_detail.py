@@ -44,14 +44,14 @@ class OtherInStoreDetail(models.Model):
 
     def _get_goods_position_info(self):
         need_set = False
-        default_goods_position_id = 0
+        goods_position_id_default = 0
         for r in self:
             if not r.other_in_store_id.store_id:
                 break
             need_set = r.other_in_store_id.store_id.active_goods_position
-            default_goods_position_id = r.other_in_store_id.store_id.default_goods_position_id
+            goods_position_id_default = r.other_in_store_id.store_id.goods_position_id_default
             break
-        return need_set, default_goods_position_id
+        return need_set, goods_position_id_default
 
     @api.depends('goods_id')
     def _set_main(self):
