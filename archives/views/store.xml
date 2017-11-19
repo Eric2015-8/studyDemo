@@ -12,7 +12,7 @@
                     <field name="company_id"/>
                     <field name="active_batch"/>
                     <field name="active_goods_position"/>
-                    <field name="default_goods_position_id"/>
+                    <field name="goods_position_id_default"/>
                 </tree>
             </field>
         </record>
@@ -30,7 +30,7 @@
                             <field name="company_id"/>
                             <!--<field name="active_batch"/>-->
                             <!--<field name="active_goods_position"/>-->
-                            <!--<field name="default_goods_position_id" options="{'no_open':True,'no_create':True}"/>-->
+                            <!--<field name="goods_position_id_default" options="{'no_open':True,'no_create':True}"/>-->
                         </group>
                         <!--<field name="goods_position_detail" mode="tree">-->
                             <!--<tree string="仓库明细" editable="bottom">-->
