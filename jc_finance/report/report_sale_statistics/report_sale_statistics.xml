@@ -20,7 +20,7 @@
         </record>
 
         <!-- 销售统计 graph 视图 -->
-        <record id='report_sale_statistics_result_result_graph' model='ir.ui.view'>
+        <record id='report_sale_statistics_result_graph' model='ir.ui.view'>
             <field name='name'>jc_finance report_sale_statistics graph</field>
             <field name='model'>jc_finance.report_sale_statistics_result</field>
             <field name='arch' type='xml'>
@@ -37,7 +37,7 @@
         </record>
 
         <!-- 销售统计 search 视图 -->
-        <record id='report_sale_statistics_result_result_search' model='ir.ui.view'>
+        <record id='report_sale_statistics_result_search' model='ir.ui.view'>
             <field name='name'>report_sale_statistics_result_result.search</field>
             <field name='model'>jc_finance.report_sale_statistics_result</field>
             <field name='arch' type='xml'>
@@ -61,6 +61,63 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="report_sale_statistics_result_kanban">
+            <field name="name">jc_finance.report_sale_statistics_result.kanban</field>
+            <field name="model">jc_finance.report_sale_statistics_result</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="customer_id"/>
+                    <field name="staff_id"/>
+                    <field name="goods_id"/>
+                    <field name="second_unit_number"/>
+                    <field name="second_unit_id"/>
+                    <field name="main_unit_number"/>
+                    <field name='main_unit_id'/>
+                    <field name='money'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <strong>
+                                            <span>
+                                                <t t-esc="record.customer_id.value"/>
+                                            </span>
+                                            <span>
+                                                <t t-esc="record.staff_id.value"/>
+                                            </span>
+                                            <span>
+                                                <t t-esc="record.goods_id.value"/>
+                                            </span>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4 text-muted" style="padding:0;">
+                                        <span>
+                                            <t t-esc="record.second_unit_number.value"/>
+                                            <t t-esc="record.second_unit_id.value"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-4 text-muted" style="padding:0;">
+                                        <span>
+                                            <t t-esc="record.main_unit_number.value"/>
+                                            <t t-esc="record.main_unit_id.value"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-4" style="padding:0;">
+                                        <span class="pull-right text-right">
+                                            <t t-esc="record.money.value"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
         <act_window id="jc_finance_sale_statistics_wizard"
                     name="销售统计"
                     src_model="jc_finance.report_sale_statistics_result"
@@ -73,7 +130,7 @@
         <record id='report_sale_statistics_result_action' model='ir.actions.act_window'>
             <field name='name'>销售统计</field>
             <field name='res_model'>jc_finance.report_sale_statistics_result</field>
-            <field name='view_mode'>tree,pivot</field>
+            <field name='view_mode'>tree,kanban,pivot</field>
             <field name='view_id' ref='report_sale_statistics_result_tree'/>
         </record>
 

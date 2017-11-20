@@ -116,6 +116,7 @@ class ReportStorageAccountWizard(models.TransientModel):
         imd = self.env['ir.model.data']
         action = imd.xmlid_to_object('jc_finance.report_sale_statistics_result_action')
         list_view_id = imd.xmlid_to_res_id('jc_finance.report_sale_statistics_result_tree')
+        kan_ban_view_id = imd.xmlid_to_res_id('jc_finance.report_sale_statistics_result_kanban')
         # form_view_id = imd.xmlid_to_res_id('archives.archives_common_goods_edit')
 
         return {
@@ -123,7 +124,7 @@ class ReportStorageAccountWizard(models.TransientModel):
             'help': action.help,
             'type': action.type,
             # 'views': [[list_view_id, 'tree'], [form_view_id, 'form']],
-            'views': [[list_view_id, 'tree']],
+            'views': [[list_view_id, 'tree'], [kan_ban_view_id, 'kanban']],
             'target': action.target,
             # 'context': action.context,
             'context': {
