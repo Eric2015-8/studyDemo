@@ -99,7 +99,7 @@
                                         <field name="class_price_id" readonly="1"/>
                                         <field name="origin_price" widget="number"/>
                                     </tree>
-                                    <kanban class="o_kanban_mobile">
+                                    <kanban class="o_kanban_mobile" quick_create="false" create="true" delete="true">
                                         <field name="goods_id"/>
                                         <field name="second_unit_id"/>
                                         <field name="second_unit_number"/>
@@ -118,11 +118,15 @@
                                                                 </span>
                                                             </strong>
                                                         </div>
-                                                        <div class="col-xs-3 text-muted" style="padding:0;">
+                                                        <div class="col-xs-3 text-muted" style="padding-right:12px;">
                                                             <span class="pull-right text-right">
                                                                 <field name="price"/>
                                                             </span>
                                                         </div>
+                                                        <a t-if="! read_only_mode" type="delete"
+                                                           style="position: absolute; right: 0; padding: 0px; diplay: inline-block">
+                                                            X
+                                                        </a>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-xs-4 text-muted" style="padding:0;">
@@ -137,7 +141,7 @@
                                                                 <field name="main_unit_id"/>
                                                             </span>
                                                         </div>
-                                                        <div class="col-xs-4 text-muted" style="padding:0;">
+                                                        <div class="col-xs-4 text-muted" style="padding-right:12px;">
                                                             <span class="pull-right text-right">
                                                                 <field name="money"/>
                                                             </span>
@@ -217,7 +221,7 @@
             <field name="name">jc_sale.sale_order.kanban</field>
             <field name="model">jc_sale.sale_order</field>
             <field name="arch" type="xml">
-                <kanban class="o_kanban_mobile">
+                <kanban class="o_kanban_mobile" quick_create="false" create="true" delete="true">
                     <!--<field name="name"/>-->
                     <field name="customer_id"/>
                     <field name="total_money"/>
