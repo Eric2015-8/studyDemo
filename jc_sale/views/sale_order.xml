@@ -266,7 +266,7 @@
             <field name="name">销售订单</field>
             <field name="res_model">jc_sale.sale_order</field>
             <field name="view_mode">tree,kanban,form</field>
-            <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
+            <field name="context" eval="{}"/>
         </record>
 
         <record model="ir.ui.view" id="jc_sale_sale_order_wizard_step">
