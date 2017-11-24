@@ -4,7 +4,7 @@
             id="report_sale_return_store"
             string="销售退库"
             model="jc_storage.sale_return_store"
-            report_type="qweb-html"
+            report_type="qweb-pdf"
             file="jc_storage.report_pdf_sale_return_store_file"
             name="jc_storage.report_pdf_sale_return_store"
             paperformat="archives.paperformat_chn__a4_lowmargin"

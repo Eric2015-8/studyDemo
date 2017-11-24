@@ -4,7 +4,7 @@
             id="report_sale_out_store"
             string="销售出库单"
             model="jc_storage.sale_out_store"
-            report_type="qweb-html"
+            report_type="qweb-pdf"
             file="jc_storage.report_pdf_sale_out_store_file"
             name="jc_storage.report_pdf_sale_out_store"
             paperformat="archives.paperformat_chn__a4_lowmargin"

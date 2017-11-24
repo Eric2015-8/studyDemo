@@ -4,7 +4,7 @@
             id="report_stock_check"
             string="库存盘点"
             model="jc_storage.stock_check"
-            report_type="qweb-html"
+            report_type="qweb-pdf"
             file="jc_storage.report_pdf_stock_check_file"
             name="jc_storage.report_pdf_stock_check"
             paperformat="archives.paperformat_chn__a4_lowmargin"

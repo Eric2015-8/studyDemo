@@ -4,7 +4,7 @@
             id="report_sale_account"
             string="销售账单"
             model="jc_finance.sale_account"
-            report_type="qweb-html"
+            report_type="qweb-pdf"
             file="jc_finance.report_pdf_sale_account_file"
             name="jc_finance.report_pdf_sale_account"
             paperformat="archives.paperformat_chn__a4_lowmargin"

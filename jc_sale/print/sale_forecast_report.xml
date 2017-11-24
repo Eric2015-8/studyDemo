@@ -5,7 +5,7 @@
             id="report_sale_forecast"
             string="销售预报"
             model="jc_sale.sale_forecast"
-            report_type="qweb-html"
+            report_type="qweb-pdf"
             file="jc_sale.report_pdf_sale_forecast_file"
             name="jc_sale.report_pdf_sale_forecast"
             paperformat="archives.paperformat_chn__a4_lowmargin"
