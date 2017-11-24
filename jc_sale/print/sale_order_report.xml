@@ -12,9 +12,9 @@
 
     <template id="report_pdf_sale_order">
         <t t-call="report.html_container">
-            <t t-set="data_report_margin_top" t-value="30"/>
-            <t t-set="data_report_header_spacing" t-value="27"/>
-            <t t-call="report.external_layout">
+            <!--<t t-set="data_report_margin_top" t-value="30"/>-->
+            <!--<t t-set="data_report_header_spacing" t-value="27"/>-->
+            <t t-call="archives.empty_layout">
                 <t t-set="o" t-value="docs[0]"/>
                 <t t-foreach="docs" t-as="quotation">
                     <div class="page">
@@ -25,13 +25,12 @@
                             <!--</h1>-->
                         <!--</div>-->
                         <div id="introduction" class="text-center">
-                            <h4>
+                                <em t-field="quotation.company_id"/>
                                 销售订单
                                 <em t-esc="quotation.name"/>
-                            </h4>
                         </div>
                         <!-- 表头 -->
-                        <div class="row mt32">
+                        <div class="row">
                             <div class="col-md-6 col-xs-6">
                                 <div class="row">
                                     <label class="col-sm-4 col-xs-4 text-right">客户:</label>
@@ -81,7 +80,7 @@
     <!--自定义打印页面：销售订单明细-->
     <template id="order_detail_layout" name="detail">
         <div id="quote">
-            <table class="table wq-table mt32">
+            <table class="table wq-table">
                 <thead>
                     <tr class="active">
                         <th>存货</th>
