@@ -4,7 +4,7 @@
             id="report_sale_order"
             string="销售订单"
             model="jc_sale.sale_order"
-            report_type="qweb-html"
+            report_type="qweb-pdf"
             file="jc_sale.report_pdf_sale_order_file"
             name="jc_sale.report_pdf_sale_order"
             paperformat="archives.paperformat_chn__a4_lowmargin"

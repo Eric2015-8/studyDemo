@@ -46,6 +46,11 @@ class SaleOrder(models.Model):
                                      track_visibility='always')
     total_money = fields.Float(string='金额', store=True, readonly=True, compute='_amount_all', track_visibility='always')
 
+    @api.multi
+    def print_quotation(self):
+        # self.filtered(lambda s: s.state == 'draft').write({'state': 'sent'})
+        return self.env['report'].get_action(self, 'jc_sale.report_pdf_sale_order')
+
     @api.depends('sale_order_detail.second_unit_number', 'sale_order_detail.main_unit_number',
                  'sale_order_detail.money')
     def _amount_all(self):
