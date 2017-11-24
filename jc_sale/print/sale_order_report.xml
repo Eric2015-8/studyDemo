@@ -12,18 +12,18 @@
 
     <template id="report_pdf_sale_order">
         <t t-call="report.html_container">
-            <t t-set="data_report_margin_top" t-value="45"/>
-            <t t-set="data_report_header_spacing" t-value="40"/>
+            <t t-set="data_report_margin_top" t-value="30"/>
+            <t t-set="data_report_header_spacing" t-value="27"/>
             <t t-call="report.external_layout">
                 <t t-set="o" t-value="docs[0]"/>
                 <t t-foreach="docs" t-as="quotation">
                     <div class="page">
-                        <div id="introduction"
-                             class="text-center"><!--page-header:在下面加了淡淡的下划线，从最左边，到最右边-->
-                            <h1>
-                                <em t-field="quotation.company_id"/>
-                            </h1>
-                        </div>
+                        <!--<div id="introduction"-->
+                             <!--class="text-center">&lt;!&ndash;page-header:在下面加了淡淡的下划线，从最左边，到最右边&ndash;&gt;-->
+                            <!--<h1>-->
+                                <!--<em t-field="quotation.company_id"/>-->
+                            <!--</h1>-->
+                        <!--</div>-->
                         <div id="introduction" class="text-center">
                             <h4>
                                 销售订单
