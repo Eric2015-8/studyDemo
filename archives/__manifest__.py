@@ -26,6 +26,7 @@
     # always loaded
     'data': [
         'print/print_format.xml',
+        'print/print_frame.xml',
 
         'security/security.xml',
         'security/ir.model.access.csv',
