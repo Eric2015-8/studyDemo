@@ -11,9 +11,10 @@
         </template>
 
         <template id="replace_login" name="replace_login" inherit_id="web.login_layout">
-            <xpath expr="//a[@href='https://www.odoo.com']" position="replace">
-                <a href="https://www.sunpop.cn" target="_blank">Powered by <span>odooApp</span></a>
-            </xpath>
+            <!--<xpath expr="//a[@href='https://www.odoo.com']" position="replace">-->
+                <!--<a href="https://www.sunpop.cn" target="_blank">Powered by <span>odooApp</span></a>-->
+            <!--</xpath>-->
+            <xpath expr="//div[@t-if='not disable_footer']" position="replace"></xpath>
         </template>
     </data>
 </odoo>
