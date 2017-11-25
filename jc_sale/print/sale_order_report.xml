@@ -78,7 +78,7 @@
     </template>
 
     <!--自定义打印页面：销售订单明细-->
-    <template id="order_detail_layout" name="detail">
+    <template id="order_detail_layout" name="sale_order_detail_print">
         <div id="quote">
             <table class="table wq-table">
                 <thead>
