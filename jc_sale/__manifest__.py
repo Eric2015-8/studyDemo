@@ -45,6 +45,8 @@
         'views/sale_setting_center_sale_type.xml',
         'views/sale_setting_center_return_type.xml',
         'views/sale_setting_center.xml',
+        'views/sale_return.xml',
+        'print/sale_return_print.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

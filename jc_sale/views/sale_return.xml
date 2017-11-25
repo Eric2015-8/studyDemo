@@ -1,0 +1,254 @@
+<openerp>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="jc_sale_sale_return_list">
+            <field name="name">销售退单列表</field>
+            <field name="model">jc_sale.sale_return</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="bill_state"/>
+                    <field name="store_id"/>
+                    <field name="type_id"/>
+                    <field name="staff_id"/>
+                    <field name="date"/>
+                    <field name="customer_id"/>
+                    <field name="company_id"/>
+                    <field name="department_id"/>
+                    <field name="remark"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="jc_sale_sale_return_edit">
+            <field name="name">销售退单新建</field>
+            <field name="model">jc_sale.sale_return</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="id" attrs="{'invisible': True}"/>
+                        <label string="单据状态:"/>
+                        <field name="bill_state" readonly="1" attrs="{'invisible': [('id', '==', False)]}"/>
+                        <button name="do_check" string="审核" type="object" class="oe_highlight oe_read_only"
+                                attrs="{'invisible': ['|',('bill_state', '!=', 1),('id', '==', False)]}"
+                                groups="jc_sale.jc_group_sale_all"/>
+                        <button name="do_un_check" string="撤销" type="object"
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 10)]}"
+                                groups="jc_sale.jc_group_sale_all"/>
+                        <button name="do_finish" string="完毕" type="object"
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 10)]}"
+                                groups="jc_sale.jc_group_sale_all"/>
+                        <button name="do_un_finish" string="撤销完毕" type="object"
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 20)]}"
+                                groups="jc_sale.jc_group_sale_all"/>
+                        <button name="do_customer_setting" string="个性设置" type="object"
+                                attrs="{'invisible': [('bill_state', '!=', 1)]}"/>
+                    </header>
+                    <sheet>
+                        <group name="group_top" string="销售退单" col="4">
+                            <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="remark" col="4"/>
+                        </group>
+                        <notebook>
+                            <page string="物料信息">
+                                <field name="sale_return_detail" mode="tree,kanban">
+                                    <form string="销售退单明细">
+                                        <group>
+                                            <field name="goods_id"
+                                                   context="{'second_unit_id':second_unit_id, 'main_unit_id':main_unit_id}"
+                                                   options="{'no_open':True,'no_create':True}"
+                                            />
+                                            <label for="second_unit_number" string="辅数量"/>
+                                            <div>
+                                                <field name="second_unit_number_tmp" class="oe_inline" widget="number"/>
+                                                <field name="second_unit_id"
+                                                       class="oe_inline oe_no_button"
+                                                       options="{'no_open':True,'no_create':True}"
+                                                />
+                                            </div>
+                                            <label for="main_unit_number" string="主数量"/>
+                                            <div>
+                                                <field name="main_unit_number_tmp" class="oe_inline" widget="number"/>
+                                                <field name="main_unit_id"
+                                                       class="oe_inline oe_no_button"
+                                                       options="{'no_open':True,'no_create':True}"
+                                                />
+                                            </div>
+                                            <field name="price_tmp" widget="number"/>
+                                            <field name="money" widget="number"/>
+                                            <field name="second_unit_number" invisible="1"/>
+                                            <field name="main_unit_number" invisible="1"/>
+                                            <field name="price" invisible="1"/>
+                                        </group>
+                                    </form>
+                                    <tree string="销售退单明细" editable="bottom">
+                                        <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="second_unit_id" readonly="1"/>
+                                        <field name="second_unit_number"/>
+                                        <field name="main_unit_id" readonly="1"/>
+                                        <field name="main_unit_number"/>
+                                        <field name="price"/>
+                                        <field name="money"/>
+                                        <field name="remark"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile" quick_create="false" create="true" delete="true">
+                                        <field name="goods_id"/>
+                                        <field name="second_unit_id"/>
+                                        <field name="second_unit_number"/>
+                                        <field name="main_unit_id"/>
+                                        <field name="main_unit_number"/>
+                                        <field name="price"/>
+                                        <field name="money"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                                    <div class="row">
+                                                        <div class="col-xs-9" style="padding:0;">
+                                                            <strong>
+                                                                <span>
+                                                                    <t t-esc="record.goods_id.value"/>
+                                                                </span>
+                                                            </strong>
+                                                        </div>
+                                                        <div class="col-xs-3 text-muted" style="padding-right:12px;">
+                                                            <span class="pull-right text-right">
+                                                                <field name="price"/>
+                                                            </span>
+                                                        </div>
+                                                        <a t-if="! read_only_mode" type="delete"
+                                                           style="position: absolute; right: 0; padding: 0px; diplay: inline-block">
+                                                            X
+                                                        </a>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-4 text-muted" style="padding:0;">
+                                                            <span>
+                                                                <field name="second_unit_number"/>
+                                                                <field name="second_unit_id"/>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-xs-4 text-muted" style="padding:0;">
+                                                            <span>
+                                                                <field name="main_unit_number"/>
+                                                                <field name="main_unit_id"/>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-xs-4 text-muted" style="padding-right:12px;">
+                                                            <span class="pull-right text-right">
+                                                                <field name="money"/>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                            <page string="其它信息">
+                                <group name="group_other" col="4">
+                                    <field name="date"/>
+                                    <field name="type_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="staff_id" domain="[('is_sale_man','=',True)]"
+                                           options="{'no_open':True,'no_create':True}" readonly="0"/>
+                                    <field name="store_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="department_id" options="{'no_open':True,'no_create':True}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <!--<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>-->
+                        <field name="_to_approver_ids" widget="approve" readonly="1"/>
+                        <!--<field name="message_ids" widget="mail_thread"/>-->
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_return_search_view">
+            <field name="name">sale_return.search</field>
+            <field name="model">jc_sale.sale_return</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="bill_state"/>
+                    <field name="store_id"/>
+                    <field name="type_id"/>
+                    <field name="staff_id"/>
+                    <filter name="not_checked_bill" string="未审核"
+                            domain="[('bill_state', '=', 1)]"/>
+                    <filter name="checked_bill" string="已审核"
+                            domain="[('bill_state', '=', 10)]"/>
+                    <filter name="finished_bill" string="已完毕"
+                            domain="[('bill_state', '=', 20)]"/>
+                    <group string="Group By">
+                        <filter name="by_bill_state" string="单据状态"
+                                context="{'group_by': 'bill_state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_jc_sale_sale_order_kanban">
+            <field name="name">销售退单.kanban</field>
+            <field name="model">jc_sale.sale_return</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" quick_create="false" create="true" delete="true">
+                    <!--<field name="name"/>-->
+                    <field name="customer_id"/>
+                    <field name="total_money"/>
+                    <field name="date"/>
+                    <field name="bill_state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong>
+                                            <span>
+                                                <t t-esc="record.customer_id.value"/>
+                                            </span>
+                                        </strong>
+                                    </div>
+                                    <div class="col-xs-6 pull-right text-right">
+                                        <strong>
+                                            <field name="total_money"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span>
+                                            <!--<t t-esc="record.name.value"/>-->
+                                            <t t-esc="record.date.value"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <span class="pull-right text-right">
+                                            <field name="bill_state" widget="kanban_label_selection"
+                                                   options="{'classes': {'1': 'default', '10': 'success', '20': 'success'}}"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="jc_sale_sale_return_action_window">
+            <field name="name">销售退单</field>
+            <field name="res_model">jc_sale.sale_return</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
+        </record>
+
+        <menuitem name="销售退单" id="jc_sale.menu_sale_return" parent="jc_sale_menu_root"
+                  action="jc_sale_sale_return_action_window" sequence="3"/>
+
+    </data>
+</openerp>
