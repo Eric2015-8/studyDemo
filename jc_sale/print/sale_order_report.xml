@@ -18,16 +18,10 @@
                 <t t-set="o" t-value="docs[0]"/>
                 <t t-foreach="docs" t-as="quotation">
                     <div class="page">
-                        <!--<div id="introduction"-->
-                             <!--class="text-center">&lt;!&ndash;page-header:在下面加了淡淡的下划线，从最左边，到最右边&ndash;&gt;-->
-                            <!--<h1>-->
-                                <!--<em t-field="quotation.company_id"/>-->
-                            <!--</h1>-->
-                        <!--</div>-->
                         <div id="introduction" class="text-center">
-                                <em t-field="quotation.company_id"/>
-                                销售订单
-                                <em t-esc="quotation.name"/>
+                            <em t-field="quotation.company_id"/>
+                            销售订单
+                            <em t-esc="quotation.name"/>
                         </div>
                         <!-- 表头 -->
                         <div class="row">
@@ -121,26 +115,16 @@
                         </tr>
                     </t>
                     <tr>
-                        <td>
-                            合计
-                        </td>
-                        <td>
-                            <t t-esc="quotation.total_main_number"/>
-                        </td>
-                        <td>
-                            <t t-esc="quotation.total_second_number"/>
-                        </td>
+                        <td>合计</td>
+                        <td><t t-esc="quotation.total_main_number"/></td>
+                        <td><t t-esc="quotation.total_second_number"/></td>
                         <td></td>
-                        <td>
-                            <t t-esc="round(quotation.total_money,2)"/>
-                        </td>
+                        <td><t t-esc="round(quotation.total_money,2)"/></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>
-                            业务员：
-                        </td>
+                        <td>业务员：</td>
                         <td></td>
                         <td>审核：</td>
                         <td></td>
