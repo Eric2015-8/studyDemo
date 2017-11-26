@@ -52,7 +52,7 @@
                             <field name="remark"/>
                         </group>
                         <notebook>
-                            <page string="物料信息">
+                            <page string="订货信息">
                                 <field name="sale_order_detail" mode="tree,kanban">
                                     <form string="销售订单明细">
                                         <group>

@@ -2,7 +2,7 @@
 <odoo>
     <report
             id="report_sale_out_store"
-            string="销售出库单"
+            string="销售出库"
             model="jc_storage.sale_out_store"
             report_type="qweb-pdf"
             file="jc_storage.report_pdf_sale_out_store_file"
@@ -26,7 +26,7 @@
                         </div>
                         <div id="introduction" class="text-center">
                             <h4>
-                                销售出库单
+                                销售出库
                                 <em t-esc="quotation.name"/>
                             </h4>
                         </div>
@@ -78,7 +78,7 @@
         </t>
     </template>
 
-    <!--自定义打印页面：销售出库单明细-->
+    <!--自定义打印页面：销售出库明细-->
     <template id="sale_out_store_detail_layout" name="detail">
         <div id="quote">
             <table class="table wq-table mt32">

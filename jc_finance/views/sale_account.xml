@@ -49,7 +49,7 @@
                             <field name="remark"/>
                         </group>
                         <notebook>
-                            <page string="物料信息">
+                            <page string="订货信息">
                                 <field name="sale_account_detail" mode="tree,kanban">
                                     <form string="销售账单明细">
                                         <group>

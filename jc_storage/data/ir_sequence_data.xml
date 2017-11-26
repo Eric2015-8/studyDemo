@@ -2,9 +2,9 @@
 <odoo>
     <data>
 
-        <!-- 销售出库单 -->
+        <!-- 销售出库 -->
         <record id="seq_sale_order" model="ir.sequence">
-            <field name="name">销售出库单</field>
+            <field name="name">销售出库</field>
             <field name="code">jc_storage.sale_out_store</field>
             <field name="prefix">%(year)s/%(month)s/</field>
             <field name="padding">5</field>

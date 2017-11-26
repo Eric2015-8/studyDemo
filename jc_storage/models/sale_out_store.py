@@ -7,7 +7,7 @@ from . import bill_define
 
 class SaleOutStore(models.Model):
     _name = 'jc_storage.sale_out_store'
-    _description = u'仓储：销售出库单'
+    _description = u'仓储：销售出库'
     _order = 'id desc'
 
     _inherit = ['ir.needaction_mixin']
@@ -45,7 +45,7 @@ class SaleOutStore(models.Model):
                                      track_visibility='always')
     total_money = fields.Float(string='金额', store=True, readonly=True, compute='_amount_all', track_visibility='always')
 
-    sale_out_store_detail = fields.One2many('jc_storage.sale_out_store.detail', 'sale_out_store_id', string=u'销售出库单明细',
+    sale_out_store_detail = fields.One2many('jc_storage.sale_out_store.detail', 'sale_out_store_id', string=u'销售出库明细',
                                             copy=True)
 
     @api.depends('sale_out_store_detail.second_unit_number', 'sale_out_store_detail.main_unit_number',
@@ -105,7 +105,7 @@ class SaleOutStore(models.Model):
     def _create_sale_account(self):
         values = {
             'source_bill_id': self.id,
-            'source_bill_type': 20,  # 销售出库单
+            'source_bill_type': 20,  # 销售出库
             'customer_id': self.customer_id.id,
             'date': self.date,
             'out_store_date': self.out_store_date,
@@ -123,7 +123,7 @@ class SaleOutStore(models.Model):
         for detail in self.sale_out_store_detail:
             values = {
                 'sale_account_id': bill.id,
-                'source_bill_type': 20,  # 销售出库单
+                'source_bill_type': 20,  # 销售出库
                 'source_bill_id': self.id,
                 'source_detail_id': detail.id,
                 'goods_id': detail.goods_id.id,
@@ -183,7 +183,7 @@ class SaleOutStore(models.Model):
     @api.multi
     def do_customer_setting(self):
         table = u'jc_storage.sale_out_store'
-        table_show_name = u'销售出库单'
+        table_show_name = u'销售出库'
         need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name)
 

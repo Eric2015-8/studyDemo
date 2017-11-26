@@ -51,7 +51,7 @@
                             <field name="remark"/>
                         </group>
                         <notebook>
-                            <page string="物料信息">
+                            <page string="订货信息">
                                 <div>
                                     <button name="add_goods_page" string="添加" type="object"
                                             class="oe_highlight oe_edit_only"/>

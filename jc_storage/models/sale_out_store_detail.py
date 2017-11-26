@@ -6,9 +6,9 @@ from . import bill_define
 
 class SaleOutStoreDetail(models.Model):
     _name = 'jc_storage.sale_out_store.detail'
-    _description = u'仓储：销售出库单明细'
+    _description = u'仓储：销售出库明细'
 
-    sale_out_store_id = fields.Many2one('jc_storage.sale_out_store', string='销售出库单引用', required=True,
+    sale_out_store_id = fields.Many2one('jc_storage.sale_out_store', string='销售出库引用', required=True,
                                         ondelete='cascade', index=True, copy=False)
 
     source_bill_type = fields.Selection(bill_define.BILL_TYPE, string=u'来源单据类型', readonly=True, copy=False)

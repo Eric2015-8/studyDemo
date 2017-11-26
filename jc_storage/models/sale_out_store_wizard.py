@@ -6,9 +6,9 @@ import datetime
 
 
 class CreateSaleOutStoreWizard1(models.TransientModel):
-    """手机创建销售出库单 向导 """
+    """手机创建销售出库 向导 """
     _name = "jc_storage.create.sale.out.store.wizard1"
-    _description = u'手机创建销售出库单的向导'
+    _description = u'手机创建销售出库的向导'
 
     state = fields.Selection(
         [('step1', 'step1'), ('step2', 'step2')]
@@ -125,7 +125,7 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
             'company_id': self.company_id.id,
             'remark': self.remark,
         }
-        table = u'jc_storage.sale_out_store'  # 使用销售销售出库单的个性设置
+        table = u'jc_storage.sale_out_store'  # 使用销售销售出库的个性设置
         need_set_fields = ['type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         # need_set_fields中的值，从个性设置中取值
         self.env['archives.set_customer_setting'].set_default_if_empty(values, table, need_set_fields)
@@ -149,16 +149,16 @@ class CreateSaleOutStoreWizard1(models.TransientModel):
     @api.model
     def default_get(self, fields_):
         res = super(CreateSaleOutStoreWizard1, self).default_get(fields_)
-        table = u'jc_storage.sale_out_store'  # 使用销售出库单的个性设置
+        table = u'jc_storage.sale_out_store'  # 使用销售出库的个性设置
         need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
         self.env['archives.set_customer_setting'].set_default(res, table, fields_, need_set_fields)
         return res
 
 
 class CreateSaleOutStoreWizard2(models.TransientModel):
-    """手机生成销售出库单 向导-明细 """
+    """手机生成销售出库 向导-明细 """
     _name = "jc_storage.create.sale.out.store.wizard2"
-    _description = u'手机创建销售出库单的向导-明细'
+    _description = u'手机创建销售出库的向导-明细'
 
     detail_id = fields.Many2one('jc_storage.create.sale.out.store.wizard1', string='引用', required=True,
                                 ondelete='cascade', index=True, copy=False)

@@ -2,7 +2,7 @@
     <data>
         <!-- explicit list view definition -->
         <record model="ir.ui.view" id="jc_storage_sale_out_store_list">
-            <field name="name">销售出库单列表</field>
+            <field name="name">销售出库列表</field>
             <field name="model">jc_storage.sale_out_store</field>
             <field name="arch" type="xml">
                 <tree>
@@ -20,7 +20,7 @@
         </record>
 
         <record model="ir.ui.view" id="jc_storage_sale_out_store_edit">
-            <field name="name">销售出库单新建</field>
+            <field name="name">销售出库新建</field>
             <field name="model">jc_storage.sale_out_store</field>
             <field name="arch" type="xml">
                 <form>
@@ -44,16 +44,16 @@
                                 attrs="{'invisible': [('bill_state', '!=', 1)]}"/>
                     </header>
                     <sheet>
-                        <group name="group_top" string="销售出库单" col="4">
+                        <group name="group_top" string="销售出库" col="4">
                             <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
                             <field name="out_store_date"/>
                             <field name="store_id" options="{'no_open':True,'no_create':True}"/>
                             <field name="remark"/>
                         </group>
                         <notebook>
-                            <page string="物料信息">
+                            <page string="订货信息">
                                 <field name="sale_out_store_detail" mode="tree,kanban">
-                                    <form string="销售出库单明细">
+                                    <form string="销售出库明细">
                                         <group>
                                             <field name="goods_id"
                                                    context="{'second_unit_id':second_unit_id, 'main_unit_id':main_unit_id}"
@@ -82,7 +82,7 @@
                                             <field name="price" invisible="1"/>
                                         </group>
                                     </form>
-                                    <tree string="销售出库单明细" editable="bottom">
+                                    <tree string="销售出库明细" editable="bottom">
                                         <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
                                         <field name="second_unit_id" readonly="1"/>
                                         <field name="second_unit_number" widget="char"/>
@@ -230,18 +230,18 @@
 
         <!--actions opening views on models-->
         <record model="ir.actions.act_window" id="jc_storage_sale_out_store_action_window">
-            <field name="name">销售出库单</field>
+            <field name="name">销售出库</field>
             <field name="res_model">jc_storage.sale_out_store</field>
             <field name="view_mode">tree,kanban,form</field>
             <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
         </record>
 
         <record model="ir.ui.view" id="jc_storage_sale_out_store_wizard_step">
-            <field name="name">手机销售出库单第一步</field>
+            <field name="name">手机销售出库第一步</field>
             <field name="model">jc_storage.create.sale.out.store.wizard1</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="手机销售出库单" version="7.0">
+                <form string="手机销售出库" version="7.0">
                     <field invisible="1" name="state"/>
                     <sheet states="step1">
                         <notebook>
@@ -270,7 +270,7 @@
                             <button name="action_add" string="添加" type="object"/>
                         </div>
                         <field name="wizard_detail" mode="tree">
-                            <tree string="销售出库单明细" editable="bottom" create="0">
+                            <tree string="销售出库明细" editable="bottom" create="0">
                                 <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
                                 <field name="main_unit_number"/>
                                 <field name="price"/>
@@ -289,7 +289,7 @@
         </record>
 
         <act_window id="jc_storage_mobile_sale_out_store_action_wizard"
-                    name="手机销售出库单"
+                    name="手机销售出库"
                     src_model="jc_storage.sale_out_store"
                     res_model="jc_storage.create.sale.out.store.wizard1"
                     view_mode="form"
@@ -299,7 +299,7 @@
         <!--<menuitem name="出库向导" id="jc_storage.mobile_sale_out_store_action_wizard"-->
                   <!--action="jc_storage_mobile_sale_out_store_action_wizard" sequence="2"/>-->
 
-        <menuitem name="销售出库单" id="jc_storage.menu_sale_out_store" parent="jc_storage_menu_root"
+        <menuitem name="销售出库" id="jc_storage.menu_sale_out_store" parent="jc_storage_menu_root"
                   action="jc_storage_sale_out_store_action_window" sequence="3"/>
 
     </data>

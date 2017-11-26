@@ -22,7 +22,7 @@
         </record>
 
         <record id="jc_rule_sale_out_store_all" model="ir.rule">
-            <field name="name">全部销售出库单</field>
+            <field name="name">全部销售出库</field>
             <field ref="model_jc_storage_sale_out_store" name="model_id"/>
             <field name="domain_force">[(1,'=',1)]</field>
             <field name="groups" eval="[(4, ref('jc_storage.jc_group_storage_all'))]"/>
