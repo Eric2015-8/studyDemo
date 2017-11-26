@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from . import bill_define
 
 
 class SaleReturnStore(models.Model):
@@ -10,6 +11,9 @@ class SaleReturnStore(models.Model):
     _order = 'id desc'
 
     _inherit = ['ir.needaction_mixin']
+
+    source_bill_type = fields.Selection(bill_define.BILL_TYPE, string=u'来源单据类型', readonly=True, copy=False)
+    source_bill_id = fields.Integer(string="来源单据号", readonly=True, copy=False, default=0)
 
     bill_state = fields.Selection(
         [(1, '未审核'), (10, '已审核'), (20, '已完毕')],
@@ -150,7 +154,7 @@ class SaleReturnStore(models.Model):
         setting = self.env['setting_center.return_type'].query_type(self.sale_return_type_id.id)
         if not setting:
             raise ValidationError(u'请到【设置中心】“销售”下设置“销售退货流程”！')
-        _type = setting
+        _type = setting[1]
         if _type == 1:
             return
         bill = self._create_sale_account()

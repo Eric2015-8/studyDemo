@@ -154,7 +154,7 @@ class SaleOutStore(models.Model):
         setting = self.env['setting_center.sale_type'].query_type(self.type_id.id)
         if not setting:
             raise ValidationError(u'请到【设置中心】“销售”下设置“销售流程”！')
-        _type = setting[0]
+        _type = setting[2]
         if _type == 1:
             return
         bill = self._create_sale_account()
