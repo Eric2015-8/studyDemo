@@ -18,6 +18,8 @@ class SaleSettingCenter(models.TransientModel):
                                                         string=u'出库生成账单方式')
 
     # 销售退货流程
+    sale_return_2_return_store_type_default = fields.Selection(create_type, default=10, readonly=True,
+                                                               string=u'销售退单生成销售退货方式')
     return_store_2_account_type_default = fields.Selection(create_type, default=10, readonly=True,
                                                            string=u'销售退货生成账单方式')
 
@@ -61,6 +63,19 @@ class SaleSettingCenter(models.TransientModel):
                                                       record.out_store_2_account_type_default or 10)
 
     @api.model
+    def get_default_sale_return_2_return_store_type_default(self, fields_):
+        data = self.env["ir.config_parameter"].get_param("jc_sale.sale_return_2_return_store_type_default", default=10)
+        if data:
+            data = int(data)
+        return {'sale_return_2_return_store_type_default': data or 10}
+
+    @api.multi
+    def set_sale_return_2_return_store_type_default(self):
+        for record in self:
+            self.env['ir.config_parameter'].set_param("jc_sale.sale_return_2_return_store_type_default",
+                                                      record.sale_return_2_return_store_type_default or 10)
+
+    @api.model
     def get_default_return_store_2_account_type_default(self, fields_):
         data = self.env["ir.config_parameter"].get_param("jc_sale.return_store_2_account_type_default", default=10)
         if data:
@@ -80,4 +95,5 @@ class SaleSettingCenter(models.TransientModel):
         return a, b, c
 
     def query_return_type_2_bill_default(self):
-        return self.get_default_return_store_2_account_type_default(None)
+        return self.get_default_sale_return_2_return_store_type_default(None), \
+               self.get_default_return_store_2_account_type_default(None)

@@ -36,6 +36,11 @@
                         <label string="销售退货流程"/>
                         <div>
                             <div>
+                                <label for="sale_return_2_return_store_type_default"/>
+                                <label string=":"/>
+                                <field name="sale_return_2_return_store_type_default"/>
+                            </div>
+                            <div>
                                 <label for="return_store_2_account_type_default"/>
                                 <label string=":"/>
                                 <field name="return_store_2_account_type_default"/>

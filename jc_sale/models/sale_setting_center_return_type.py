@@ -14,6 +14,7 @@ class SaleSettingCenterReturnType(models.Model):
 
     sale_return_type_id = fields.Many2one('archives.common_archive', string=u'销售退货类型', required=True,
                                           domain="[('archive_name','=',22)]")
+    sale_return_2_return_store_type = fields.Selection(create_type, default=10, string=u'销售退单生成销售退货方式', required=True)
     return_store_2_account_type = fields.Selection(create_type, default=10, string=u'销售退货生成账单方式', required=True)
 
     def _set_name(self, values):
@@ -38,6 +39,7 @@ class SaleSettingCenterReturnType(models.Model):
 
         result = self.search([('sale_return_type_id', '=', sale_return_type_id_)])
         if result:
-            return result[0].return_store_2_account_type
+            return result[0].sale_return_2_return_store_type, \
+                   result[0].return_store_2_account_type
 
         return self.env['setting_center'].query_return_type_2_bill_default()

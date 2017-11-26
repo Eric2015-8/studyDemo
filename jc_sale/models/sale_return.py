@@ -23,7 +23,7 @@ class SaleReturn(models.Model):
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     type_id = fields.Many2one('archives.common_archive', string=u'销售退货类型', required=True,
-                                          domain="[('archive_name','=',22)]")
+                              domain="[('archive_name','=',22)]")
     remark = fields.Char(string=u'摘要')
 
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
@@ -93,14 +93,13 @@ class SaleReturn(models.Model):
             raise ValidationError(_('只有未审核单据才能编辑.'))
         return super(SaleReturn, self).write(values)
 
-    def _create_sale_account(self):
+    def _create_sale_return_store(self):
         values = {
             'source_bill_id': self.id,
-            'source_bill_type': 23,  # 销售退单
+            'source_bill_type': 3,  # 销售退单
             'customer_id': self.customer_id.id,
             'date': self.date,
-            'out_store_date': self.date,
-            # 'type_id': self.type_id.id,
+            'sale_return_type_id': self.type_id.id,
             'staff_id': self.staff_id.id,
             'department_id': self.department_id.id,
             'store_id': self.store_id.id,
@@ -110,31 +109,31 @@ class SaleReturn(models.Model):
             'total_second_number': self.total_second_number,
             'total_money': self.total_money,
         }
-        bill = self.env['jc_finance.sale_account'].create(values)
+        bill = self.env['jc_storage.sale_return_store'].create(values)
         for detail in self.sale_return_detail:
             values = {
-                'sale_account_id': bill.id,
-                'source_bill_type': 23,  # 销售退单
+                'sale_return_store_id': bill.id,
+                'source_bill_type': 3,  # 销售退单
                 'source_bill_id': self.id,
                 'source_detail_id': detail.id,
                 'goods_id': detail.goods_id.id,
                 'second_unit_id': detail.second_unit_id.id,
                 'second_unit_number': detail.second_unit_number,
-                'second_unit_number_tmp': detail.second_unit_number,
+                # 'second_unit_number_tmp': detail.second_unit_number,
                 'main_unit_id': detail.main_unit_id.id,
                 'main_unit_number': detail.main_unit_number,
-                'main_unit_number_tmp': detail.main_unit_number,
+                # 'main_unit_number_tmp': detail.main_unit_number,
                 'price': detail.price,
-                'price_tmp': detail.price,
+                # 'price_tmp': detail.price,
                 'money': detail.money,
                 'remark': detail.remark,
             }
-            self.env['jc_finance.sale_account.detail'].create(values)
+            self.env['jc_storage.sale_return_store.detail'].create(values)
         return bill
 
-    def _delete_sale_account(self):
-        bills = self.env["jc_finance.sale_account"].search(
-            [('source_bill_id', '=', self.id), ('source_bill_type', '=', 23)])
+    def _delete_sale_return_store(self):
+        bills = self.env["jc_storage.sale_return_store"].search(
+            [('source_bill_id', '=', self.id), ('source_bill_type', '=', 3)])
         if bills:
             for bill in bills:
                 bill.unlink()
@@ -145,17 +144,17 @@ class SaleReturn(models.Model):
         setting = self.env['setting_center.return_type'].query_type(self.type_id.id)
         if not setting:
             raise ValidationError(u'请到【设置中心】“销售”下设置“销售退货流程”！')
-        _type = setting
+        _type = setting[0]
         if _type == 1:
             return
-        bill = self._create_sale_account()
+        bill = self._create_sale_return_store()
         if _type == 20:
             bill.do_check()
         return
 
     @api.multi
     def do_check(self):
-        # self._check_logic()
+        self._check_logic()
         self.bill_state = 10
 
     @api.multi
@@ -168,7 +167,7 @@ class SaleReturn(models.Model):
 
     @api.multi
     def do_un_check(self):
-        # self._delete_sale_account()
+        self._delete_sale_return_store()
         self.bill_state = 1
 
     @api.multi
