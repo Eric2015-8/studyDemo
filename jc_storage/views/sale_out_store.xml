@@ -61,7 +61,7 @@
                                             />
                                             <label for="second_unit_number" string="辅数量"/>
                                             <div>
-                                                <field name="second_unit_number_tmp" class="oe_inline"/>
+                                                <field name="second_unit_number_tmp" class="oe_inline" widget="number"/>
                                                 <field name="second_unit_id"
                                                        class="oe_inline oe_no_button"
                                                        options="{'no_open':True,'no_create':True}"
@@ -69,13 +69,13 @@
                                             </div>
                                             <label for="main_unit_number" string="主数量"/>
                                             <div>
-                                                <field name="main_unit_number_tmp" class="oe_inline"/>
+                                                <field name="main_unit_number_tmp" class="oe_inline" widget="number"/>
                                                 <field name="main_unit_id"
                                                        class="oe_inline oe_no_button"
                                                        options="{'no_open':True,'no_create':True}"
                                                 />
                                             </div>
-                                            <field name="price_tmp"/>
+                                            <field name="price_tmp" widget="number"/>
                                             <field name="money"/>
                                             <field name="second_unit_number" invisible="1"/>
                                             <field name="main_unit_number" invisible="1"/>
