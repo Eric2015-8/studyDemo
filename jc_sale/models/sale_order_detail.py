@@ -24,23 +24,23 @@ class SaleOrderDetail(models.Model):
 
     remark = fields.Char(string=u'备注')
 
-    def _compute_money(self):
+    def _compute_money2(self):
         self.money = (self.price + self.transfer_price) * self.main_unit_number
 
     @api.onchange('second_unit_number_tmp')
-    def _onchange_for_second_unit_number_from_tmp(self):
+    def _onchange_for_second_unit_number_from_tmp2(self):
         if not self.goods_id.need_change():
             return
-        self._compute_money()
+        self._compute_money2()
 
     @api.onchange('main_unit_number_tmp')
-    def _onchange_for_main_unit_number_from_tmp(self):
-        self._compute_money()
+    def _onchange_for_main_unit_number_from_tmp2(self):
+        self._compute_money2()
 
     @api.onchange('price_tmp')
-    def _onchange_for_price_from_tmp(self):
-        self._compute_money()
+    def _onchange_for_price_from_tmp2(self):
+        self._compute_money2()
 
     @api.onchange('price', 'main_unit_number', 'transfer_price')
-    def _onchange_for_money(self):
-        self._compute_money()
+    def _onchange_for_money2(self):
+        self._compute_money2()

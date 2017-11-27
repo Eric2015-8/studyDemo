@@ -191,7 +191,7 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_jc_sale_sale_order_kanban">
+        <record model="ir.ui.view" id="view_jc_sale_sale_return_kanban">
             <field name="name">销售退单.kanban</field>
             <field name="model">jc_sale.sale_return</field>
             <field name="arch" type="xml">
