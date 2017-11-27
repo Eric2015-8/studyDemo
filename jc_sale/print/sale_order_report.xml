@@ -124,8 +124,8 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td>业务员：</td>
-                        <td><t t-esc="quotation.staff_id.name"/></td>
+                        <td>业务员：<t t-esc="quotation.staff_id.name"/></td>
+                        <td></td>
                         <td>审核：</td>
                         <td></td>
                         <td></td>
