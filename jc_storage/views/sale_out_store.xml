@@ -53,7 +53,24 @@
                         <notebook>
                             <page string="订货信息">
                                 <field name="sale_out_store_detail" mode="tree,kanban">
-                                    <form string="销售出库明细">
+                                    <tree string="销售出库明细" create="false" delete="false">
+                                        <field name="goods_id" readonly="1"/>
+                                        <field name="second_unit_id" readonly="1"/>
+                                        <field name="second_unit_number" readonly="1" widget="char"/>
+                                        <field name="main_unit_id" readonly="1"/>
+                                        <field name="main_unit_number" readonly="1" widget="char"/>
+                                        <field name="price" readonly="1" widget="char"/>
+                                        <field name="money" readonly="1"/>
+                                        <field name="remark" readonly="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <field name="total_money"/>
+                                </group>
+                            </page>
+                            <page string="出库信息">
+                                <field name="sale_out_store_out_detail" mode="tree,kanban">
+                                    <form string="销售出库订货明细">
                                         <group>
                                             <field name="goods_id"
                                                    context="{'second_unit_id':second_unit_id, 'main_unit_id':main_unit_id}"
@@ -82,7 +99,7 @@
                                             <field name="price" invisible="1"/>
                                         </group>
                                     </form>
-                                    <tree string="销售出库明细" editable="bottom">
+                                    <tree string="销售出库订货明细" editable="bottom">
                                         <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
                                         <field name="second_unit_id" readonly="1"/>
                                         <field name="second_unit_number" widget="char"/>
@@ -138,7 +155,7 @@
                                     </kanban>
                                 </field>
                                 <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
-                                    <field name="total_money"/>
+                                    <field name="total_money2"/>
                                 </group>
                             </page>
                             <page string="其它信息">

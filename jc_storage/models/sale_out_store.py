@@ -27,7 +27,7 @@ class SaleOutStore(models.Model):
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
-                                   domain="[('archive_name','=',1)]")
+                              domain="[('archive_name','=',1)]")
     remark = fields.Char(string=u'摘要')
 
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
@@ -44,9 +44,12 @@ class SaleOutStore(models.Model):
     total_main_number = fields.Float(string='主数量', store=True, readonly=True, compute='_amount_all',
                                      track_visibility='always')
     total_money = fields.Float(string='金额', store=True, readonly=True, compute='_amount_all', track_visibility='always')
+    total_money2 = fields.Float(string='金额', related='total_money')
 
-    sale_out_store_detail = fields.One2many('jc_storage.sale_out_store.detail', 'sale_out_store_id', string=u'销售出库明细',
+    sale_out_store_detail = fields.One2many('jc_storage.sale_out_store.detail', 'sale_out_store_id', string=u'销售出库订货明细',
                                             copy=True)
+    sale_out_store_out_detail = fields.One2many('jc_storage.sale_out_store.out_detail', 'sale_out_store_id',
+                                                string=u'销售出库-出库明细', copy=True)
 
     @api.depends('sale_out_store_detail.second_unit_number', 'sale_out_store_detail.main_unit_number',
                  'sale_out_store_detail.money')
@@ -100,7 +103,24 @@ class SaleOutStore(models.Model):
     def write(self, values):
         if self.bill_state > 1 and not SaleOutStore._is_bill_state_change(values):
             raise ValidationError(_('只有未审核单据才能编辑.'))
-        return super(SaleOutStore, self).write(values)
+        result = super(SaleOutStore, self).write(values)
+        self._set_oder_detail()
+        return result
+
+    def _set_oder_detail(self):
+        for detail in self.sale_out_store_detail:
+            detail.main_unit_number = 0
+            detail.second_unit_number = 0
+            detail.price = 0
+            detail.money = 0
+            for out_detail in self.sale_out_store_out_detail:
+                if out_detail.goods_id == detail.goods_id:
+                    detail.main_unit_number += out_detail.main_unit_number
+                    detail.second_unit_number += out_detail.second_unit_number
+                    detail.money += out_detail.money
+            if detail.main_unit_number != 0:
+                detail.price = detail.money / detail.main_unit_number
+        return
 
     def _create_sale_account(self):
         values = {

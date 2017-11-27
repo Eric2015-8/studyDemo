@@ -106,6 +106,16 @@ class SaleOrder(models.Model):
         return super(SaleOrder, self).write(values)
 
     def _create_out_store(self):
+        values = self._get_bill_values()
+        bill = self.env['jc_storage.sale_out_store'].create(values)
+        for detail in self.sale_order_detail:
+            main, second, price = SaleOrder.get_str_tuple_from_number(detail)
+            values = self._get_detail_values(bill, detail, main, price, second)
+            self.env['jc_storage.sale_out_store.detail'].create(values)
+            self.env['jc_storage.sale_out_store.out_detail'].create(values)
+        return bill
+
+    def _get_bill_values(self):
         values = {
             'source_bill_id': self.id,
             'source_bill_type': 2,  # 销售订单
@@ -122,28 +132,27 @@ class SaleOrder(models.Model):
             'total_second_number': self.total_second_number,
             'total_money': self.total_money,
         }
-        bill = self.env['jc_storage.sale_out_store'].create(values)
-        for detail in self.sale_order_detail:
-            main, second, price = SaleOrder.get_str_tuple_from_number(detail)
-            values = {
-                'sale_out_store_id': bill.id,
-                'source_bill_type': 2,  # 销售订单
-                'source_bill_id': self.id,
-                'source_detail_id': detail.id,
-                'goods_id': detail.goods_id.id,
-                'second_unit_id': detail.second_unit_id.id,
-                'second_unit_number': detail.second_unit_number,
-                'second_unit_number_tmp': main,
-                'main_unit_id': detail.main_unit_id.id,
-                'main_unit_number': detail.main_unit_number,
-                'main_unit_number_tmp': second,
-                'price': detail.price,
-                'price_tmp': price,
-                'money': detail.money,
-                'remark': detail.remark,
-            }
-            self.env['jc_storage.sale_out_store.detail'].create(values)
-        return bill
+        return values
+
+    def _get_detail_values(self, bill, detail, main, price, second):
+        values = {
+            'sale_out_store_id': bill.id,
+            'source_bill_type': 2,  # 销售订单
+            'source_bill_id': self.id,
+            'source_detail_id': detail.id,
+            'goods_id': detail.goods_id.id,
+            'second_unit_id': detail.second_unit_id.id,
+            'second_unit_number': detail.second_unit_number,
+            'second_unit_number_tmp': main,
+            'main_unit_id': detail.main_unit_id.id,
+            'main_unit_number': detail.main_unit_number,
+            'main_unit_number_tmp': second,
+            'price': detail.price,
+            'price_tmp': price,
+            'money': detail.money,
+            'remark': detail.remark,
+        }
+        return values
 
     @staticmethod
     def get_str_tuple_from_number(detail):
