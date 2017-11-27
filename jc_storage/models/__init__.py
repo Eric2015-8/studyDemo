@@ -17,6 +17,7 @@ from . import transfer_in
 from . import transfer_in_detail
 from . import sale_return_store
 from . import sale_return_store_detail
+from . import sale_return_store_retrun_detail
 from . import stock_check
 from . import stock_check_detail
 

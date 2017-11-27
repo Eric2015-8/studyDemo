@@ -45,8 +45,10 @@ class SaleReturnStore(models.Model):
     total_money = fields.Float(string='金额', store=True, readonly=True, compute='_amount_all', track_visibility='always')
 
     sale_return_store_detail = fields.One2many('jc_storage.sale_return_store.detail', 'sale_return_store_id',
-                                               string=u'销售退库明细',
-                                               copy=True)
+                                               string=u'销售退库明细', copy=True)
+    sale_return_store_return_detail = fields.One2many('jc_storage.sale_return_store.return_detail',
+                                                      'sale_return_store_id',
+                                                      string=u'销售退库明细', copy=True)
 
     @api.depends('sale_return_store_detail.second_unit_number', 'sale_return_store_detail.main_unit_number',
                  'sale_return_store_detail.money')
@@ -100,7 +102,24 @@ class SaleReturnStore(models.Model):
     def write(self, values):
         if self.bill_state > 1 and not SaleReturnStore._is_bill_state_change(values):
             raise ValidationError(_('只有未审核单据才能编辑.'))
-        return super(SaleReturnStore, self).write(values)
+        result = super(SaleReturnStore, self).write(values)
+        self._set_return_detail()
+        return result
+
+    def _set_return_detail(self):
+        for detail in self.sale_return_store_detail:
+            detail.main_unit_number = 0
+            detail.second_unit_number = 0
+            detail.price = 0
+            detail.money = 0
+            for out_detail in self.sale_return_store_return_detail:
+                if out_detail.goods_id == detail.goods_id:
+                    detail.main_unit_number += out_detail.main_unit_number
+                    detail.second_unit_number += out_detail.second_unit_number
+                    detail.money += out_detail.money
+            if detail.main_unit_number != 0:
+                detail.price = detail.money / detail.main_unit_number
+        return
 
     def _create_sale_account(self):
         values = {

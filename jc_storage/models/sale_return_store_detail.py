@@ -7,7 +7,7 @@ from . import bill_define
 
 class SaleReturnStoreDetail(models.Model):
     _name = 'jc_storage.sale_return_store.detail'
-    _description = u'仓储：销售退库明细'
+    _description = u'仓储：销售退库-退货信息明细'
 
     _inherit = ['goods.detail']
 

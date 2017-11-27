@@ -111,25 +111,30 @@ class SaleReturn(models.Model):
         }
         bill = self.env['jc_storage.sale_return_store'].create(values)
         for detail in self.sale_return_detail:
-            values = {
-                'sale_return_store_id': bill.id,
-                'source_bill_type': 3,  # 销售退单
-                'source_bill_id': self.id,
-                'source_detail_id': detail.id,
-                'goods_id': detail.goods_id.id,
-                'second_unit_id': detail.second_unit_id.id,
-                'second_unit_number': detail.second_unit_number,
-                # 'second_unit_number_tmp': detail.second_unit_number,
-                'main_unit_id': detail.main_unit_id.id,
-                'main_unit_number': detail.main_unit_number,
-                # 'main_unit_number_tmp': detail.main_unit_number,
-                'price': detail.price,
-                # 'price_tmp': detail.price,
-                'money': detail.money,
-                'remark': detail.remark,
-            }
+            values = self._get_detail_values(bill, detail)
             self.env['jc_storage.sale_return_store.detail'].create(values)
+            self.env['jc_storage.sale_return_store.return_detail'].create(values)
         return bill
+
+    def _get_detail_values(self, bill, detail):
+        values = {
+            'sale_return_store_id': bill.id,
+            'source_bill_type': 3,  # 销售退单
+            'source_bill_id': self.id,
+            'source_detail_id': detail.id,
+            'goods_id': detail.goods_id.id,
+            'second_unit_id': detail.second_unit_id.id,
+            'second_unit_number': detail.second_unit_number,
+            # 'second_unit_number_tmp': detail.second_unit_number,
+            'main_unit_id': detail.main_unit_id.id,
+            'main_unit_number': detail.main_unit_number,
+            # 'main_unit_number_tmp': detail.main_unit_number,
+            'price': detail.price,
+            # 'price_tmp': detail.price,
+            'money': detail.money,
+            'remark': detail.remark,
+        }
+        return values
 
     def _delete_sale_return_store(self):
         bills = self.env["jc_storage.sale_return_store"].search(
