@@ -80,36 +80,26 @@
                         <th>产品</th>
                         <th>数量</th>
                         <th>件数</th>
-                        <th>单价</th>
-                        <th>金额</th>
                         <th>备注</th>
                     </tr>
                 </thead>
                 <tbody>
                     <t t-foreach="quotation.sale_order_detail" t-as="detail">
                         <tr>
-                            <td style="border-bottom: 1px solid gray;padding:0;">
+                            <td style="border-bottom: 1px solid gray;padding:0;font-size:15px;">
                                 <t t-esc="detail.goods_id.name"/>
                             </td>
-                            <td style="border-bottom: 1px solid gray;padding:0;">
+                            <td style="border-bottom: 1px solid gray;padding:0;font-size:15px;">
                                 <t t-esc="detail.main_unit_number"/>
                                 <t t-esc="detail.main_unit_id.name"/>
                             </td>
-                            <td style="border-bottom: 1px solid gray;padding:0;">
+                            <td style="border-bottom: 1px solid gray;padding:0;font-size:15px;">
                                 <t t-if="detail.goods_id.need_second_change == '1'">
                                     <t t-esc="round(detail.second_unit_number,2)"/>
                                     <t t-esc="detail.second_unit_id.name"/>
                                 </t>
                             </td>
-                            <td style="border-bottom: 1px solid gray;padding:0;">
-                                <t t-esc="detail.price"/>
-                                <!--<t t-esc="detail['price']"/>-->
-                            </td>
-                            <td style="border-bottom: 1px solid gray;padding:0;">
-                                <t t-esc="round(detail.money,2)"/>
-                                <!--<t t-esc="detail['money']"/>-->
-                            </td>
-                            <td style="border-bottom: 1px solid gray;padding:0;">
+                            <td style="border-bottom: 1px solid gray;padding:0;font-size:15px;">
                                 <t t-esc="detail.remark"/>
                             </td>
                         </tr>
@@ -119,15 +109,11 @@
                         <td><t t-esc="quotation.total_main_number"/></td>
                         <td><t t-esc="quotation.total_second_number"/></td>
                         <td></td>
-                        <td><t t-esc="round(quotation.total_money,2)"/></td>
-                        <td></td>
                     </tr>
                     <tr>
-                        <td></td>
                         <td>业务员：</td>
-                        <td></td>
+                        <td><t t-esc="quotation.staff_id.name"/></td>
                         <td>审核：</td>
-                        <td></td>
                         <td></td>
                     </tr>
                 </tbody>
