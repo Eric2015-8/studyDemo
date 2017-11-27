@@ -68,7 +68,7 @@ where d.id is not null and (b.bill_state=10 or b.bill_state=20)
 group by b.date,b.store_id,d.goods_id,g.second_unit_id,g.main_unit_id
 
 union all
---销售出库
+--销售出库(取“出库信息”)
 select
 b.out_store_date,
 b.store_id,
@@ -82,7 +82,7 @@ sum(d.main_unit_number) main_unit_number_sub,
 sum(-1*d.second_unit_number) second_unit_number_balance,
 sum(-1*d.main_unit_number) main_unit_number_balance
 FROM jc_storage_sale_out_store b 
-LEFT JOIN jc_storage_sale_out_store_detail d ON d.sale_out_store_id = b.id
+LEFT JOIN jc_storage_sale_out_store_out_detail d ON d.sale_out_store_id = b.id
 LEFT JOIN archives_goods g on d.goods_id = g.id
 where d.id is not null and (b.bill_state=10 or b.bill_state=20)
 group by b.out_store_date,b.store_id,d.goods_id,g.second_unit_id,g.main_unit_id
@@ -128,7 +128,7 @@ where d.id is not null and (b.bill_state=10 or b.bill_state=20)
 group by b.date,b.in_store_id,d.goods_id,g.second_unit_id,g.main_unit_id
 
 union all
---销售退库
+--销售退库(取“退库信息”)
 select
 b.date,
 b.store_id,
@@ -142,7 +142,7 @@ null as main_unit_number_sub,
 sum(d.second_unit_number) second_unit_number_balance,
 sum(d.main_unit_number) main_unit_number_balance
 FROM jc_storage_sale_return_store b 
-LEFT JOIN jc_storage_sale_return_store_detail d ON d.sale_return_store_id = b.id
+LEFT JOIN jc_storage_sale_return_store_return_detail d ON d.sale_return_store_id = b.id
 LEFT JOIN archives_goods g on d.goods_id = g.id
 where d.id is not null and (b.bill_state=10 or b.bill_state=20)
 group by b.date,b.store_id,d.goods_id,g.second_unit_id,g.main_unit_id
