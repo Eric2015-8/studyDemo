@@ -53,6 +53,11 @@ class SaleOutStore(models.Model):
     sale_out_store_out_detail = fields.One2many('jc_storage.sale_out_store.out_detail', 'sale_out_store_id',
                                                 string=u'销售出库-出库明细', copy=True)
 
+    @api.multi
+    def print_quotation(self):
+        # self.filtered(lambda s: s.state == 'draft').write({'state': 'sent'})
+        return self.env['report'].get_action(self, 'jc_storage.report_pdf_sale_out_store')
+
     @api.depends('sale_out_store_detail.second_unit_number', 'sale_out_store_detail.main_unit_number',
                  'sale_out_store_detail.money')
     def _amount_all(self):
