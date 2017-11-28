@@ -78,6 +78,7 @@
                                             </div>
                                             <field name="price_tmp" widget="number"/>
                                             <field name="money" widget="number"/>
+                                            <field name="remark"/>
                                             <field name="second_unit_number" invisible="1"/>
                                             <field name="main_unit_number" invisible="1"/>
                                             <field name="price" invisible="1"/>
