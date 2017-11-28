@@ -35,7 +35,7 @@ class SaleOutStore(models.Model):
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
                                  domain=lambda self: self.env['archives.organization'].get_company_organization())
     staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
-    store_id = fields.Many2one('archives.store', string=u'仓库',
+    store_id = fields.Many2one('archives.store', string=u'仓库', required=True,
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
                                     domain=lambda self: self.env['archives.organization'].get_department_organization())
