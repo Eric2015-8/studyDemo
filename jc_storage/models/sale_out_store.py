@@ -23,6 +23,8 @@ class SaleOutStore(models.Model):
     name = fields.Char(string=u'单据编号', required=True, copy=False, readonly=True,
                        index=True, default=lambda self: _('新建'))
 
+    order_name = fields.Char(string=u'订单号', readonly=True)
+
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
@@ -126,6 +128,7 @@ class SaleOutStore(models.Model):
         values = {
             'source_bill_id': self.id,
             'source_bill_type': 20,  # 销售出库
+            'order_name': self.order_name,
             'customer_id': self.customer_id.id,
             'date': self.date,
             'out_store_date': self.out_store_date,

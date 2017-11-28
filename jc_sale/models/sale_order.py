@@ -119,6 +119,7 @@ class SaleOrder(models.Model):
         values = {
             'source_bill_id': self.id,
             'source_bill_type': 2,  # 销售订单
+            'order_name': self.name,
             'customer_id': self.customer_id.id,
             'date': self.date,
             'out_store_date': self.out_store_date,

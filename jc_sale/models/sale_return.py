@@ -97,6 +97,7 @@ class SaleReturn(models.Model):
         values = {
             'source_bill_id': self.id,
             'source_bill_type': 3,  # 销售退单
+            'order_name': self.name,
             'customer_id': self.customer_id.id,
             'date': self.date,
             'sale_return_type_id': self.type_id.id,

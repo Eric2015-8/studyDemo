@@ -60,8 +60,18 @@
                             </div>
                             <div class="col-md-6 col-xs-6">
                                 <div class="row">
-                                    <label class="col-sm-5 col-xs-5 text-right">摘要:</label>
+                                    <label class="col-sm-5 col-xs-5 text-right">订单号:</label>
                                     <div class="col-sm-7 col-xs-7">
+                                        <span t-field="quotation.order_name"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12">
+                                <div class="row">
+                                    <label class="col-sm-2 col-xs-2 text-right">摘要:</label>
+                                    <div class="col-sm-10 col-xs-10">
                                         <span t-field="quotation.remark"/>
                                     </div>
                                 </div>

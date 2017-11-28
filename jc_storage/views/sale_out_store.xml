@@ -8,6 +8,7 @@
                 <tree>
                     <field name="id"/>
                     <field name="name"/>
+                    <field name="order_name"/>
                     <field name="bill_state"/>
                     <field name="customer_id"/>
                     <field name="date"/>
@@ -167,6 +168,7 @@
                                     <field name="staff_id" domain="[('is_sale_man','=',True)]"
                                            options="{'no_open':True,'no_create':True}"/>
                                     <field name="department_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="order_name"/>
                                 </group>
                             </page>
                         </notebook>
