@@ -130,6 +130,19 @@ class Organization(models.Model):
             result.append(('id', 'in', ids))
         return result
 
+    def get_store_organization_condition(self, store_field):
+        user = self.env.user
+        if not user.organization_id:
+            return ''
+        if user.organization_id.active_store:
+            ids = []
+            for detail in user.organization_id.store_ids:
+                ids.append(str(detail.id))
+            if len(ids) == 0:
+                return store_field + ' = 0'
+            return '{} in ({})'.format(store_field, ','.join(ids))
+        return ''
+
     # 得到受权限控制的：部门
     def get_department_organization(self):
         user = self.env.user
