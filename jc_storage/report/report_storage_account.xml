@@ -60,7 +60,7 @@
                     res_model="jc_storage.report_storage_account_wizard"
                     view_mode="form"
                     target="new"
-                    context="{'default_user_id': uid}"/>
+                    context="{}"/>
 
         <!-- 库存账 action -->
         <record id='report_storage_account_action' model='ir.actions.act_window'>

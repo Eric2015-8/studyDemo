@@ -6,9 +6,6 @@
             <field name="arch" type="xml">
                 <form>
                     <group colspan="4">
-                        <field name="user_id" invisible="1"/>
-                    </group>
-                    <group colspan="4">
                         <field name="store_id" options="{'no_open':True,'no_create':True}"/>
                         <field name="date_start"/>
                         <field name="date_end"/>

@@ -8,8 +8,6 @@ class ReportStorageAccountWizard(models.TransientModel):
     _name = 'jc_storage.report_storage_account_wizard'
     _description = u'存储：库存账查询条件'
 
-    user_id = fields.Many2one('res.users', string=u'用户', readonly=True, index=True, default=lambda self: self.env.user)
-
     store_id = fields.Many2one('archives.store', string=u'仓库',
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
 
@@ -81,7 +79,7 @@ class ReportStorageAccountWizard(models.TransientModel):
             return condition
         if len(condition) == 0:
             return 'where ' + s
-        return condition + ' ' + s
+        return condition + ' and ' + s
 
     def get_number_field(self):
         if self.unit_id == 'main':
@@ -89,12 +87,12 @@ class ReportStorageAccountWizard(models.TransientModel):
         return 'second_unit_number_add', 'second_unit_number_sub', 'second_unit_number_balance'
 
     def clear_data(self):
-        sql = 'DELETE FROM jc_storage_report_storage_account_result WHERE user_id = ' + str(self.user_id.id)
+        sql = 'DELETE FROM jc_storage_report_storage_account_result WHERE create_uid = ' + str(self._uid)
         self.env.cr.execute(sql)
 
     def insert_data(self, data):
         sql_format = 'insert into jc_storage_report_storage_account_result' \
-                     '(user_id,goods_id,unit_id,number_start,number_add,number_sub,number_end) ' \
+                     '(create_uid,goods_id,unit_id,number_start,number_add,number_sub,number_end) ' \
                      'values({0},{1},{2},{3},{4},{5},{6})'
         for row in data:
             sql = self.get_insert_sql(row, sql_format)
@@ -102,7 +100,7 @@ class ReportStorageAccountWizard(models.TransientModel):
         return
 
     def get_insert_sql(self, row, sql_format):
-        return sql_format.format(self.user_id.id,
+        return sql_format.format(self._uid,
                                  self.get_data(row, 0), self.get_data(row, 1), self.get_data(row, 2),
                                  self.get_data(row, 3), self.get_data(row, 4), self.get_data(row, 5))
 
@@ -123,8 +121,5 @@ class ReportStorageAccountWizard(models.TransientModel):
             'views': [[list_view_id, 'tree']],
             'target': action.target,
             # 'context': action.context,
-            'context': {
-                'user_id': self.env.uid,
-            },
             'res_model': action.res_model,
         }
