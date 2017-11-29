@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    "name": "approve",
+    "name": "审批",
     "version": '11.11',
     "author": 'xxb',
     "website": "http://www.osbzr.com",
