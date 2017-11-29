@@ -85,8 +85,7 @@
                                     <field name="date"/>
                                     <field name="sale_return_type_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="company_id" options="{'no_open':True,'no_create':True}"/>
-                                    <field name="staff_id" domain="[('is_sale_man','=',True)]"
-                                           options="{'no_open':True,'no_create':True}" readonly="0"/>
+                                    <field name="staff_id" options="{'no_open':True,'no_create':True}" readonly="0"/>
                                     <field name="store_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="department_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="order_name"/>

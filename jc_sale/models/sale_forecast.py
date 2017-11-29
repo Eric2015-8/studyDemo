@@ -2,35 +2,28 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from . import jc_base
 
 
-class SaleForecast(models.Model):
+class SaleForecast(jc_base.Bill):
     _name = 'jc_sale.sale_forecast'
     _description = u'销售：销售预报'
     _order = 'id desc'
 
     _inherit = ['ir.needaction_mixin']
 
-    bill_state = fields.Selection(
-        [(1, '未审核'), (10, '已审核'), (20, '已完毕')],
-        string=u'单据状态', require=True, default=1, readonly=True
-    )
-
-    name = fields.Char(string=u'单据编号', required=True, copy=False, readonly=True,
-                       index=True, default=lambda self: _('新建'))
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
-    date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
+
     type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
-                                   domain=[('archive_name', '=', 1)])
-    remark = fields.Char(string=u'摘要')
+                              domain=[('archive_name', '=', 1)])
 
     sale_forecast_detail = fields.One2many('jc_sale.sale_forecast.detail', 'sale_forecast_id', string=u'销售预报明细',
                                            copy=True)
 
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
                                  domain=lambda self: self.env['archives.organization'].get_company_organization())
-    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
+    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True, domain="[('is_sale_man','=',True)]")
     store_id = fields.Many2one('archives.store', string=u'仓库',
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
@@ -75,12 +68,6 @@ class SaleForecast(models.Model):
     @api.model
     def _needaction_domain_get(self):
         return [('bill_state', '=', 1)]
-
-    @staticmethod
-    def _is_bill_state_change(values):
-        if len(values) == 1 and 'bill_state' in values:
-            return True
-        return False
 
     def _create_order(self):
         values = {
@@ -135,43 +122,15 @@ class SaleForecast(models.Model):
             order.do_check()
         return
 
-    @api.model
-    def create(self, values):
-        if values.get('name', '新建') == '新建':
-            values['name'] = self.env['ir.sequence'].next_by_code('jc_sale.sale_forecast') or '新建'
-
-        result = super(SaleForecast, self).create(values)
-        return result
-
-    @api.multi
-    def unlink(self):
-        if self.bill_state > 1:
-            raise ValidationError(_('只有未审核的单据才能删除.'))
-        return super(SaleForecast, self).unlink()
-
-    @api.multi
-    def write(self, values):
-        if self.bill_state > 1 and not SaleForecast._is_bill_state_change(values):
-            raise ValidationError(_('只有未审核单据才能编辑.'))
-        return super(SaleForecast, self).write(values)
-
     @api.multi
     def do_check(self):
         self._check_logic()
-        self.bill_state = 10
-
-    @api.multi
-    def do_finish(self):
-        self.bill_state = 20
-
-    @api.multi
-    def do_un_finish(self):
-        self.bill_state = 10
+        super(SaleForecast, self).do_check()
 
     @api.multi
     def do_un_check(self):
         self._delete_order()
-        self.bill_state = 1
+        super(SaleForecast, self).do_un_check()
 
     @api.multi
     def do_customer_setting(self):

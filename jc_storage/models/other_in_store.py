@@ -1,34 +1,25 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+from . import jc_base
 
 
-class OtherInStore(models.Model):
+class OtherInStore(jc_base.Bill):
     _name = 'jc_storage.other_in_store'
     _description = u'仓储：其他入库'
     _order = 'id desc'
 
     _inherit = ['ir.needaction_mixin']
 
-    bill_state = fields.Selection(
-        [(1, '未审核'), (10, '已审核'), (20, '已完毕')],
-        string=u'单据状态', require=True, default=1, readonly=True
-    )
-
-    name = fields.Char(string=u'单据编号', required=True, copy=False, readonly=True,
-                       index=True, default=lambda self: _('新建'))
-
     store_id = fields.Many2one('archives.store', string=u'仓库', required=True,
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
     in_store_type_id = fields.Many2one('archives.common_archive', string=u'入库类型', required=True,
                                        domain="[('archive_name','=',18)]")
-    date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
-    remark = fields.Char(string=u'摘要')
 
     customer_id = fields.Many2one('archives.customer', string=u'往来单位',
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
-    staff_id = fields.Many2one('archives.staff', string=u'员工')
+    staff_id = fields.Many2one('archives.staff', string=u'员工', domain=[('is_sale_man', '=', True)])
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
                                  domain=lambda self: self.env['archives.organization'].get_company_organization())
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
@@ -90,12 +81,6 @@ class OtherInStore(models.Model):
         }
         return result
 
-    @staticmethod
-    def _is_bill_state_change(values):
-        if len(values) == 1 and 'bill_state' in values:
-            return True
-        return False
-
     # def _check_goods_position(self):
     #     if self.store_id.active_goods_position:
     #         for detail in self.other_in_store_detail:
@@ -107,43 +92,17 @@ class OtherInStore(models.Model):
     #                 detail.goods_position_id = None
     #     return
 
-    @api.model
-    def create(self, values):
-        if values.get('name', '新建') == '新建':
-            values['name'] = self.env['ir.sequence'].next_by_code('jc_storage.other_in_store') or '新建'
-        result = super(OtherInStore, self).create(values)
-        # self._check_goods_position()
-        return result
+    # @api.model
+    # def create(self, values):
+    #     result = super(OtherInStore, self).create(values)
+    #     self._check_goods_position()
+    #     return result
 
-    @api.multi
-    def unlink(self):
-        if self.bill_state > 1:
-            raise ValidationError(_('只有未审核的单据才能删除.'))
-        return super(OtherInStore, self).unlink()
-
-    @api.multi
-    def write(self, values):
-        if self.bill_state > 1 and not OtherInStore._is_bill_state_change(values):
-            raise ValidationError(_('只有未审核单据才能编辑.'))
-        result = super(OtherInStore, self).write(values)
-        # self._check_goods_position()
-        return result
-
-    @api.multi
-    def do_check(self):
-        self.bill_state = 10
-
-    @api.multi
-    def do_finish(self):
-        self.bill_state = 20
-
-    @api.multi
-    def do_un_finish(self):
-        self.bill_state = 10
-
-    @api.multi
-    def do_un_check(self):
-        self.bill_state = 1
+    # @api.multi
+    # def write(self, values):
+    #     result = super(OtherInStore, self).write(values)
+    #     self._check_goods_position()
+    #     return result
 
     @api.multi
     def do_customer_setting(self):
