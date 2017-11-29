@@ -126,7 +126,7 @@
                         <td></td>
                         <td>业务员：<t t-esc="quotation.staff_id.name"/></td>
                         <td></td>
-                        <td>审核：</td>
+                        <td>审核人：<t t-esc="quotation.check_uid.name"/></td>
                         <td></td>
                         <td></td>
                     </tr>
