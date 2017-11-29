@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "archives",
+    'name': "档案",
 
     'summary': """
         全部档案模块""",
