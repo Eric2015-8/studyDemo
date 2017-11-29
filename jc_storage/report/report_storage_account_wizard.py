@@ -73,9 +73,15 @@ class ReportStorageAccountWizard(models.TransientModel):
         return 'sum({0})'.format(number_field[2])
 
     def get_condition(self):
+        s = self.env['archives.organization'].get_store_organization_condition('store_id')
+        condition = ''
         if self.store_id:
-            return 'WHERE store_id = ' + str(self.store_id.id)
-        return ''
+            condition = 'WHERE store_id = ' + str(self.store_id.id)
+        if len(s) == 0:
+            return condition
+        if len(condition) == 0:
+            return 'where ' + s
+        return condition + ' ' + s
 
     def get_number_field(self):
         if self.unit_id == 'main':
