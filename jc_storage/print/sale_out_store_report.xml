@@ -19,12 +19,13 @@
                 <t t-foreach="docs" t-as="quotation">
                     <div class="page">
                         <div id="introduction" class="text-center">
-                            <em t-field="quotation.company_id"/>
-                            销售出库
-                            <em t-esc="quotation.order_name"/>
+                            <div style="font-size:16px;">
+                                销售出库
+                                <em t-esc="quotation.order_name"/>
+                            </div>
                         </div>
                         <!-- 表头 -->
-                        <div class="row mt32">
+                        <div class="row">
                             <div class="col-md-6 col-xs-6">
                                 <div class="row">
                                     <label class="col-sm-4 col-xs-4 text-right">客户:</label>
@@ -74,7 +75,7 @@
     <!--自定义打印页面：销售出库明细-->
     <template id="sale_out_store_detail_layout" name="detail">
         <div id="quote">
-            <table class="table wq-table mt32">
+            <table class="table wq-table">
                 <thead>
                     <tr class="active">
                         <th>产品</th>
