@@ -81,6 +81,8 @@
                         <th>产品</th>
                         <th>数量</th>
                         <th>件数</th>
+                        <th>单价</th>
+                        <th>金额</th>
                         <th>备注</th>
                     </tr>
                 </thead>
@@ -100,6 +102,12 @@
                                     <t t-esc="detail.second_unit_id.name"/>
                                 </t>
                             </td>
+                            <td style="border-bottom: 1px solid gray;padding:0;font-size:16px;">
+                                <t t-esc="detail.price"/>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;padding:0;font-size:16px;">
+                                <t t-esc="round(detail.money,2)"/>
+                            </td>
                             <td style="border-bottom: 1px solid gray;font-size:16px;">
                                 <t t-esc="detail.remark"/>
                             </td>
@@ -116,8 +124,14 @@
                             <t t-esc="int(quotation.total_second_number)"/>
                         </td>
                         <td></td>
+                        <td>
+                            <t t-esc="quotation.total_money"/>
+                        </td>
+                        <td></td>
                     </tr>
                     <tr>
+                        <td></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td>发货人：</td>
