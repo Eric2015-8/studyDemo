@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 class OtherInStoreDetail(models.Model):
     _name = 'jc_storage.other_out_store.detail'
-    _description = u'仓储：其他入库明细'
+    _description = u'仓储：其他出库明细'
 
     _inherit = ['goods.detail']
 
