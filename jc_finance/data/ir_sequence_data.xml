@@ -3,7 +3,7 @@
     <data>
 
         <!-- 销售账单 -->
-        <record id="seq_jc_finance_sale_account" model="ir.sequence">
+        <record id="seq_sale_order" model="ir.sequence">
             <field name="name">销售账单</field>
             <field name="code">jc_finance.sale_account</field>
             <field name="prefix">%(year)s/%(month)s/</field>
