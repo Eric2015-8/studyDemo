@@ -20,5 +20,7 @@ from . import setting_center
 from . import store_goods_position_detail
 from . import subject
 from . import account
+from . import account_book
+from . import account_book_detail
 
 # from . import approve

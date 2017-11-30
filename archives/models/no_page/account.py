@@ -4,7 +4,7 @@ from odoo import models, fields, api
 
 
 class Account(models.Model):
-    _name = 'archives.account'
+    _name = 'archives.account_number'
     _description = u'无菜单档案：账号'
 
     _sql_constraints = [

@@ -3,7 +3,7 @@
         <!-- explicit list view definition -->
         <record model="ir.ui.view" id="archives_common_account_list">
             <field name="name">账号列表</field>
-            <field name="model">archives.account</field>
+            <field name="model">archives.account_number</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
@@ -13,7 +13,7 @@
 
         <record model="ir.ui.view" id="archives_common_account_edit">
             <field name="name">账号新建</field>
-            <field name="model">archives.account</field>
+            <field name="model">archives.account_number</field>
             <field name="arch" type="xml">
                 <form>
                     <sheet>
@@ -28,7 +28,7 @@
         <!-- actions opening views on models -->
         <record model="ir.actions.act_window" id="archives_common_account_action_window">
             <field name="name">账号</field>
-            <field name="res_model">archives.account</field>
+            <field name="res_model">archives.account_number</field>
             <field name="view_mode">tree,form</field>
         </record>
 

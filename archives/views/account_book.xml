@@ -1,0 +1,46 @@
+<openerp>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="archives_common_account_book_list">
+            <field name="name">账本列表</field>
+            <field name="model">archives.account_book</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="archives_common_account_book_edit">
+            <field name="name">账本新建</field>
+            <field name="model">archives.account_book</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top" string="账本">
+                            <field name="name"/>
+                        </group>
+                        <field name="detail" mode="tree">
+                            <tree string="账本明细" editable="bottom">
+                                <field name="bill_type_id" options="{'no_open':True,'no_create':True}"/>
+                                <field name="common_archive_id" options="{'no_open':True,'no_create':True}"/>
+                                <field name="direct"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="archives_common_account_book_action_window">
+            <field name="name">账本</field>
+            <field name="res_model">archives.account_book</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- actions -->
+        <menuitem name="账本" id="archives.menu_account_book" parent="archives_menu_common"
+                  action="archives_common_account_book_action_window"/>
+    </data>
+</openerp>

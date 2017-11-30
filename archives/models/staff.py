@@ -28,7 +28,7 @@ class Staff(models.Model):
     #     个人信息
     id_no = fields.Char(string=u'身份证号')
     address = fields.Char(string=u'家庭住址')
-    account_id = fields.Many2one('archives.account', string=u'账号')
+    account_id = fields.Many2one('archives.account_number', string=u'账号')
     birthday = fields.Date(string=u'出生日期')
     gender = fields.Selection([
         ('male', '男'),

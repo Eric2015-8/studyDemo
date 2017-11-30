@@ -54,6 +54,7 @@
         'views/setting_center.xml',
         'views/subject.xml',
         'views/account.xml',
+        'views/account_book.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
