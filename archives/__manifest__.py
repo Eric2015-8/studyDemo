@@ -36,6 +36,7 @@
         'views/no_page/zone.xml',
         'views/no_page/zone_type1.xml',
         'views/no_page/zone_type2.xml',
+        'views/no_page/bank.xml',
 
         'views/views.xml',
         'views/common_archive.xml',
@@ -52,6 +53,7 @@
         'wizard/set_customer_setting.xml',
         'views/setting_center.xml',
         'views/subject.xml',
+        'views/account.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

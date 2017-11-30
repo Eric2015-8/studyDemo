@@ -1,0 +1,47 @@
+<openerp>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="archives_common_account_list">
+            <field name="name">账户列表</field>
+            <field name="model">archives.account</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="bank_id"/>
+                    <field name="number"/>
+                    <field name="company_id"/>
+                    <field name="remark"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="archives_common_account_edit">
+            <field name="name">账户新建</field>
+            <field name="model">archives.account</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_top" string="账户">
+                            <field name="name"/>
+                            <field name="bank_id"/>
+                            <field name="number" widget="char"/>
+                            <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="remark"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="archives_common_account_action_window">
+            <field name="name">账户</field>
+            <field name="res_model">archives.account</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- actions -->
+        <menuitem name="账户" id="archives.menu_account" parent="archives_menu_common"
+                  action="archives_common_account_action_window"/>
+    </data>
+</openerp>

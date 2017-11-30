@@ -9,6 +9,7 @@ access_archives_store,access_archives_store,model_archives_store,,1,1,1,1
 access_archives_organization,access_archives_organization,model_archives_organization,,1,1,1,1
 access_archives_organization_group,access_archives_organization_group,model_archives_organization_group,,1,1,1,1
 access_archives_subject,access_archives_subject,model_archives_subject,,1,1,1,1
+access_archives_account,access_archives_account,model_archives_account,,1,1,1,1
 
 access_archives_account,access_archives_account,model_archives_account,,1,1,1,1
 access_archives_duty,access_archives_duty,model_archives_duty,,1,1,1,1
@@ -17,6 +18,7 @@ access_archives_unit,access_archives_unit,model_archives_unit,,1,1,1,1
 access_archives_zone,access_archives_zone,model_archives_zone,,1,1,1,1
 access_archives_zone_type1,access_archives_zone_type1,model_archives_zone_type1,,1,1,1,1
 access_archives_zone_type2,access_archives_zone_type2,model_archives_zone_type2,,1,1,1,1
+access_archives_bank,access_archives_bank,model_archives_bank,,1,1,1,1
 access_archives_goods_number,access_archives_goods_number,model_archives_goods_number,,1,1,1,1
 
 
