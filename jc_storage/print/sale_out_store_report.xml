@@ -131,10 +131,10 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>业务员：<t t-esc="quotation.staff_id.name"/></td>
+                        <td>复磅：</td>
                         <td>发货人：</td>
+                        <td>审核：</td>
                         <td></td>
                     </tr>
                 </tbody>
