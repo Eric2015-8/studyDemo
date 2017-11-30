@@ -19,7 +19,7 @@ class SaleReturn(jc_base.Bill):
 
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
                                  domain=lambda self: self.env['archives.organization'].get_company_organization())
-    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True, domain=[('is_sale_man','=',True)])
+    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True, domain=[('is_sale_man', '=', True)])
     store_id = fields.Many2one('archives.store', string=u'仓库',
                                domain=lambda self: self.env['archives.organization'].get_store_organization())
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
@@ -138,11 +138,14 @@ class SaleReturn(jc_base.Bill):
         table = u'jc_sale.sale_return'
         table_show_name = u'销售退单'
         need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
-        return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name)
+        type_id_field = 'sale_return_type_id'
+        return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name,
+                                                                       type_id_field)
 
     @api.model
     def default_get(self, fields_):
         res = super(SaleReturn, self).default_get(fields_)
         need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
-        self.env['archives.set_customer_setting'].set_default(res, self._name, fields_, need_set_fields)
+        type_id_field = 'sale_return_type_id'
+        self.env['archives.set_customer_setting'].set_default(res, self._name, fields_, need_set_fields, type_id_field)
         return res
