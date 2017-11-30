@@ -113,7 +113,7 @@
             <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
         </record>
 
-        <menuitem name="收款单" id="jc_finance.menu_receipt" parent="jc_finance_menu_root"
+        <menuitem name="收款单" id="jc_finance.menu_receipt" parent="jc_finance_menu_money"
                   action="jc_finance_receipt_action_window" sequence="2"/>
 
     </data>
