@@ -7,6 +7,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
+                    <field name="company_id"/>
                 </tree>
             </field>
         </record>
@@ -19,6 +20,7 @@
                     <sheet>
                         <group name="group_top" string="账本">
                             <field name="name"/>
+                            <field name="company_id" options="{'no_open':True,'no_create':True}"/>
                         </group>
                         <field name="detail" mode="tree">
                             <tree string="账本明细" editable="bottom">

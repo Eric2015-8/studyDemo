@@ -14,6 +14,8 @@ class AccountBook(models.Model):
     _description = u'档案：账本'
 
     name = fields.Char(string=u'名称', required=True)
+    company_id = fields.Many2one('res.company', string=u'公司', required=True,
+                                 domain=lambda self: self.env['archives.organization'].get_company_organization())
 
     detail = fields.One2many('archives.account_book_detail', 'account_book_id',
                              string=u'账本明细', copy=True)
