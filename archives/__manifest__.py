@@ -31,7 +31,7 @@
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/no_page/duty.xml',
-        'views/no_page/account.xml',
+        'views/no_page/account_number.xml',
         'views/no_page/unit.xml',
         'views/no_page/zone.xml',
         'views/no_page/zone_type1.xml',
