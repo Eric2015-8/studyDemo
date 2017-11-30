@@ -32,9 +32,9 @@ ARCHIVE_NAME = [
 
 
 # customer_organization_ids = fields.Many2many('archives.common_archive', 'archives_organization_customer_rel',
-#                                              string=u'客户权限', domain="[('archive_name','=',16)]")
+#                                              string=u'客户权限', domain=[('archive_name','=',16)])
 
-# organization_id = fields.Many2one('archives.common_archive', string=u'客户权限', domain="[('archive_name','=',16)]")
+# organization_id = fields.Many2one('archives.common_archive', string=u'客户权限', domain=[('archive_name','=',16)])
 
 
 class CommonArchive(models.Model):
