@@ -31,6 +31,10 @@ class Receipt(jc_base.Bill):
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
                                     domain=lambda self: self.env['archives.organization'].get_department_organization())
 
+    @api.model
+    def get_code(self):
+        return self._name
+
     # @api.onchange('customer_id')
     # def _onchange_for_staff(self):
     #     self.staff_id = self.customer_id.staff_id

@@ -41,6 +41,10 @@ class SaleAccount(jc_base.Bill):
                                      track_visibility='always')
     total_money = fields.Float(string='金额', store=True, readonly=True, compute='_amount_all', track_visibility='always')
 
+    @api.model
+    def get_code(self):
+        return self._name
+
     @api.depends('sale_account_detail.second_unit_number', 'sale_account_detail.main_unit_number',
                  'sale_account_detail.money')
     def _amount_all(self):
