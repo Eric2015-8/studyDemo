@@ -1,7 +1,7 @@
 <openerp>
     <data>
         <!-- Top menu item -->
-        <menuitem name="仓储" id="jc_storage_menu_root"/>
+        <menuitem name="仓储" id="jc_storage_menu_root" web_icon="jc_storage,static/description/icon.png"/>
 
     </data>
 </openerp>

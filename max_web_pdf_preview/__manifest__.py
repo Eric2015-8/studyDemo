@@ -25,7 +25,7 @@
     'category': 'jc',
 
     'summary': """
-        To Preview & Print PDF report in your browser.
+        预览打印
     """,
 
     'description': """Web PDF Report Preview & Print

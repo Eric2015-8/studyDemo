@@ -3,7 +3,7 @@
     'name': "Web Freeze List View Header",
 
     'summary': """
-        To freeze list view's header, very helpful when dealing with many record.
+        固定列表表头.
     """,
 
     'description': """

@@ -21,7 +21,8 @@
 {
     'name': 'ir_sequence_autoreset',
     'version': '0.1',
-    'category' : 'jc',
+    'category': 'jc',
+    'summary': """自动重置序列编号""",
     'description': """
 
 Auto reset sequence by year,month,day
@@ -39,7 +40,7 @@ http://me.alipay.com/wangbuke
     'website': 'http://buke.github.io',
     'depends': ['base'],
     'data': [
-           'ir_sequence.xml',
+        'ir_sequence.xml',
     ],
     'installable': True,
     'images': [],

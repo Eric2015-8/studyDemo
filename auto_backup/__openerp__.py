@@ -5,7 +5,7 @@
     'author' : 'VanRoey.be - Yenthe Van Ginneken',
     'website' : 'http://www.vanroey.be/applications/bedrijfsbeheer/odoo',
     'category' : 'jc',
-    'summary': 'Backups',
+    'summary': '数据库自动备份',
     'description': """The Database Auto-Backup module enables the user to make configurations for the automatic backup of the database. Backups can be taken on the local system or on a remote server, through SFTP.
 You only have to specify the hostname, port, backup location and databasename (all will be pre-filled by default with correct data.
 If you want to write to an external server with SFTP you will need to provide the IP, username and password for the remote backups.

@@ -1,7 +1,7 @@
 <openerp>
     <data>
         <!-- Top menu item -->
-        <menuitem name="财务" id="jc_finance_menu_root"/>
+        <menuitem name="财务" id="jc_finance_menu_root" web_icon="jc_finance,static/description/icon.png"/>
 
     </data>
 </openerp>

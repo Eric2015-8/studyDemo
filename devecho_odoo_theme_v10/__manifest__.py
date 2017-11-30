@@ -3,10 +3,10 @@
     'name': "devecho_odoo_theme_v10",
 
     'summary': """
-        Odoo10 社区版高仿企业版后台主题 莆田版 兼容手机端自适应""",
+        Odoo10 主题""",
 
     'description': """
-        Odoo10 社区版高仿企业版后台主题 莆田版 兼容手机端自适应
+        Odoo10 主题 兼容手机端自适应
     """,
 
     'author': "n37r06u3",

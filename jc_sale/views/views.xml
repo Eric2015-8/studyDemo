@@ -1,7 +1,7 @@
 <openerp>
     <data>
         <!-- Top menu item -->
-        <menuitem name="销售" id="jc_sale_menu_root"/>
+        <menuitem name="销售" id="jc_sale_menu_root" web_icon="jc_sale,static/description/icon.png"/>
 
         <menuitem name="报表" id="jc_sale_menu_report" parent="jc_sale_menu_root" sequence="10"/>
     </data>
