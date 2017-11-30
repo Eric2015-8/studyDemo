@@ -7,3 +7,5 @@ from . import models
 from . import sale_account
 from . import sale_account_detail
 from . import sale_account_wizard
+from . import receipt
+from . import receipt_detail
