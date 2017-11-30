@@ -34,6 +34,10 @@ class OtherOutStore(jc_base.Bill):
     other_out_store_detail = fields.One2many('jc_storage.other_out_store.detail', 'other_out_store_id',
                                              string=u'其他入库明细', copy=True)
 
+    @api.model
+    def get_code(self):
+        return self._name
+
     @api.depends('other_out_store_detail.second_unit_number', 'other_out_store_detail.main_unit_number',
                  'other_out_store_detail.money')
     def _amount_all(self):

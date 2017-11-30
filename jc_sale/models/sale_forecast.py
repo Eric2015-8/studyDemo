@@ -30,6 +30,10 @@ class SaleForecast(jc_base.Bill):
                                     domain=lambda self: self.env['archives.organization'].get_department_organization())
     out_store_date = fields.Date(string=u'出库日期', required=True, default=fields.Date.today)
 
+    @api.model
+    def get_code(self):
+        return self._name
+
     @api.onchange('customer_id')
     def _onchange_for_staff(self):
         self.staff_id = self.customer_id.staff_id

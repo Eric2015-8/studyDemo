@@ -45,6 +45,10 @@ class SaleOutStore(jc_base.Bill):
     sale_out_store_out_detail = fields.One2many('jc_storage.sale_out_store.out_detail', 'sale_out_store_id',
                                                 string=u'销售出库-出库明细', copy=True)
 
+    @api.model
+    def get_code(self):
+        return self._name
+
     @api.multi
     def print_quotation(self):
         # self.filtered(lambda s: s.state == 'draft').write({'state': 'sent'})

@@ -44,6 +44,10 @@ class SaleReturnStore(jc_base.Bill):
                                                       'sale_return_store_id',
                                                       string=u'销售退库明细', copy=True)
 
+    @api.model
+    def get_code(self):
+        return self._name
+
     @api.depends('sale_return_store_detail.second_unit_number', 'sale_return_store_detail.main_unit_number',
                  'sale_return_store_detail.money')
     def _amount_all(self):

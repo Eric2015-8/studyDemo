@@ -23,6 +23,10 @@ class Bill(models.Model):
     create_uid = fields.Many2one('res.users', string='创建人', readonly=True)
     check_uid = fields.Many2one('res.users', string='审核人', readonly=True)
 
+    @api.model
+    def get_code(self):
+        raise ValidationError('开发错误：请重写 get_code 方法')
+
     @api.multi
     def unlink(self):
         if self.bill_state > 1:
@@ -32,7 +36,8 @@ class Bill(models.Model):
     @api.model
     def create(self, values):
         if values.get('name', '新建') == '新建':
-            values['name'] = self.env['ir.sequence'].next_by_code('jc_sale.sale_order') or '新建'
+            n = self.get_code()
+            values['name'] = self.env['ir.sequence'].next_by_code(n) or '新建'
 
         result = super(Bill, self).create(values)
         return result

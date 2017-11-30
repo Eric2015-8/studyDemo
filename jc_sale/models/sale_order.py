@@ -39,6 +39,10 @@ class SaleOrder(jc_base.Bill):
                                      track_visibility='always')
     total_money = fields.Float(string='金额', store=True, readonly=True, compute='_amount_all', track_visibility='always')
 
+    @api.model
+    def get_code(self):
+        return self._name
+
     @api.multi
     def print_quotation(self):
         # self.filtered(lambda s: s.state == 'draft').write({'state': 'sent'})

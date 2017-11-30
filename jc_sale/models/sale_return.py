@@ -33,6 +33,10 @@ class SaleReturn(jc_base.Bill):
 
     sale_return_detail = fields.One2many('jc_sale.sale_return.detail', 'sale_return_id', string=u'销售退单明细', copy=True)
 
+    @api.model
+    def get_code(self):
+        return self._name
+
     @api.depends('sale_return_detail.second_unit_number', 'sale_return_detail.main_unit_number',
                  'sale_return_detail.money')
     def _amount_all(self):

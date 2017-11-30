@@ -41,6 +41,10 @@ class TransferOut(jc_base.Bill):
     transfer_out_detail = fields.One2many('jc_storage.transfer_out.detail', 'transfer_out_id',
                                           string=u'调拨出库明细', copy=True)
 
+    @api.model
+    def get_code(self):
+        return self._name
+
     @api.depends('transfer_out_detail.second_unit_number', 'transfer_out_detail.main_unit_number',
                  'transfer_out_detail.money')
     def _amount_all(self):

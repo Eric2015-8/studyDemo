@@ -27,6 +27,10 @@ class StockCheck(jc_base.Bill):
                                          copy=True)
 
     @api.model
+    def get_code(self):
+        return self._name
+
+    @api.model
     def _needaction_domain_get(self):
         return [('bill_state', '=', 1)]
 
