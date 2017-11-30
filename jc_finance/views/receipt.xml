@@ -2,7 +2,7 @@
     <data>
         <!-- explicit list view definition -->
         <record model="ir.ui.view" id="jc_finance_receipt_list">
-            <field name="name">销售账单列表</field>
+            <field name="name">收款单列表</field>
             <field name="model">jc_finance.receipt</field>
             <field name="arch" type="xml">
                 <tree>
@@ -22,7 +22,7 @@
         </record>
 
         <record model="ir.ui.view" id="jc_finance_receipt_edit">
-            <field name="name">销售账单新建</field>
+            <field name="name">收款单新建</field>
             <field name="model">jc_finance.receipt</field>
             <field name="arch" type="xml">
                 <form>
@@ -62,7 +62,7 @@
                                             <field name="remark"/>
                                         </group>
                                     </form>
-                                    <tree string="销售账单明细" editable="bottom">
+                                    <tree string="收款单明细" editable="bottom">
                                         <field name="subject_id" options="{'no_open':True,'no_create':True}"/>
                                         <field name="money" widget="char"/>
                                         <field name="remark"/>
