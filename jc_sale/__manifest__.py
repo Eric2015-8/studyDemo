@@ -9,7 +9,7 @@
         销售的内容如：销售订单、销售价格，其使用对象为销售人员
     """,
 
-    'author': "xxb开发",
+    'author': "Eric Bear开发",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing

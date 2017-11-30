@@ -9,7 +9,7 @@
         全部档案模块，所有模块依赖这个模块
     """,
 
-    'author': "xxb开发",
+    'author': "Eric Bear开发",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing

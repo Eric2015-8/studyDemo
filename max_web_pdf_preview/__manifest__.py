@@ -22,7 +22,7 @@
 {
     "name": "Web PDF Report Preview & Print",
     'version': '10.0.0.1',
-    'category': 'Web',
+    'category': 'jc',
 
     'summary': """
         To Preview & Print PDF report in your browser.

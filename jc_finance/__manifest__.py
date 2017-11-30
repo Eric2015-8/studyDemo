@@ -9,7 +9,7 @@
         与账务相关的内容，如：销售记账、收款单
     """,
 
-    'author': "xxb开发",
+    'author': "Eric Bear开发",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing

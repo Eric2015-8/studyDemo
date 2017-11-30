@@ -9,7 +9,7 @@
         与库存相关的单据，如：其他入库、销售出库，其使用对象为仓库人员
     """,
 
-    'author': "xxb开发",
+    'author': "Eric Bear开发",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing

@@ -2,7 +2,7 @@
 {
     "name": "审批",
     "version": '11.11',
-    "author": 'xxb',
+    "author": 'Eric Bear开发',
     "website": "http://www.osbzr.com",
     "category": "jc",
     "description": """
