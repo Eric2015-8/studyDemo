@@ -9,3 +9,5 @@ from . import sale_account_detail
 from . import sale_account_wizard
 from . import receipt
 from . import receipt_detail
+from . import payment
+from . import payment_detail
