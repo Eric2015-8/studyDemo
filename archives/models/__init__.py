@@ -18,5 +18,6 @@ from . import customer_setting_detail
 from . import utils
 from . import setting_center
 from . import store_goods_position_detail
+from . import subject
 
 # from . import approve
