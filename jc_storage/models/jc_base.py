@@ -20,6 +20,9 @@ class Bill(models.Model):
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today)
     remark = fields.Char(string=u'摘要')
 
+    create_uid = fields.Many2one('res.users', string='创建人', readonly=True)
+    check_uid = fields.Many2one('res.users', string='审核人', readonly=True)
+
     @api.multi
     def unlink(self):
         if self.bill_state > 1:
@@ -42,12 +45,17 @@ class Bill(models.Model):
 
     @staticmethod
     def _is_bill_state_change(values):
-        if len(values) == 1 and 'bill_state' in values:
-            return True
-        return False
+        ignore_fields = ['bill_state', 'check_uid']
+        if len(values) > len(ignore_fields):
+            return False
+        for f in values:
+            if f not in ignore_fields:
+                return False
+        return True
 
     @api.multi
     def do_check(self):
+        self.check_uid = self._uid
         self.bill_state = 10
 
     @api.multi
@@ -60,4 +68,5 @@ class Bill(models.Model):
 
     @api.multi
     def do_un_check(self):
+        self.check_uid = False
         self.bill_state = 1
