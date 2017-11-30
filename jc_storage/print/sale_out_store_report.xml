@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="paper_format_sale_out_store" model="report.paperformat">
+        <field name="name">销售出库纸张</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">103</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
     <report
             id="report_sale_out_store"
             string="销售出库"
@@ -7,7 +23,7 @@
             report_type="qweb-pdf"
             file="jc_storage.report_pdf_sale_out_store_file"
             name="jc_storage.report_pdf_sale_out_store"
-            paperformat="archives.paperformat_chn__a4_lowmargin"
+            paperformat="jc_storage.paper_format_sale_out_store"
     />
 
     <template id="report_pdf_sale_out_store">
@@ -131,7 +147,9 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td>业务员：<t t-esc="quotation.staff_id.name"/></td>
+                        <td>业务员：
+                            <t t-esc="quotation.staff_id.name"/>
+                        </td>
                         <td>复磅：</td>
                         <td>发货人：</td>
                         <td>审核：</td>
