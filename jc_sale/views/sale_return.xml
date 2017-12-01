@@ -84,10 +84,10 @@
                                     </form>
                                     <tree string="销售退单明细" editable="bottom">
                                         <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
-                                        <field name="second_unit_id" readonly="1"/>
                                         <field name="second_unit_number" widget="char"/>
-                                        <field name="main_unit_id" readonly="1"/>
+                                        <field name="second_unit_id" readonly="1"/>
                                         <field name="main_unit_number" widget="char"/>
+                                        <field name="main_unit_id" readonly="1"/>
                                         <field name="price" widget="char"/>
                                         <field name="money"/>
                                         <field name="remark"/>
