@@ -11,3 +11,5 @@ from . import receipt
 from . import receipt_detail
 from . import payment
 from . import payment_detail
+from . import memo_ticket
+from . import memo_ticket_detail
