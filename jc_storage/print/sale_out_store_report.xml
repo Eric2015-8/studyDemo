@@ -95,8 +95,8 @@
                 <thead>
                     <tr class="active">
                         <th>产品</th>
-                        <th>数量</th>
                         <th>件数</th>
+                        <th>数量</th>
                         <th>单价</th>
                         <th>金额</th>
                         <th>备注</th>
@@ -109,14 +109,14 @@
                                 <t t-esc="detail.goods_id.name"/>
                             </td>
                             <td style="border-bottom: 1px solid gray;font-size:16px;">
-                                <t t-esc="detail.main_unit_number"/>
-                                <t t-esc="detail.main_unit_id.name"/>
-                            </td>
-                            <td style="border-bottom: 1px solid gray;font-size:16px;">
                                 <t t-if="detail.goods_id.need_second_change == '1'">
                                     <t t-esc="int(detail.second_unit_number)"/>
                                     <t t-esc="detail.second_unit_id.name"/>
                                 </t>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;font-size:16px;">
+                                <t t-esc="detail.main_unit_number"/>
+                                <t t-esc="detail.main_unit_id.name"/>
                             </td>
                             <td style="border-bottom: 1px solid gray;padding:0;font-size:16px;">
                                 <t t-esc="detail.price"/>
@@ -134,10 +134,10 @@
                             合计
                         </td>
                         <td>
-                            <t t-esc="quotation.total_main_number"/>
+                            <t t-esc="int(quotation.total_second_number)"/>
                         </td>
                         <td>
-                            <t t-esc="int(quotation.total_second_number)"/>
+                            <t t-esc="quotation.total_main_number"/>
                         </td>
                         <td></td>
                         <td>
