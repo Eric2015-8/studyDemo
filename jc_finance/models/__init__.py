@@ -13,3 +13,6 @@ from . import payment
 from . import payment_detail
 from . import memo_ticket
 from . import memo_ticket_detail
+from . import sale_invoice
+from . import sale_invoice_bill_detail
+from . import sale_invoice_invoice_detail

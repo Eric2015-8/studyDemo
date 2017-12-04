@@ -1,0 +1,128 @@
+<openerp>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="jc_finance_sale_invoice_list">
+            <field name="name">销售发票列表</field>
+            <field name="model">jc_finance.sale_invoice</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="bill_state"/>
+                    <field name="date"/>
+                    <field name="customer_id"/>
+                    <field name="type_id"/>
+                    <field name="company_id"/>
+                    <field name="department_id"/>
+                    <field name="invoice_customer"/>
+                    <field name="remark"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="jc_finance_sale_invoice_edit">
+            <field name="name">销售发票新建</field>
+            <field name="model">jc_finance.sale_invoice</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="id" attrs="{'invisible': True}"/>
+                        <label string="单据状态:"/>
+                        <field name="bill_state" readonly="1" attrs="{'invisible': [('id', '==', False)]}"/>
+                        <button name="do_check" string="审核" type="object" class="oe_highlight oe_read_only"
+                                attrs="{'invisible': ['|',('bill_state', '!=', 1),('id', '==', False)]}"
+                                groups="jc_finance.jc_rule_sale_account_all"/>
+                        <button name="do_un_check" string="撤销" type="object"
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 10)]}"
+                                groups="jc_finance.jc_rule_sale_account_all"/>
+                        <button name="do_finish" string="完毕" type="object"
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 10)]}"
+                                groups="jc_finance.jc_rule_sale_account_all"/>
+                        <button name="do_un_finish" string="撤销完毕" type="object"
+                                class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 20)]}"
+                                groups="jc_finance.jc_rule_sale_account_all"/>
+                        <!--<button name="print_quotation" string="打印" type="object" class="btn-primary"-->
+                        <!--attrs="{'invisible': [('id', '==', False)]}"/>-->
+                        <button name="do_customer_setting" string="个性设置" type="object"
+                                attrs="{'invisible': [('bill_state', '!=', 1)]}"/>
+                    </header>
+                    <sheet>
+                        <group name="group_top" string="销售发票" col="4">
+                            <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="date"/>
+                            <field name="type_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="remark"/>
+                        </group>
+                        <notebook>
+                            <page string="单据信息">
+                                <field name="bill_detail" mode="tree,kanban">
+                                    <!--<form string="销售发票-单据信息"></form>-->
+                                    <tree string="销售发票-单据信息" editable="bottom" create="false">
+                                        <field name="bill_type_id" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="date"/>
+                                        <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="main_unit_number_total"/>
+                                        <field name="price"/>
+                                        <field name="money_total"/>
+                                        <field name="main_unit_number_already"/>
+                                        <field name="money_already"/>
+                                        <field name="main_unit_number"/>
+                                        <field name="money"/>
+                                        <field name="remark"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="发票信息">
+                                <field name="invoice_detail" mode="tree,kanban">
+                                    <!--<form string="销售发票-发票信息"></form>-->
+                                    <tree string="销售发票-发票信息" editable="bottom">
+                                        <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="goods_invoice"/>
+                                        <field name="number"/>
+                                        <field name="number2"/>
+                                        <field name="price"/>
+                                        <field name="money"/>
+                                        <field name="remark"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="其它信息">
+                                <group name="group_other" col="4">
+                                    <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="department_id" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="invoice_customer"/>
+                                </group>
+                            </page>
+                        </notebook>
+                        <group name="group_operator" col="4">
+                            <field name="create_uid" options="{'no_open':True,'no_create':True}"/>
+                            <field name="check_uid" options="{'no_open':True,'no_create':True}"/>
+                        </group>
+                    </sheet>
+                    <!--<div class="oe_chatter">-->
+                    <!--<field name="_to_approver_ids" widget="approve" readonly="1"/>-->
+                    <!--</div>-->
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_invoice_search_view">
+            <field name="name">销售发票.search</field>
+            <field name="model">jc_finance.sale_invoice</field>
+            <field name="arch" type="xml">
+                <search></search>
+            </field>
+        </record>
+
+        <!--actions opening views on models-->
+        <record model="ir.actions.act_window" id="jc_finance_sale_invoice_action_window">
+            <field name="name">销售发票</field>
+            <field name="res_model">jc_finance.sale_invoice</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="销售发票" id="jc_finance.menu_sale_invoice" parent="jc_finance_menu_root"
+                  action="jc_finance_sale_invoice_action_window" sequence="3"/>
+
+    </data>
+</openerp>
