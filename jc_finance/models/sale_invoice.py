@@ -3,6 +3,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from . import jc_base
+from . import bill_define
 
 
 class SaleInvoice(jc_base.Bill):
@@ -15,6 +16,9 @@ class SaleInvoice(jc_base.Bill):
     @api.model
     def _needaction_domain_get(self):
         return [('bill_state', '=', 1)]
+
+    source_bill_type = fields.Selection(bill_define.BILL_TYPE, string=u'来源单据类型', readonly=True, copy=False)
+    source_bill_id = fields.Integer(string="来源单据号", readonly=True, copy=False, default=0)
 
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())

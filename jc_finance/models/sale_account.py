@@ -74,6 +74,99 @@ class SaleAccount(jc_base.Bill):
         return [('bill_state', '=', 1)]
 
     @api.multi
+    def do_check(self):
+        self._check_logic()
+        super(SaleAccount, self).do_check()
+
+    @api.multi
+    def do_un_check(self):
+        self._delete_sale_invoice()
+        super(SaleAccount, self).do_un_check()
+
+    def _delete_sale_invoice(self):
+        bills = self.env["jc_finance.sale_invoice"].search(
+            [('source_bill_id', '=', self.id), ('source_bill_type', '=', 40)])
+        if bills:
+            for bill in bills:
+                bill.unlink()
+
+    def _check_logic(self):
+        if not self.type_id:
+            raise ValidationError(u'未选择{销售类型}')
+        module = 'setting_center.sale_type'
+        index = 3
+        info = '销售流程'
+        if self.source_bill_type == 23:
+            module = 'setting_center.return_type'
+            index = 2
+            info = '退货流程'
+        setting = self.env[module].query_type(self.type_id.id)
+        if not setting:
+            raise ValidationError(u'请到【设置中心】“销售”下设置“{}”！'.format(info))
+        _type = setting[index]
+        if _type == 1:
+            return
+        bill = self._create_sale_invoice()
+        if _type == 20:
+            bill.do_check()
+        return
+
+    def _create_sale_invoice(self):
+        values = self._get_bill_values()
+        bill = self.env['jc_finance.sale_invoice'].create(values)
+        for detail in self.sale_account_detail:
+            bill_values = self._get_detail_values_bill(bill, detail)
+            self.env['jc_finance.sale_invoice_bill_detail'].create(bill_values)
+            invoice_values = self._get_detail_values_invoice(bill, detail)
+            self.env['jc_finance.sale_invoice_invoice_detail'].create(invoice_values)
+        return bill
+
+    def _get_bill_values(self):
+        values = {
+            'source_bill_id': self.id,
+            'source_bill_type': 40,  # 销售账单
+            'customer_id': self.customer_id.id,
+            'date': self.date,
+            'type_id': self.type_id.id,
+            'company_id': self.company_id.id,
+            'department_id': self.department_id.id,
+            'invoice_customer': self.customer_id.name,
+            'remark': self.remark,
+            # 'total_main_number': self.total_main_number,
+            # 'total_second_number': self.total_second_number,
+            # 'total_money': self.total_money,
+        }
+        return values
+
+    def _get_detail_values_bill(self, bill, detail):
+        values = {
+            'sale_invoice_id': bill.id,
+            'source_bill_type': 40,  # 销售账单
+            'source_bill_id': self.id,
+            'source_detail_id': detail.id,
+            'bill_type_id': 40,  # 销售账单
+            'date': bill.date,
+            'goods_id': detail.goods_id.id,
+            'main_unit_number': detail.main_unit_number,
+            'price': detail.price,
+            'money': detail.money,
+            'remark': detail.remark,
+        }
+        return values
+
+    def _get_detail_values_invoice(self, bill, detail):
+        values = {
+            'sale_invoice_id': bill.id,
+            'goods_id': detail.goods_id.id,
+            'goods_invoice': detail.goods_id.name,
+            'number': detail.main_unit_number,
+            'price': detail.price,
+            'money': detail.money,
+            'remark': detail.remark,
+        }
+        return values
+
+    @api.multi
     def do_customer_setting(self):
         table_show_name = u'销售账单'
         need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']

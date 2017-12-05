@@ -11,6 +11,11 @@ class SaleInvoiceBillDetail(models.Model):
 
     sale_invoice_id = fields.Many2one('jc_finance.sale_invoice', string=u'销售发票引用', required=True,
                                       ondelete='cascade', index=True, copy=False)
+
+    source_bill_type = fields.Selection(bill_define.BILL_TYPE, string=u'来源单据类型', readonly=True, copy=False)
+    source_bill_id = fields.Integer(string="来源单据号", readonly=True, copy=False, default=0)
+    source_detail_id = fields.Integer(string="来源单据明细号", readonly=True, copy=False, default=0)
+
     bill_type_id = fields.Selection(bill_define.BILL_TYPE, string=u'单据类型', readonly=True)
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today, readonly=True)
     goods_id = fields.Many2one('archives.goods', string=u'产品', required=True, readonly=True,
