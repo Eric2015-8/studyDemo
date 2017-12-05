@@ -106,7 +106,21 @@
             <field name="name">销售发票.search</field>
             <field name="model">jc_finance.sale_invoice</field>
             <field name="arch" type="xml">
-                <search></search>
+                <search>
+                    <field name="bill_state"/>
+                    <field name="customer_id"/>
+                    <field name="department_id"/>
+                    <filter name="not_checked_bill" string="未审核"
+                            domain="[('bill_state', '=', 1)]"/>
+                    <filter name="checked_bill" string="已审核"
+                            domain="[('bill_state', '=', 10)]"/>
+                    <filter name="finished_bill" string="已完毕"
+                            domain="[('bill_state', '=', 20)]"/>
+                    <group string="Group By">
+                        <filter name="by_bill_state" string="单据状态"
+                                context="{'group_by': 'bill_state'}"/>
+                    </group>
+                </search>
             </field>
         </record>
 
@@ -115,6 +129,7 @@
             <field name="name">销售发票</field>
             <field name="res_model">jc_finance.sale_invoice</field>
             <field name="view_mode">tree,form</field>
+            <field name="context" eval="{'search_default_not_checked_bill': 1}"/>
         </record>
 
         <menuitem name="销售发票" id="jc_finance.menu_sale_invoice" parent="jc_finance_menu_root"
