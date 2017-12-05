@@ -11,7 +11,7 @@ class SaleInvoiceInvoiceDetail(models.Model):
     sale_invoice_id = fields.Many2one('jc_finance.sale_invoice', string=u'销售发票引用', required=True,
                                       ondelete='cascade', index=True, copy=False)
 
-    goods_id = fields.Many2one('archives.goods', string=u'产品', required=True, readonly=True,
+    goods_id = fields.Many2one('archives.goods', string=u'产品', required=True,
                                domain=lambda self: self.env['archives.organization'].get_goods_organization())
     goods_invoice = fields.Char(string=u'开票产品')
     number = fields.Float(digits=(6, 2), string=u'数量')

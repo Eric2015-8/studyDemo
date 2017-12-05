@@ -61,12 +61,8 @@
                                         <field name="bill_type_id" options="{'no_open':True,'no_create':True}"/>
                                         <field name="date"/>
                                         <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
-                                        <field name="main_unit_number_total"/>
-                                        <field name="price"/>
-                                        <field name="money_total"/>
-                                        <field name="main_unit_number_already"/>
-                                        <field name="money_already"/>
                                         <field name="main_unit_number"/>
+                                        <field name="price"/>
                                         <field name="money"/>
                                         <field name="remark"/>
                                     </tree>
