@@ -37,6 +37,7 @@
         'views/payment.xml',
         'views/memo_ticket.xml',
         'views/sale_invoice.xml',
+        'views/out_account.xml',
 
         'report/report_sale_statistics/report_sale_statistics.xml',
         'report/report_sale_statistics/report_sale_statistics_wizard.xml',

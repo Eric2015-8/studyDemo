@@ -16,3 +16,5 @@ from . import memo_ticket_detail
 from . import sale_invoice
 from . import sale_invoice_bill_detail
 from . import sale_invoice_invoice_detail
+from . import out_account
+from . import out_account_detail
