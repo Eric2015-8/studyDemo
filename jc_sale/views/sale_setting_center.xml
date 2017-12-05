@@ -46,7 +46,7 @@
                                 <field name="return_store_2_account_type_default"/>
                             </div>
                             <div>
-                                <label string="说明：以上设置为销售退货类型未设置时的默认操作。"/>
+                                <label string="说明：以上设置为销售类型未设置时的默认操作。"/>
                                 <button type="action" name="%(jc_sale.setting_center_return_type_action_window)d"
                                         string="点这里进行设置" icon="fa-cogs" class="oe_inline oe_link"/>
                             </div>

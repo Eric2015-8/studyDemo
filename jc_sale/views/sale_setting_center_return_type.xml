@@ -2,11 +2,11 @@
     <data>
         <!-- explicit list view definition -->
         <record model="ir.ui.view" id="jc_sale_setting_center_return_type_list">
-            <field name="name">销售退货类型设置列表</field>
+            <field name="name">销售退货设置列表</field>
             <field name="model">setting_center.return_type</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="sale_return_type_id"/>
+                    <field name="type_id"/>
                     <field name="sale_return_2_return_store_type"/>
                     <field name="return_store_2_account_type"/>
                 </tree>
@@ -14,13 +14,13 @@
         </record>
 
         <record model="ir.ui.view" id="jc_sale_setting_center_return_type_edit">
-            <field name="name">销售退货类型设置新建</field>
+            <field name="name">销售退货设置新建</field>
             <field name="model">setting_center.return_type</field>
             <field name="arch" type="xml">
                 <form>
                     <sheet>
                         <group name="group_top" col="4">
-                            <field name="sale_return_type_id" attrs="{'readonly':[('sale_return_type_id','!=',False),('id','>',0)]}"
+                            <field name="type_id" attrs="{'readonly':[('type_id','!=',False),('id','>',0)]}"
                                    options="{'no_open':True,'no_create':True}"/>
                             <field name="sale_return_2_return_store_type"/>
                             <field name="return_store_2_account_type"/>
@@ -32,11 +32,11 @@
         </record>
 
         <record model="ir.ui.view" id="setting_center_return_type_search_view">
-            <field name="name">销售退货类型设置.search</field>
+            <field name="name">销售退货设置.search</field>
             <field name="model">setting_center.return_type</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="sale_return_type_id"/>
+                    <field name="type_id"/>
                     <field name="sale_return_2_return_store_type"/>
                     <field name="return_store_2_account_type"/>
                     <group string="Group By">
@@ -48,7 +48,7 @@
         </record>
 
         <record model="ir.actions.act_window" id="setting_center_return_type_action_window">
-            <field name="name">销售退货类型设置</field>
+            <field name="name">销售退货设置</field>
             <field name="res_model">setting_center.return_type</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>

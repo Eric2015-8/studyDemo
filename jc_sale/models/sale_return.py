@@ -14,8 +14,8 @@ class SaleReturn(jc_base.Bill):
 
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
-    type_id = fields.Many2one('archives.common_archive', string=u'销售退货类型', required=True,
-                              domain="[('archive_name','=',22)]")
+    type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
+                              domain="[('archive_name','=',1)]")
 
     company_id = fields.Many2one('res.company', string=u'公司', required=True,
                                  domain=lambda self: self.env['archives.organization'].get_company_organization())
@@ -69,7 +69,7 @@ class SaleReturn(jc_base.Bill):
             'order_name': self.name,
             'customer_id': self.customer_id.id,
             'date': self.date,
-            'sale_return_type_id': self.type_id.id,
+            'type_id': self.type_id.id,
             'staff_id': self.staff_id.id,
             'department_id': self.department_id.id,
             'store_id': self.store_id.id,
@@ -115,7 +115,7 @@ class SaleReturn(jc_base.Bill):
 
     def _check_logic(self):
         if not self.type_id:
-            raise ValidationError(u'未选择{销售退货类型}')
+            raise ValidationError(u'未选择{销售类型}')
         setting = self.env['setting_center.return_type'].query_type(self.type_id.id)
         if not setting:
             raise ValidationError(u'请到【设置中心】“销售”下设置“销售退货流程”！')
@@ -142,14 +142,11 @@ class SaleReturn(jc_base.Bill):
         table = u'jc_sale.sale_return'
         table_show_name = u'销售退单'
         need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
-        type_id_field = 'sale_return_type_id'
-        return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name,
-                                                                       type_id_field)
+        return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, table, table_show_name)
 
     @api.model
     def default_get(self, fields_):
         res = super(SaleReturn, self).default_get(fields_)
         need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']
-        type_id_field = 'sale_return_type_id'
-        self.env['archives.set_customer_setting'].set_default(res, self._name, fields_, need_set_fields, type_id_field)
+        self.env['archives.set_customer_setting'].set_default(res, self._name, fields_, need_set_fields)
         return res
