@@ -10,6 +10,7 @@
                     <field name="forecast_2_oder_type"/>
                     <field name="order_2_out_store_type"/>
                     <field name="out_store_2_account_type"/>
+                    <field name="account_2_invoice_type_default"/>
                 </tree>
             </field>
         </record>
@@ -26,6 +27,7 @@
                             <field name="forecast_2_oder_type"/>
                             <field name="order_2_out_store_type"/>
                             <field name="out_store_2_account_type"/>
+                            <field name="account_2_invoice_type_default"/>
                             <field name="id" attrs="{'invisible':True}"/>
                         </group>
                     </sheet>
@@ -42,6 +44,7 @@
                     <field name="forecast_2_oder_type"/>
                     <field name="order_2_out_store_type"/>
                     <field name="out_store_2_account_type"/>
+                    <field name="account_2_invoice_type_default"/>
                     <group string="Group By">
                         <filter name="by_forecast_2_oder_type" string="预报生成订单方式"
                                 context="{'group_by': 'forecast_2_oder_type'}"/>
@@ -53,6 +56,8 @@
                     <group string="Group By">
                         <filter name="by_out_store_2_account_type" string="出库生成账单方式"
                                 context="{'group_by': 'out_store_2_account_type'}"/>
+                        <filter name="by_account_2_invoice_type_default" string="出库生成账单方式"
+                                context="{'group_by': 'account_2_invoice_type_default'}"/>
                     </group>
                 </search>
             </field>

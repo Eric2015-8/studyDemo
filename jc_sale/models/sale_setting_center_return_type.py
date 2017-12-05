@@ -16,6 +16,7 @@ class SaleSettingCenterReturnType(models.Model):
                               domain="[('archive_name','=',1)]")
     sale_return_2_return_store_type = fields.Selection(create_type, default=10, string=u'销售退单生成销售退货方式', required=True)
     return_store_2_account_type = fields.Selection(create_type, default=10, string=u'销售退货生成账单方式', required=True)
+    account_2_invoice_type_default = fields.Selection(create_type, default=10, string=u'账单生成发票方式', required=True)
 
     def _set_name(self, values):
         values['name'] = self.env['archives.common_archive'].browse(values['type_id']).name
@@ -40,6 +41,7 @@ class SaleSettingCenterReturnType(models.Model):
         result = self.search([('type_id', '=', type_id)])
         if result:
             return result[0].sale_return_2_return_store_type, \
-                   result[0].return_store_2_account_type
+                   result[0].return_store_2_account_type, \
+                   result[0].account_2_invoice_type_default
 
         return self.env['setting_center'].query_return_type_2_bill_default()

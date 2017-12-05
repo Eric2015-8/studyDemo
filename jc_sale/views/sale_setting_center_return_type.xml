@@ -9,6 +9,7 @@
                     <field name="type_id"/>
                     <field name="sale_return_2_return_store_type"/>
                     <field name="return_store_2_account_type"/>
+                    <field name="account_2_invoice_type_default"/>
                 </tree>
             </field>
         </record>
@@ -24,6 +25,7 @@
                                    options="{'no_open':True,'no_create':True}"/>
                             <field name="sale_return_2_return_store_type"/>
                             <field name="return_store_2_account_type"/>
+                            <field name="account_2_invoice_type_default"/>
                             <field name="id" attrs="{'invisible':True}"/>
                         </group>
                     </sheet>
@@ -39,9 +41,12 @@
                     <field name="type_id"/>
                     <field name="sale_return_2_return_store_type"/>
                     <field name="return_store_2_account_type"/>
+                    <field name="account_2_invoice_type_default"/>
                     <group string="Group By">
                         <filter name="by_return_store_2_account_type" string="销售退货生成账单方式"
                                 context="{'group_by': 'return_store_2_account_type'}"/>
+                        <filter name="by_account_2_invoice_type_default" string="销售退货生成账单方式"
+                                context="{'group_by': 'account_2_invoice_type_default'}"/>
                     </group>
                 </search>
             </field>

@@ -13,10 +13,11 @@ class SaleSettingCenterSaleType(models.Model):
                        index=True, default=lambda self: '新建')
 
     type_id = fields.Many2one('archives.common_archive', string=u'销售类型', required=True,
-                                   domain=[('archive_name', '=', 1)])
+                              domain=[('archive_name', '=', 1)])
     forecast_2_oder_type = fields.Selection(create_type, default=1, string=u'预报生成订单方式', required=True)
     order_2_out_store_type = fields.Selection(create_type, default=10, string=u'订单生成出库方式', required=True)
     out_store_2_account_type = fields.Selection(create_type, default=10, string=u'出库生成账单方式', required=True)
+    account_2_invoice_type_default = fields.Selection(create_type, default=10, string=u'账单生成发票方式', required=True)
 
     def _set_name(self, values):
         values['name'] = self.env['archives.common_archive'].browse(values['type_id']).name
@@ -42,6 +43,7 @@ class SaleSettingCenterSaleType(models.Model):
         if result:
             return result[0].forecast_2_oder_type, \
                    result[0].order_2_out_store_type, \
-                   result[0].out_store_2_account_type
+                   result[0].out_store_2_account_type, \
+                   result[0].account_2_invoice_type_default
 
         return self.env['setting_center'].query_sale_type_2_bill_default()
