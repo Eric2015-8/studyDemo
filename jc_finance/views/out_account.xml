@@ -102,34 +102,34 @@
             <field name="name">转出款单.search</field>
             <field name="model">jc_finance.out_account</field>
             <field name="arch" type="xml">
-            <search>
-                <field name="bill_state"/>
-                <field name="out_account_id"/>
-                <field name="in_account_id"/>
-                <field name="type_id"/>
-                <field name="company_id"/>
-                <field name="department_id"/>
-                <field name="out_customer_id"/>
-                <field name="in_customer_id"/>
-                <field name="out_staff_id"/>
-                <field name="in_staff_id"/>
-                <filter name="today" string="本日" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                <filter name="yesterday" string="昨日"
-                        domain="[('date', '=',(context_today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d'))]"/>
-                <filter string="本月" domain="[('date', '&gt;=', time.strftime('%%Y-%%m-01'))]"/>
-                <filter string="本年" name="year"
-                        domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
-                <filter name="not_checked_bill" string="未审核"
-                        domain="[('bill_state', '=', 1)]"/>
-                <filter name="checked_bill" string="已审核"
-                        domain="[('bill_state', '=', 10)]"/>
-                <filter name="finished_bill" string="已完毕"
-                        domain="[('bill_state', '=', 20)]"/>
-                <group string="Group By">
-                    <filter name="by_bill_state" string="单据状态"
-                            context="{'group_by': 'bill_state'}"/>
-                </group>
-            </search>
+                <search>
+                    <field name="bill_state"/>
+                    <field name="out_account_id"/>
+                    <field name="in_account_id"/>
+                    <field name="type_id"/>
+                    <field name="company_id"/>
+                    <field name="department_id"/>
+                    <field name="out_customer_id"/>
+                    <field name="in_customer_id"/>
+                    <field name="out_staff_id"/>
+                    <field name="in_staff_id"/>
+                    <filter name="today" string="本日" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter name="yesterday" string="昨日"
+                            domain="[('date', '=',(context_today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+                    <filter string="本月" domain="[('date', '&gt;=', time.strftime('%%Y-%%m-01'))]"/>
+                    <filter string="本年" name="year"
+                            domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                    <filter name="not_checked_bill" string="未审核"
+                            domain="[('bill_state', '=', 1)]"/>
+                    <filter name="checked_bill" string="已审核"
+                            domain="[('bill_state', '=', 10)]"/>
+                    <filter name="finished_bill" string="已完毕"
+                            domain="[('bill_state', '=', 20)]"/>
+                    <group string="Group By">
+                        <filter name="by_bill_state" string="单据状态"
+                                context="{'group_by': 'bill_state'}"/>
+                    </group>
+                </search>
             </field>
         </record>
 
