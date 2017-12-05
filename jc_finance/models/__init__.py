@@ -18,3 +18,5 @@ from . import sale_invoice_bill_detail
 from . import sale_invoice_invoice_detail
 from . import out_account
 from . import out_account_detail
+from . import in_account
+from . import in_account_detail
