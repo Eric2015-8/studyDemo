@@ -159,6 +159,7 @@ class SaleAccount(jc_base.Bill):
             'sale_invoice_id': bill.id,
             'goods_id': detail.goods_id.id,
             'goods_invoice': detail.goods_id.name,
+            'main_unit_id': detail.main_unit_id.id,
             'number': detail.main_unit_number,
             'price': detail.price,
             'money': detail.money,

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+            id="report_sale_invoice"
+            string="销售发票"
+            model="jc_finance.sale_invoice"
+            report_type="qweb-pdf"
+            file="jc_finance.report_pdf_sale_invoice_file"
+            name="jc_finance.report_pdf_sale_invoice"
+            paperformat="archives.paperformat_chn__a4_lowmargin"
+    />
+
+    <template id="report_pdf_sale_invoice">
+        <t t-call="report.html_container">
+            <t t-call="archives.empty_layout">
+                <t t-set="o" t-value="docs[0]"/>
+                <t t-foreach="docs" t-as="quotation">
+                    <div class="page">
+                        <div id="introduction" class="text-center">
+                            发货单
+                            <em t-esc="quotation.name"/>
+                        </div>
+                        <!-- 表头 -->
+                        <div class="row mt32">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="row">
+                                    <label class="col-sm-4 col-xs-4 text-right">客户:</label>
+                                    <div class="col-sm-8 col-xs-8">
+                                        <div t-field="quotation.customer_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="row">
+                                    <label class="col-sm-5 col-xs-5 text-right">日期:</label>
+                                    <div class="col-sm-7 col-xs-7">
+                                        <span t-field="quotation.date"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12">
+                                <div class="row">
+                                    <label class="col-sm-2 col-xs-2 text-right">地址:</label>
+                                    <div class="col-sm-10 col-xs-10">
+                                        <span t-field="quotation.customer_id.zone_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="oe_structure"/>
+                        <!--明细-->
+                        <t t-call="jc_finance.sale_invoice_detail_layout"/>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!--自定义打印页面：销售发票明细-->
+    <template id="sale_invoice_detail_layout" name="detail">
+        <div id="quote">
+            <table class="table wq-table mt32">
+                <thead>
+                    <tr class="active">
+                        <th>产品</th>
+                        <th>单位</th>
+                        <th>数量</th>
+                        <th>金额</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="quotation.invoice_detail" t-as="detail">
+                        <tr>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.goods_invoice"/>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.main_unit_id.name"/>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="detail.number"/>
+                            </td>
+                            <td style="border-bottom: 1px solid gray;">
+                                <t t-esc="round(detail.money,2)"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <tr>
+                        <td>
+                            合计
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <t t-esc="round(quotation.total_money,2)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            大写金额：
+                        </td>
+                        <td colspan="3">
+                            <t t-esc="quotation.total_money_chn"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            开票员：
+                        </td>
+                        <td>
+                            <t t-esc="quotation.current_user_name"/>
+                        </td>
+                        <td>收款：</td>
+                        <td>审核：</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </template>
+
+</odoo>

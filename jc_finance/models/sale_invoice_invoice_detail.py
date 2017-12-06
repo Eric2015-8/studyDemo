@@ -19,3 +19,10 @@ class SaleInvoiceInvoiceDetail(models.Model):
     price = fields.Float(digits=(6, 2), help="单价", string=u'单价', readonly=True)
     money = fields.Float(digits=(6, 2), help="金额", string=u'金额')
     remark = fields.Char(string=u'备注')
+
+    main_unit_id = fields.Many2one('archives.unit', string=u'主单位', compute='_set_main', store=True)
+
+    @api.depends('goods_id')
+    def _set_main(self):
+        for record in self:
+            record.main_unit_id = record.goods_id.main_unit_id

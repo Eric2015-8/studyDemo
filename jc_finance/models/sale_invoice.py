@@ -4,6 +4,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from . import jc_base
 from . import bill_define
+from . import util
 
 
 class SaleInvoice(jc_base.Bill):
@@ -36,9 +37,32 @@ class SaleInvoice(jc_base.Bill):
     invoice_detail = fields.One2many('jc_finance.sale_invoice_invoice_detail', 'sale_invoice_id',
                                      string=u'销售发票_发票明细', copy=True)
 
+    total_money = fields.Float(string=u'金额', store=True, readonly=True, compute='_amount_all',
+                               track_visibility='always')
+    total_money_chn = fields.Char(string=u'大写金额', store=True, readonly=True, compute='_amount_all')
+    current_user_name = fields.Char(string=u'当前用户', store=False, readonly=True, compute='_get_current_user_name',
+                                    track_visibility='always')
+
     @api.model
     def get_code(self):
         return self._name
+
+    @api.depends('invoice_detail.money')
+    def _amount_all(self):
+        for bill in self:
+            total_money = 0.0
+            for line in bill.invoice_detail:
+                total_money += line.money
+            cn = util.cn_currency(total_money)
+            bill.update({
+                'total_money': total_money,
+                'total_money_chn': cn,
+            })
+
+    @api.depends('invoice_detail.money')
+    def _get_current_user_name(self):
+        for bill in self:
+            bill.current_user_name = self.env['res.users'].browse(self._uid).name
 
     @api.onchange('customer_id')
     def _onchange_for_staff(self):
