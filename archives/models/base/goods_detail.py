@@ -62,3 +62,7 @@ class GoodsDetail(models.AbstractModel):
         else:
             self.second_unit_id = None
         self.main_unit_id = self.goods_id.main_unit_id
+        self.second_unit_number = None
+        self.main_unit_number = None
+        self.price = None
+        self.money = None
