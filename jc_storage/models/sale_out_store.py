@@ -122,6 +122,7 @@ class SaleOutStore(jc_base.Bill):
             'total_money': self.total_money,
         }
         bill = self.env['jc_finance.sale_account'].create(values)
+        order_number_dic = self._get_order_number_dic()
         for detail in self.sale_out_store_detail:
             values = {
                 'sale_account_id': bill.id,
@@ -140,8 +141,24 @@ class SaleOutStore(jc_base.Bill):
                 'money': detail.money,
                 'remark': detail.remark,
             }
+            if detail.source_detail_id in order_number_dic:
+                values['order_number'] = order_number_dic[detail.source_detail_id]
+                values['diff_number'] = order_number_dic[detail.source_detail_id] - detail.main_unit_number
+            else:  # 这种情况不应出现。因为整个流程中，相关明细是一一对应的
+                values['order_number'] = 0
+                values['diff_number'] = 0 - detail.main_unit_number
             self.env['jc_finance.sale_account.detail'].create(values)
         return bill
+
+    def _get_order_number_dic(self):
+        dic = {}
+        order = self.env['jc_sale.sale_order'].browse(self.source_bill_id)
+        for detail in self.sale_out_store_detail:
+            for d_order in order.sale_order_detail:
+                if d_order.id == detail.source_detail_id:
+                    dic[detail.source_detail_id] = d_order.main_unit_number
+                    break
+        return dic
 
     def _delete_sale_account(self):
         bills = self.env["jc_finance.sale_account"].search(

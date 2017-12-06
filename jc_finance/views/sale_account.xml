@@ -85,10 +85,12 @@
                                         <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
                                         <field name="second_unit_number" widget="char"/>
                                         <field name="second_unit_id" readonly="1"/>
+                                        <field name="order_number" widget="char"/>
                                         <field name="main_unit_number" widget="char"/>
                                         <field name="main_unit_id" readonly="1"/>
                                         <field name="price" widget="char"/>
                                         <field name="money"/>
+                                        <field name="diff_number"/>
                                         <field name="remark"/>
                                     </tree>
                                     <kanban class="o_kanban_mobile">
