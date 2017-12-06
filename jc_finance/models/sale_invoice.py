@@ -49,6 +49,10 @@ class SaleInvoice(jc_base.Bill):
     def get_code(self):
         return self._name
 
+    @api.multi
+    def print_quotation(self):
+        return self.env['report'].get_action(self, 'jc_finance.report_pdf_sale_invoice')
+
     @api.depends('invoice_detail.money')
     def _amount_all(self):
         for bill in self:
