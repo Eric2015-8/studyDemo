@@ -8,6 +8,7 @@
                 <tree>
                     <field name="id"/>
                     <field name="name"/>
+                    <field name="order_name"/>
                     <field name="bill_state"/>
                     <field name="date"/>
                     <field name="customer_id"/>
@@ -59,6 +60,7 @@
                                     <!--<form string="销售发票-单据信息"></form>-->
                                     <tree string="销售发票-单据信息" editable="bottom" create="false">
                                         <field name="bill_type_id" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="order_name"/>
                                         <field name="date"/>
                                         <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
                                         <field name="main_unit_number"/>

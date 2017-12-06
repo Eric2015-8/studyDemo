@@ -125,6 +125,7 @@ class SaleAccount(jc_base.Bill):
         values = {
             'source_bill_id': self.id,
             'source_bill_type': 40,  # 销售账单
+            'order_name': self.order_name,
             'customer_id': self.customer_id.id,
             'date': self.date,
             'type_id': self.type_id.id,
@@ -144,6 +145,7 @@ class SaleAccount(jc_base.Bill):
             'source_bill_type': 40,  # 销售账单
             'source_bill_id': self.id,
             'source_detail_id': detail.id,
+            'order_name': self.order_name,
             'bill_type_id': 40,  # 销售账单
             'date': bill.date,
             'goods_id': detail.goods_id.id,

@@ -21,6 +21,8 @@ class SaleInvoice(jc_base.Bill):
     source_bill_type = fields.Selection(bill_define.BILL_TYPE, string=u'来源单据类型', readonly=True, copy=False)
     source_bill_id = fields.Integer(string="来源单据号", readonly=True, copy=False, default=0)
 
+    order_name = fields.Char(string=u'订单号', readonly=True)
+
     customer_id = fields.Many2one('archives.customer', string=u'客户', required=True,
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
     type_id = fields.Many2one('archives.common_archive', string=u'发票类型', required=True,

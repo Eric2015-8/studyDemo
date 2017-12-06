@@ -16,6 +16,8 @@ class SaleInvoiceBillDetail(models.Model):
     source_bill_id = fields.Integer(string="来源单据号", readonly=True, copy=False, default=0)
     source_detail_id = fields.Integer(string="来源单据明细号", readonly=True, copy=False, default=0)
 
+    order_name = fields.Char(string=u'订单号', readonly=True)
+
     bill_type_id = fields.Selection(bill_define.BILL_TYPE, string=u'单据类型', readonly=True)
     date = fields.Date(string=u'日期', required=True, default=fields.Date.today, readonly=True)
     goods_id = fields.Many2one('archives.goods', string=u'产品', required=True, readonly=True,
