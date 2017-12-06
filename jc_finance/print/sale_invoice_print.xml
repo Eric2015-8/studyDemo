@@ -100,7 +100,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="text-right">
                             大写金额：
                         </td>
                         <td colspan="3">
@@ -108,13 +108,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="text-right">
                             开票员：
                         </td>
                         <td>
                             <t t-esc="quotation.current_user_name"/>
                         </td>
-                        <td>收款：</td>
+                        <td>车号：</td>
                         <td>审核：</td>
                     </tr>
                 </tbody>
