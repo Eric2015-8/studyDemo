@@ -11,10 +11,15 @@ class ReportSaleStatistics(models.Model):
     _auto = False
 
     customer_id = fields.Many2one('archives.customer', string=u'客户')
+    customer_organization_id = fields.Many2one('archives.common_archive', string=u'客户权限',
+                                               domain="[('archive_name','=',16)]")
     staff_id = fields.Many2one('archives.staff', string=u'销售员')
 
     date = fields.Date(string=u'日期', default=fields.Date.today)
     goods_id = fields.Many2one('archives.goods', string=u'产品')
+    goods_type_id = fields.Many2one('archives.common_archive', string=u'物料分类')
+    goods_organization_id = fields.Many2one('archives.common_archive', string=u'存货权限',
+                                            domain="[('archive_name','=',17)]")
     second_unit_id = fields.Many2one('archives.unit', string=u'辅单位')
     main_unit_id = fields.Many2one('archives.unit', string=u'主单位')
     second_unit_number = fields.Float(digits=dp.get_precision('Quantity'), string=u'辅数量')
@@ -29,9 +34,12 @@ class ReportSaleStatistics(models.Model):
             create or replace view jc_finance_report_sale_statistics as (
 select
 b.customer_id,
+cu.organization_id customer_organization_id,
 b.staff_id,
 b.date,
 d.goods_id,
+g.goods_type_id,
+g.organization_id goods_organization_id,
 g.second_unit_id,
 g.main_unit_id,
 sum(d.second_unit_number) second_unit_number,
@@ -40,7 +48,8 @@ sum(d.money) money
 FROM jc_finance_sale_account b
 LEFT JOIN jc_finance_sale_account_detail d ON d.sale_account_id = b.id
 LEFT JOIN archives_goods g on d.goods_id = g.id
+LEFT JOIN archives_customer cu on b.customer_id = cu.id
 where d.id is not null and (b.bill_state=10 or b.bill_state=20)
-group by b.customer_id,b.staff_id,b.date,d.goods_id,g.second_unit_id,g.main_unit_id
+group by b.customer_id,cu.organization_id,b.staff_id,b.date,d.goods_id,g.goods_type_id,g.organization_id,g.second_unit_id,g.main_unit_id
             )
         """)

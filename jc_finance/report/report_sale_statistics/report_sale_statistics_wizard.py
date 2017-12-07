@@ -54,6 +54,26 @@ class ReportStorageAccountWizard(models.TransientModel):
             format(_field, condition)
 
     def get_condition(self):
+        a = self._get_condition_from_select()
+        cs = self.env['archives.organization'].get_customer_organization_condition_staff('staff_id')
+        co = self.env['archives.organization'].get_customer_organization_condition_organization(
+            'customer_organization_id')
+        gt = self.env['archives.organization'].get_goods_organization_condition_goods_type('goods_type_id')
+        go = self.env['archives.organization'].get_goods_organization_condition_organization('goods_organization_id')
+        t = ReportStorageAccountWizard._combine_condition(a, cs)
+        t2 = ReportStorageAccountWizard._combine_condition(t, co)
+        t3 = ReportStorageAccountWizard._combine_condition(t2, gt)
+        return ReportStorageAccountWizard._combine_condition(t3, go)
+
+    @staticmethod
+    def _combine_condition(condition, s_no_where):
+        if len(s_no_where) == 0:
+            return condition
+        if len(condition) == 0:
+            return 'where ' + s_no_where
+        return condition + ' and ' + s_no_where
+
+    def _get_condition_from_select(self):
         if self.customer_id or self.staff_id or self.goods_id or self.date_start or self.date_end:
             condition = 'where '
         else:

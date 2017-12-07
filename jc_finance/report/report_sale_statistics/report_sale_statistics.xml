@@ -45,6 +45,7 @@
                     <field name='goods_id' string='产品' filter_domain="[('goods_id', 'ilike', self)]"/>
                     <field name='customer_id' string='客户' filter_domain="[('customer_id', 'ilike', self)]"/>
                     <field name='staff_id' string='销售员' filter_domain="[('staff_id', 'ilike', self)]"/>
+                    <!--<filter name="self" string="自己" domain="[('create_uid', '=', uid)]"/>-->
                     <filter name="today" string="本日" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
                     <filter name="yesterday" string="昨日"
                             domain="[('date', '=',(context_today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d'))]"/>
