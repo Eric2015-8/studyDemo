@@ -124,7 +124,7 @@
                     res_model="jc_finance.report_sale_statistics_wizard"
                     view_mode="form"
                     target="new"
-                    context="{'default_user_id': uid}"/>
+                    context="{}"/>
 
         <!-- 销售统计 action -->
         <record id='report_sale_statistics_result_action' model='ir.actions.act_window'>

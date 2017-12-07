@@ -8,8 +8,6 @@ class ReportStorageAccountResult(models.TransientModel):
     _name = 'jc_finance.report_sale_statistics_result'
     _description = u'财务：销售统计查询结果'
 
-    user_id = fields.Many2one('res.users', string=u'用户', readonly=True, index=True, default=lambda self: self.env.user)
-
     customer_id = fields.Many2one('archives.customer', string=u'客户',
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
     staff_id = fields.Many2one('archives.staff', string=u'销售员')

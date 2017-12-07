@@ -13,8 +13,6 @@ class ReportStorageAccountWizard(models.TransientModel):
         month = date.strftime('%m')
         return '{}-{}-01'.format(year, month)
 
-    user_id = fields.Many2one('res.users', string=u'用户', readonly=True, index=True, default=lambda self: self.env.user)
-
     customer_id = fields.Many2one('archives.customer', string=u'客户',
                                   domain=lambda self: self.env['archives.organization'].get_customer_organization())
     staff_id = fields.Many2one('archives.staff', string=u'销售员')
@@ -83,12 +81,12 @@ class ReportStorageAccountWizard(models.TransientModel):
         return ''
 
     def clear_data(self):
-        sql = 'DELETE FROM jc_finance_report_sale_statistics_result WHERE user_id = ' + str(self.user_id.id)
+        sql = 'DELETE FROM jc_finance_report_sale_statistics_result WHERE create_uid = ' + str(self._uid)
         self.env.cr.execute(sql)
 
     def insert_data(self, data):
         sql_format = 'insert into jc_finance_report_sale_statistics_result' \
-                     '(user_id,customer_id,staff_id,goods_id,second_unit_id,main_unit_id,' \
+                     '(create_uid,customer_id,staff_id,goods_id,second_unit_id,main_unit_id,' \
                      'second_unit_number,main_unit_number,money) ' \
                      + self.get_values_format()
         for row in data:
@@ -105,7 +103,7 @@ class ReportStorageAccountWizard(models.TransientModel):
             return 'values({0},null,null,{1},{2},{3},{4},{5},{6})'
 
     def get_insert_sql(self, row, sql_format):
-        return sql_format.format(self.user_id.id,
+        return sql_format.format(self._uid,
                                  self.get_data(row, 0), self.get_data(row, 1), self.get_data(row, 2),
                                  self.get_data(row, 3), self.get_data(row, 4), self.get_data(row, 5))
 
@@ -127,8 +125,8 @@ class ReportStorageAccountWizard(models.TransientModel):
             'views': [[list_view_id, 'tree'], [kan_ban_view_id, 'kanban']],
             'target': action.target,
             # 'context': action.context,
-            'context': {
-                'user_id': self.env.uid,
-            },
+            # 'context': {
+            #     'create_uid': self.env.uid,
+            # },
             'res_model': action.res_model,
         }
