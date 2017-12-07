@@ -33,6 +33,7 @@ class SaleInvoice(jc_base.Bill):
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
                                     domain=lambda self: self.env['archives.organization'].get_department_organization())
     invoice_customer = fields.Char(string=u'开票客户')
+    staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True, domain=[('is_sale_man', '=', True)])
 
     bill_detail = fields.One2many('jc_finance.sale_invoice_bill_detail', 'sale_invoice_id',
                                   string=u'销售发票_单据明细', copy=True)

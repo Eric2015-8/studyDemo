@@ -132,6 +132,7 @@ class SaleAccount(jc_base.Bill):
             'company_id': self.company_id.id,
             'department_id': self.department_id.id,
             'invoice_customer': self.customer_id.name,
+            'staff_id': self.staff_id.id,
             'remark': self.remark,
             # 'total_main_number': self.total_main_number,
             # 'total_second_number': self.total_second_number,
