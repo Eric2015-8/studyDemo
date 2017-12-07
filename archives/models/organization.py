@@ -86,6 +86,36 @@ class Organization(models.Model):
             result.append(('organization_id', 'in', ids))
         return result
 
+    def get_customer_organization_condition_staff(self, staff_field):  # 用于sql语句
+        user = self.env.user
+        if not user.organization_id:
+            return ''
+        if user.organization_id.active_customer_staff:
+            ids = []
+            for detail in user.organization_id.customer_staff_ids:
+                ids.append(str(detail.id))
+            if len(ids) == 0:
+                return staff_field + ' = 0'
+            if len(ids) == 1:
+                return staff_field + ' = ' + ids[0]
+            return '{} in ({})'.format(staff_field, ','.join(ids))
+        return ''
+
+    def get_customer_organization_condition_organization(self, customer_organization_field):  # 用于sql语句
+        user = self.env.user
+        if not user.organization_id:
+            return ''
+        if user.organization_id.active_customer:
+            ids = []
+            for detail in user.organization_id.customer_organization_ids:
+                ids.append(str(detail.id))
+            if len(ids) == 0:
+                return customer_organization_field + ' = 0'
+            if len(ids) == 1:
+                return customer_organization_field + ' = ' + ids[0]
+            return '{} in ({})'.format(customer_organization_field, ','.join(ids))
+        return ''
+
     # 得到受权限控制的：存货
     def get_goods_organization(self):
         user = self.env.user
@@ -104,6 +134,36 @@ class Organization(models.Model):
             result.append(('organization_id', 'in', ids))
         return result
 
+    def get_goods_organization_condition_goods_type(self, goods_type_field):  # 用于sql语句
+        user = self.env.user
+        if not user.organization_id:
+            return ''
+        if user.organization_id.active_goods_goods_type:
+            ids = []
+            for detail in user.organization_id.goods_goods_type_ids:
+                ids.append(str(detail.id))
+            if len(ids) == 0:
+                return goods_type_field + ' = 0'
+            if len(ids) == 1:
+                return goods_type_field + ' = ' + ids[0]
+            return '{} in ({})'.format(goods_type_field, ','.join(ids))
+        return ''
+
+    def get_goods_organization_condition_organization(self, goods_organization_field):  # 用于sql语句
+        user = self.env.user
+        if not user.organization_id:
+            return ''
+        if user.organization_id.active_goods:
+            ids = []
+            for detail in user.organization_id.goods_organization_ids:
+                ids.append(str(detail.id))
+            if len(ids) == 0:
+                return goods_organization_field + ' = 0'
+            if len(ids) == 1:
+                return goods_organization_field + ' = ' + ids[0]
+            return '{} in ({})'.format(goods_organization_field, ','.join(ids))
+        return ''
+
     # 得到受权限控制的：公司
     def get_company_organization(self):
         user = self.env.user
@@ -116,6 +176,21 @@ class Organization(models.Model):
                 ids.append(detail.id)
             result.append(('id', 'in', ids))
         return result
+
+    def get_company_organization_condition(self, company_field):  # 用于sql语句
+        user = self.env.user
+        if not user.organization_id:
+            return ''
+        if user.organization_id.active_company:
+            ids = []
+            for detail in user.organization_id.company_ids:
+                ids.append(str(detail.id))
+            if len(ids) == 0:
+                return company_field + ' = 0'
+            if len(ids) == 1:
+                return company_field + ' = ' + ids[0]
+            return '{} in ({})'.format(company_field, ','.join(ids))
+        return ''
 
     # 得到受权限控制的：仓库
     def get_store_organization(self):
@@ -130,7 +205,7 @@ class Organization(models.Model):
             result.append(('id', 'in', ids))
         return result
 
-    def get_store_organization_condition(self, store_field):
+    def get_store_organization_condition(self, store_field):  # 用于sql语句
         user = self.env.user
         if not user.organization_id:
             return ''
@@ -140,6 +215,8 @@ class Organization(models.Model):
                 ids.append(str(detail.id))
             if len(ids) == 0:
                 return store_field + ' = 0'
+            if len(ids) == 1:
+                return store_field + ' = ' + ids[0]
             return '{} in ({})'.format(store_field, ','.join(ids))
         return ''
 
@@ -155,6 +232,21 @@ class Organization(models.Model):
                 ids.append(detail.id)
             result.append(('id', 'in', ids))
         return result
+
+    def get_department_organization_condition(self, department_field):  # 用于sql语句
+        user = self.env.user
+        if not user.organization_id:
+            return ''
+        if user.organization_id.active_department:
+            ids = []
+            for detail in user.organization_id.department_ids:
+                ids.append(str(detail.id))
+            if len(ids) == 0:
+                return department_field + ' = 0'
+            if len(ids) == 1:
+                return department_field + ' = ' + ids[0]
+            return '{} in ({})'.format(department_field, ','.join(ids))
+        return ''
 
     @api.multi
     def load_group(self):
@@ -178,13 +270,13 @@ class Organization(models.Model):
             'goods_organization_ids': [[6, False, bill.goods_organization_ids.ids]],
             # 公司权限的设置
             'active_company': bill.active_company,
-            'company_ids': [[6, False, bill.goods_goods_type_ids.ids]],
+            'company_ids': [[6, False, bill.company_ids.ids]],
             # 仓库权限的设置
             'active_store': bill.active_store,
-            'store_ids': [[6, False, bill.goods_goods_type_ids.ids]],
+            'store_ids': [[6, False, bill.store_ids.ids]],
             # 部门权限的设置
             'active_department': bill.active_department,
-            'department_ids': [[6, False, bill.goods_goods_type_ids.ids]],
+            'department_ids': [[6, False, bill.department_ids.ids]],
         }
 
     @api.model
