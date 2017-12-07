@@ -22,3 +22,7 @@ from . import out_account
 from . import out_account_detail
 from . import in_account
 from . import in_account_detail
+from . import out_bill
+from . import out_bill_detail
+from . import in_bill
+from . import in_bill_detail

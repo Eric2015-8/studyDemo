@@ -40,6 +40,8 @@
         'print/sale_invoice_print.xml',
         'views/out_account.xml',
         'views/in_account.xml',
+        'views/out_bill.xml',
+        'views/in_bill.xml',
 
         'report/report_sale_statistics/report_sale_statistics.xml',
         'report/report_sale_statistics/report_sale_statistics_wizard.xml',
