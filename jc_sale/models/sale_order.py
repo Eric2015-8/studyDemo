@@ -33,6 +33,8 @@ class SaleOrder(jc_base.Bill):
                                     domain=lambda self: self.env['archives.organization'].get_department_organization())
     out_store_date = fields.Date(string=u'出库日期', required=True, default=fields.Date.today)
 
+    address = fields.Char(string=u'地址', compute='_compute_address', store=True)
+
     total_second_number = fields.Float(string='辅数量', store=True, readonly=True, compute='_amount_all',
                                        track_visibility='always')
     total_main_number = fields.Float(string='主数量', store=True, readonly=True, compute='_amount_all',
@@ -47,6 +49,12 @@ class SaleOrder(jc_base.Bill):
     def print_quotation(self):
         # self.filtered(lambda s: s.state == 'draft').write({'state': 'sent'})
         return self.env['report'].get_action(self, 'jc_sale.report_pdf_sale_order')
+
+    @api.depends('customer_id')
+    def _compute_address(self):
+        for order in self:
+            order.address = order.customer_id.zone_type2_id.name + ' ' + order.customer_id.zone_type1_id.name + ' ' \
+                            + order.customer_id.zone_id.name + ' ' + order.customer_id.address
 
     @api.depends('sale_order_detail.second_unit_number', 'sale_order_detail.main_unit_number',
                  'sale_order_detail.money')
