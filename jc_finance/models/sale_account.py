@@ -4,6 +4,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from . import bill_define
 from . import jc_base
+import datetime
 
 
 class SaleAccount(jc_base.Bill):
@@ -133,7 +134,7 @@ class SaleAccount(jc_base.Bill):
             'source_bill_type': 40,  # 销售账单
             'order_name': self.order_name,
             'customer_id': self.customer_id.id,
-            'date': self.date,
+            'date': datetime.datetime.today(),
             'type_id': _type_id,
             'company_id': self.company_id.id,
             'department_id': self.department_id.id,

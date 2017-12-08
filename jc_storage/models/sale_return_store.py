@@ -4,6 +4,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from . import bill_define
 from . import jc_base
+import datetime
 
 
 class SaleReturnStore(jc_base.Bill):
@@ -103,7 +104,7 @@ class SaleReturnStore(jc_base.Bill):
             'source_bill_type': 23,  # 销售退库
             'order_name': self.order_name,
             'customer_id': self.customer_id.id,
-            'date': self.date,
+            'date': datetime.datetime.today(),
             'out_store_date': self.date,
             'type_id': self.type_id.id,
             'staff_id': self.staff_id.id,
