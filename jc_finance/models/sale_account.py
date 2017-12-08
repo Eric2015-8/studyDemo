@@ -112,7 +112,10 @@ class SaleAccount(jc_base.Bill):
         return
 
     def _create_sale_invoice(self):
-        values = self._get_bill_values()
+        _type_id = self._query_type_id()
+        if not _type_id:
+            raise ValidationError(u'没有{发票类型}，请到 档案 - 通用档案 中添加{档案名称}为“销售发票”的档案')
+        values = self._get_bill_values(_type_id)
         bill = self.env['jc_finance.sale_invoice'].create(values)
         for detail in self.sale_account_detail:
             bill_values = self._get_detail_values_bill(bill, detail)
@@ -121,14 +124,17 @@ class SaleAccount(jc_base.Bill):
             self.env['jc_finance.sale_invoice_invoice_detail'].create(invoice_values)
         return bill
 
-    def _get_bill_values(self):
+    def _query_type_id(self):  # 取第一个发票类型
+        return self.env['archives.common_archive'].search([('archive_name', '=', 27)], limit=1, order='id').id
+
+    def _get_bill_values(self, _type_id):
         values = {
             'source_bill_id': self.id,
             'source_bill_type': 40,  # 销售账单
             'order_name': self.order_name,
             'customer_id': self.customer_id.id,
             'date': self.date,
-            'type_id': self.type_id.id,
+            'type_id': _type_id,
             'company_id': self.company_id.id,
             'department_id': self.department_id.id,
             'invoice_customer': self.customer_id.name,

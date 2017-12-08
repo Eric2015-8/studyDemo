@@ -48,14 +48,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-xs-6">
-                                <div class="row">
-                                    <label class="col-sm-5 col-xs-5 text-right">摘要:</label>
-                                    <div class="col-sm-7 col-xs-7">
-                                        <span t-field="quotation.remark"/>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="oe_structure"/>
