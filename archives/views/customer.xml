@@ -29,13 +29,16 @@
                             <page string="通用信息">
                                 <group col="4">
                                     <field name="tel"/>
-                                    <field name="staff_id" domain="[('is_sale_man','=',True)]" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="staff_id" domain="[('is_sale_man','=',True)]"
+                                           options="{'no_open':True,'no_create':True}"/>
                                     <label for="address" string="客户地址"/>
                                     <div class="o_address_format">
                                         <field name="address"/>
-                                        <field name="zone_id" class="oe_inline" placeholder="地区"/>
-                                        <field name="zone_type1_id" class="oe_inline" placeholder="地区分类1"/>
-                                        <field name="zone_type2_id" class="oe_inline" placeholder="地区分类2"/>
+                                        <field name="zone_id" class="o_address_city" placeholder="地区"/>
+                                        <field name="zone_type1_id" class="o_address_state" placeholder="地区分类1"
+                                               attrs="{'readonly': 1}" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="zone_type2_id" class="o_address_state" placeholder="地区分类2"
+                                               attrs="{'readonly': 1}" options="{'no_open':True,'no_create':True}"/>
                                     </div>
                                     <field name="company_id" options="{'no_open':True,'no_create':True}"/>
                                     <field name="price_type_id" options="{'no_open':True,'no_create':True}"/>
@@ -50,12 +53,18 @@
                                            options="{'no_open':True,'no_create':True}"/>
                                 </group>
                                 <group col="4">
-                                    <field name="customer_type1_id" domain="[('archive_name','=',3)]" options="{'no_open':True,'no_create':True}"/>
-                                    <field name="customer_type2_id" domain="[('archive_name','=',4)]" options="{'no_open':True,'no_create':True}"/>
-                                    <field name="customer_type3_id" domain="[('archive_name','=',5)]" options="{'no_open':True,'no_create':True}"/>
-                                    <field name="customer_type4_id" domain="[('archive_name','=',6)]" options="{'no_open':True,'no_create':True}"/>
-                                    <field name="customer_type5_id" domain="[('archive_name','=',7)]" options="{'no_open':True,'no_create':True}"/>
-                                    <field name="customer_type6_id" domain="[('archive_name','=',8)]" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="customer_type1_id" domain="[('archive_name','=',3)]"
+                                           options="{'no_open':True,'no_create':True}"/>
+                                    <field name="customer_type2_id" domain="[('archive_name','=',4)]"
+                                           options="{'no_open':True,'no_create':True}"/>
+                                    <field name="customer_type3_id" domain="[('archive_name','=',5)]"
+                                           options="{'no_open':True,'no_create':True}"/>
+                                    <field name="customer_type4_id" domain="[('archive_name','=',6)]"
+                                           options="{'no_open':True,'no_create':True}"/>
+                                    <field name="customer_type5_id" domain="[('archive_name','=',7)]"
+                                           options="{'no_open':True,'no_create':True}"/>
+                                    <field name="customer_type6_id" domain="[('archive_name','=',8)]"
+                                           options="{'no_open':True,'no_create':True}"/>
                                 </group>
                             </page>
                             <page string="客户权限">
@@ -74,7 +83,8 @@
             <field name="model">archives.customer</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="name" filter_domain="['|', '|', ('spell', 'ilike', self), ('short_name', 'ilike', self), ('name', 'ilike', self)]"/>
+                    <field name="name"
+                           filter_domain="['|', '|', ('spell', 'ilike', self), ('short_name', 'ilike', self), ('name', 'ilike', self)]"/>
                 </search>
             </field>
         </record>
@@ -85,21 +95,6 @@
             <field name="res_model">archives.customer</field>
             <field name="view_mode">tree,form</field>
         </record>
-
-        <!-- server action to the one above -->
-        <!--
-    <record model="ir.actions.server" id="archives.action_server">
-      <field name="name">archives server</field>
-      <field name="model_id" ref="model_archives_archives"/>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": self._name,
-        }
-      </field>
-    </record>
-    -->
 
         <menuitem name="销售" id="archives.menu_sale" parent="archives_menu_root"/>
 

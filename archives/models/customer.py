@@ -29,8 +29,8 @@ class Customer(models.Model):
     staff_id = fields.Many2one('archives.staff', string=u'销售员', required=True)
     address = fields.Char(string=u'地址')
     zone_id = fields.Many2one('archives.zone', string=u'地址')
-    zone_type1_id = fields.Many2one('archives.zone_type1', string=u'地区分类1')
-    zone_type2_id = fields.Many2one('archives.zone_type2', string=u'地区分类2')
+    zone_type1_id = fields.Many2one('archives.zone_type1', string=u'地区分类1', store=True, compute='_set_zone_type')
+    zone_type2_id = fields.Many2one('archives.zone_type2', string=u'地区分类2', store=True, compute='_set_zone_type')
     company_id = fields.Many2one('res.company', string=u'公司', index=True)
     price_type_id = fields.Many2one('archives.common_archive', string=u'价格分类', domain="[('archive_name','=',19)]")
 
@@ -55,6 +55,13 @@ class Customer(models.Model):
     #     @api.depends('value')
     #     def _value_pc(self):
     #         self.value2 = float(self.value) / 100
+
+    @api.depends('zone_id')
+    def _set_zone_type(self):
+        for record in self:
+            record.zone_type1_id = record.zone_id.zone_type1_id
+            record.zone_type2_id = record.zone_id.zone_type2_id
+        return
 
     @api.model
     def create(self, values):

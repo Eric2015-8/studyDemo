@@ -14,6 +14,8 @@ class Zone(models.Model):
     ]
 
     name = fields.Char(string=u'地区', required=True)
+    zone_type1_id = fields.Many2one('archives.zone_type1', string=u'地区分类1')
+    zone_type2_id = fields.Many2one('archives.zone_type2', string=u'地区分类2')
 
     @api.multi
     def copy(self, default=None):

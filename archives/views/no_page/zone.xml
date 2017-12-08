@@ -7,6 +7,8 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
+                    <field name="zone_type1_id"/>
+                    <field name="zone_type2_id"/>
                 </tree>
             </field>
         </record>
@@ -19,6 +21,8 @@
                     <sheet>
                         <group name="group_top" string="地区">
                             <field name="name"/>
+                            <field name="zone_type1_id" placeholder="地区分类1"/>
+                            <field name="zone_type2_id" placeholder="地区分类2"/>
                         </group>
                     </sheet>
                 </form>
