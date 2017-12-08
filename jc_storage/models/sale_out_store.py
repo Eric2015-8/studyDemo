@@ -33,6 +33,7 @@ class SaleOutStore(jc_base.Bill):
     department_id = fields.Many2one('archives.department', string=u'部门', required=True,
                                     domain=lambda self: self.env['archives.organization'].get_department_organization())
     out_store_date = fields.Date(string=u'出库日期', required=True, default=fields.Date.today)
+    address = fields.Char(string=u'地址', compute='_compute_address', store=True)
 
     total_second_number = fields.Float(string='辅数量', store=True, readonly=True, compute='_amount_all',
                                        track_visibility='always')
@@ -54,6 +55,12 @@ class SaleOutStore(jc_base.Bill):
     def print_quotation(self):
         # self.filtered(lambda s: s.state == 'draft').write({'state': 'sent'})
         return self.env['report'].get_action(self, 'jc_storage.report_pdf_sale_out_store')
+
+    @api.depends('customer_id')
+    def _compute_address(self):
+        for order in self:
+            order.address = order.customer_id.zone_type2_id.name + ' ' + order.customer_id.zone_type1_id.name + ' ' \
+                            + order.customer_id.zone_id.name + ' ' + order.customer_id.address
 
     @api.depends('sale_out_store_detail.second_unit_number', 'sale_out_store_detail.main_unit_number',
                  'sale_out_store_detail.money')

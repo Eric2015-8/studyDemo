@@ -108,6 +108,7 @@ class SaleOrder(jc_base.Bill):
             'store_id': self.store_id.id,
             'company_id': self.company_id.id,
             'remark': self.remark,
+            'address': self.address,
             'total_main_number': self.total_main_number,
             'total_second_number': self.total_second_number,
             'total_money': self.total_money,
