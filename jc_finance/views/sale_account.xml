@@ -41,6 +41,8 @@
                         <button name="do_un_finish" string="撤销完毕" type="object"
                                 class="oe_highlight oe_read_only" attrs="{'invisible': [('bill_state', '!=', 20)]}"
                                 groups="jc_finance.jc_group_finance_all"/>
+                        <button name="print_quotation" string="打印" type="object" class="btn-primary"
+                                attrs="{'invisible': [('id', '==', False)]}"/>
                         <button name="do_customer_setting" string="个性设置" type="object"
                                 attrs="{'invisible': [('bill_state', '!=', 1)]}"/>
                     </header>
