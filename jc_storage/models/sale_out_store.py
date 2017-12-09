@@ -178,6 +178,7 @@ class SaleOutStore(jc_base.Bill):
     def _check_logic(self):
         if not self.type_id:
             raise ValidationError(u'未选择{销售类型}')
+        self._check_date()
         setting = self.env['setting_center.sale_type'].query_type(self.type_id.id)
         if not setting:
             raise ValidationError(u'请到【设置中心】“销售”下设置“销售流程”！')
@@ -188,6 +189,12 @@ class SaleOutStore(jc_base.Bill):
         if _type == 20:
             bill.do_check()
         return
+
+    def _check_date(self):
+        if datetime.datetime.strptime(self.out_store_date, '%Y-%m-%d').date() < datetime.date.today():
+            can_early = self.env['setting_center'].query_date_can_earlier_today()
+            if not can_early:
+                raise ValidationError('{出库日期}不能早于当前日期')
 
     @api.multi
     def do_check(self):

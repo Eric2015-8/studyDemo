@@ -22,6 +22,16 @@
                             </div>
                         </div>
                     </group>
+                    <group>
+                        <label string="销售出库"/>
+                        <div>
+                            <div>
+                                <label for="sale_out_store_date_early_today_when_check"/>
+                                <label string=":"/>
+                                <field name="sale_out_store_date_early_today_when_check"/>
+                            </div>
+                        </div>
+                    </group>
                 </page>
             </xpath>
         </field>
