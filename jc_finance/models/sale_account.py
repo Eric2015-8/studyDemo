@@ -48,6 +48,8 @@ class SaleAccount(jc_base.Bill):
 
     @api.multi
     def print_quotation(self):
+        if self.bill_state < 10:
+            raise ValidationError('审核后才能打印')
         return self.env['report'].get_action(self, 'jc_finance.report_pdf_sale_account')
 
     @api.depends('sale_account_detail.second_unit_number', 'sale_account_detail.main_unit_number',

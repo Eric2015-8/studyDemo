@@ -48,6 +48,8 @@ class SaleOrder(jc_base.Bill):
     @api.multi
     def print_quotation(self):
         # self.filtered(lambda s: s.state == 'draft').write({'state': 'sent'})
+        if self.bill_state < 10:
+            raise ValidationError('审核后才能打印')
         return self.env['report'].get_action(self, 'jc_sale.report_pdf_sale_order')
 
     @api.depends('customer_id')
