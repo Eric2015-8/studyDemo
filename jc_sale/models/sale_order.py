@@ -54,9 +54,16 @@ class SaleOrder(jc_base.Bill):
 
     @api.depends('customer_id')
     def _compute_address(self):
-        for order in self:
-            order.address = order.customer_id.zone_type2_id.name + ' ' + order.customer_id.zone_type1_id.name + ' ' \
-                            + order.customer_id.zone_id.name + ' ' + order.customer_id.address
+        for bill in self:
+            a = bill.customer_id.zone_type2_id.name
+            b = bill.customer_id.zone_type1_id.name
+            c = bill.customer_id.zone_id.name
+            d = bill.customer_id.address
+            list = [a if a else '',
+                    b if b else '',
+                    c if c else '',
+                    d if d else '']
+            bill.address = ' '.join(list)
 
     @api.depends('sale_order_detail.second_unit_number', 'sale_order_detail.main_unit_number',
                  'sale_order_detail.money')
