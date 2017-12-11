@@ -11,27 +11,20 @@
                         <field name="table" attrs="{'invisible':True}"/>
                     </group>
                     <group colspan="4">
-                        <field name="is_show_customer_id" attrs="{'invisible':True}"/>
-                        <field name="is_show_type_id" attrs="{'invisible':True}"/>
-                        <field name="is_show_company_id" attrs="{'invisible':True}"/>
-                        <field name="is_show_staff_id" attrs="{'invisible':True}"/>
-                        <field name="is_show_store_id" attrs="{'invisible':True}"/>
-                        <field name="is_show_department_id" attrs="{'invisible':True}"/>
-                        <field name="is_show_in_store_type_id" attrs="{'invisible':True}"/>
                         <field name="customer_id" options="{'no_open':True,'no_create':True}"
-                               attrs="{'invisible':[('is_show_customer_id','!=',True)]}"/>
+                               invisible="not context.get('customer_id',False)"/>
                         <field name="type_id" options="{'no_open':True,'no_create':True}"
-                               attrs="{'invisible':[('is_show_type_id','!=',True)]}"/>
+                               invisible="not context.get('type_id',False)"/>
                         <field name="company_id" options="{'no_open':True,'no_create':True}"
-                               attrs="{'invisible':[('is_show_company_id','!=',True)]}"/>
+                               invisible="not context.get('company_id',False)"/>
                         <field name="staff_id" options="{'no_open':True,'no_create':True}"
-                               attrs="{'invisible':[('is_show_staff_id','!=',True)]}"/>
+                               invisible="not context.get('staff_id',False)"/>
                         <field name="store_id" options="{'no_open':True,'no_create':True}"
-                               attrs="{'invisible':[('is_show_store_id','!=',True)]}"/>
+                               invisible="not context.get('store_id',False)"/>
                         <field name="department_id" options="{'no_open':True,'no_create':True}"
-                               attrs="{'invisible':[('is_show_department_id','!=',True)]}"/>
+                               invisible="not context.get('department_id',False)"/>
                         <field name="in_store_type_id" options="{'no_open':True,'no_create':True}"
-                               attrs="{'invisible':[('is_show_in_store_type_id','!=',True)]}"/>
+                               invisible="not context.get('in_store_type_id',False)"/>
                     </group>
                     <footer>
                         <button name="subscribe" type="object"
