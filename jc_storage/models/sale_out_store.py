@@ -214,7 +214,6 @@ class SaleOutStore(jc_base.Bill):
         self._delete_sale_account()
         super(SaleOutStore, self).do_un_check()
 
-    @api.multi
     def do_customer_setting(self):
         table = u'jc_storage.sale_out_store'
         table_show_name = u'销售出库'

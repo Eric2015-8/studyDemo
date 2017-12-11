@@ -74,7 +74,6 @@ class TransferIn(jc_base.Bill):
     def _needaction_domain_get(self):
         return [('bill_state', '=', 1)]
 
-    @api.multi
     def do_customer_setting(self):
         table_show_name = u'调拨入库'
         return self.env['jc_storage.set_transfer_customer_setting'].send_and_open(self._name, table_show_name)

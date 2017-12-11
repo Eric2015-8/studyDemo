@@ -76,7 +76,6 @@ class ClassPrice(models.Model):
     def do_un_check(self):
         self.bill_state = 1
 
-    @api.multi
     def do_customer_setting(self):
         table = u'jc_sale.class_price'
         table_show_name = u'分类价'

@@ -139,7 +139,6 @@ class TransferOut(jc_base.Bill):
         self._delete_transfer_out()
         super(TransferOut, self).do_check()
 
-    @api.multi
     def do_customer_setting(self):
         table_show_name = u'调拨出库'
         return self.env['jc_storage.set_transfer_customer_setting'].send_and_open(self._name, table_show_name)

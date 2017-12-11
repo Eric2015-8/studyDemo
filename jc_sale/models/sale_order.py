@@ -188,7 +188,6 @@ class SaleOrder(jc_base.Bill):
         self._delete_out_store()
         super(SaleOrder, self).do_un_check()
 
-    @api.multi
     def do_customer_setting(self):
         table = u'jc_sale.sale_order'
         table_show_name = u'销售订单'

@@ -108,7 +108,6 @@ class OtherInStore(jc_base.Bill):
     #     self._check_goods_position()
     #     return result
 
-    @api.multi
     def do_customer_setting(self):
         table = u'jc_storage.other_in_store'
         table_show_name = u'其他入库'

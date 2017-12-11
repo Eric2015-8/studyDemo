@@ -43,7 +43,6 @@ class Payment(jc_base.Bill):
     def _needaction_domain_get(self):
         return [('bill_state', '=', 1)]
 
-    @api.multi
     def do_customer_setting(self):
         table_show_name = u'付款单'
         need_set_fields = ['customer_id', 'company_id', 'staff_id', 'department_id']

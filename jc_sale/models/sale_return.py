@@ -137,7 +137,6 @@ class SaleReturn(jc_base.Bill):
         self._delete_sale_return_store()
         super(SaleReturn, self).do_un_check()
 
-    @api.multi
     def do_customer_setting(self):
         table = u'jc_sale.sale_return'
         table_show_name = u'销售退单'

@@ -38,7 +38,6 @@ class OutAccount(jc_base.Bill):
     def get_code(self):
         return self._name
 
-    @api.multi
     def do_customer_setting(self):
         table_show_name = u'转出款单'
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, self._name, table_show_name)

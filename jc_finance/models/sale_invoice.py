@@ -77,7 +77,6 @@ class SaleInvoice(jc_base.Bill):
     def _onchange_for_staff(self):
         self.invoice_customer = self.customer_id.name
 
-    @api.multi
     def do_customer_setting(self):
         table_show_name = u'销售发票'
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, self._name, table_show_name)

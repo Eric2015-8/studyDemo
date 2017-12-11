@@ -183,7 +183,6 @@ class SaleAccount(jc_base.Bill):
         }
         return values
 
-    @api.multi
     def do_customer_setting(self):
         table_show_name = u'销售账单'
         need_set_fields = ['customer_id', 'type_id', 'company_id', 'staff_id', 'store_id', 'department_id']

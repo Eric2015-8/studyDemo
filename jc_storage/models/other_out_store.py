@@ -85,7 +85,6 @@ class OtherOutStore(jc_base.Bill):
         }
         return result
 
-    @api.multi
     def do_customer_setting(self):
         table = u'jc_storage.other_out_store'
         table_show_name = u'其他出库'

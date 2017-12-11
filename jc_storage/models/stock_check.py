@@ -34,7 +34,6 @@ class StockCheck(jc_base.Bill):
     def _needaction_domain_get(self):
         return [('bill_state', '=', 1)]
 
-    @api.multi
     def do_customer_setting(self):
         table_show_name = u'库存盘点'
         return self.env['archives.set_customer_setting'].send_and_open(need_set_fields, self._name, table_show_name)
