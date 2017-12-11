@@ -2,22 +2,14 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from . import utils
+from . import base_infor
 
 
-class Goods(models.Model):
+class Goods(base_infor.BaseInfoUnique):
     _name = 'archives.goods'
     _description = u'档案：物料'
 
-    _sql_constraints = [
-        ('name_unique',
-         'UNIQUE(name)',
-         "已存在同名物料"),
-    ]
-
-    name = fields.Char(string=u'名称', required=True)
     short_name = fields.Char(string=u'简称')
-    spell = fields.Char(string=u'首拼')
 
     # 通用信息
     main_unit_id = fields.Many2one('archives.unit', string=u'主单位')
@@ -65,34 +57,3 @@ class Goods(models.Model):
     def _compute_statistics_rate(self):
         for record in self:
             record.statistics_rate = float(record.statistics_rate_string)
-
-    @api.model
-    def create(self, values):
-        utils.set_spell(values)
-        return super(Goods, self).create(values)
-
-    @api.multi
-    def write(self, values):
-        utils.set_spell(values)
-        return super(Goods, self).write(values)
-
-    @api.multi
-    def copy(self, default=None):
-        default = dict(default or {})
-
-        copied_count = self.search_count(
-            [('name', '=like', u"Copy of {}%".format(self.name))])
-        if not copied_count:
-            new_name = u"Copy of {}".format(self.name)
-        else:
-            new_name = u"Copy of {} ({})".format(self.name, copied_count)
-
-        default['name'] = new_name
-        return super(Goods, self).copy(default)
-
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
-        args = args or []
-        domain = ['|', ('spell', operator, name), ('name', operator, name)]
-        recs = self.search(domain + args, limit=limit)
-        return recs.name_get()

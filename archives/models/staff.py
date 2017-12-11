@@ -1,21 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-from . import utils
+from . import base_infor
 
 
-class Staff(models.Model):
+class Staff(base_infor.BaseInfoUnique):
     _name = 'archives.staff'
     _description = u'档案：员工'
-
-    _sql_constraints = [
-        ('name_unique',
-         'UNIQUE(name)',
-         "已存在同名员工"),
-    ]
-
-    name = fields.Char(string=u'姓名', required=True)
-    spell = fields.Char(string=u'首拼')
 
     #     public
     company_id = fields.Many2one('res.company', string=u'公司', index=True)
@@ -42,42 +33,3 @@ class Staff(models.Model):
     is_purchase_man = fields.Boolean(string=u'采购员')
     is_driver = fields.Boolean(string=u'司机')
     is_sender = fields.Boolean(string=u'送货员')
-
-    @api.model
-    def create(self, values):
-        utils.set_spell(values)
-        return super(Staff, self).create(values)
-
-    @api.multi
-    def write(self, values):
-        utils.set_spell(values)
-        return super(Staff, self).write(values)
-
-    @api.multi
-    def copy(self, default=None):
-        default = dict(default or {})
-
-        copied_count = self.search_count(
-            [('name', '=like', u"Copy of {}%".format(self.name))])
-        if not copied_count:
-            new_name = u"Copy of {}".format(self.name)
-        else:
-            new_name = u"Copy of {} ({})".format(self.name, copied_count)
-
-        default['name'] = new_name
-        return super(Staff, self).copy(default)
-
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
-        args = args or []
-        domain = ['|', ('spell', operator, name), ('name', operator, name)]
-        recs = self.search(domain + args, limit=limit)
-        return recs.name_get()
-
-        # value = fields.Integer()
-        # value2 = fields.Float(compute="_value_pc", store=True)
-        # description = fields.Text()
-        #
-        # @api.depends('value')
-        # def _value_pc(self):
-        #     self.value2 = float(self.value) / 100

@@ -6,21 +6,12 @@ from odoo import models, fields, api
 from odoo import tools, _
 from odoo.exceptions import ValidationError
 from odoo.modules.module import get_module_resource
-from . import utils
+from . import base_infor
 
 
-class Department(models.Model):
+class Department(base_infor.BaseInfoUnique):
     _name = 'archives.department'
     _description = u'档案：部门'
-
-    _sql_constraints = [
-        ('name_unique',
-         'UNIQUE(name)',
-         "已存在同名部门"),
-    ]
-
-    name = fields.Char(string=u'名称', required=True)
-    spell = fields.Char(string=u'首拼')
 
     active = fields.Boolean('Active', default=True)
     company_id = fields.Many2one('res.company', string=u'公司',
@@ -32,34 +23,3 @@ class Department(models.Model):
     def _check_parent_id(self):
         if not self._check_recursion():
             raise ValidationError(_(u'错误!与上级部门互为上下级，发生循环.'))
-
-    @api.model
-    def create(self, values):
-        utils.set_spell(values)
-        return super(Department, self).create(values)
-
-    @api.multi
-    def write(self, values):
-        utils.set_spell(values)
-        return super(Department, self).write(values)
-
-    @api.multi
-    def copy(self, default=None):
-        default = dict(default or {})
-
-        copied_count = self.search_count(
-            [('name', '=like', u"Copy of {}%".format(self.name))])
-        if not copied_count:
-            new_name = u"Copy of {}".format(self.name)
-        else:
-            new_name = u"Copy of {} ({})".format(self.name, copied_count)
-
-        default['name'] = new_name
-        return super(Department, self).copy(default)
-
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
-        args = args or []
-        domain = ['|', ('spell', operator, name), ('name', operator, name)]
-        recs = self.search(domain + args, limit=limit)
-        return recs.name_get()

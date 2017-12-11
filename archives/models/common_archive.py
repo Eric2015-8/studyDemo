@@ -2,7 +2,7 @@
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
-from . import utils
+from . import base_infor
 
 ARCHIVE_NAME = [
     (1, '销售类型'),
@@ -42,12 +42,9 @@ ARCHIVE_NAME = [
 # organization_id = fields.Many2one('archives.common_archive', string=u'客户权限', domain=[('archive_name','=',16)])
 
 
-class CommonArchive(models.Model):
+class CommonArchive(base_infor.BaseInfo):
     _name = 'archives.common_archive'
     _description = u'档案：通用档案'
-
-    name = fields.Char(string=u'名称', required=True, copy=False)
-    spell = fields.Char(string=u'首拼')
 
     archive_name = fields.Selection(ARCHIVE_NAME, string=u'档案名称', require=True, default=1)
 
@@ -58,34 +55,3 @@ class CommonArchive(models.Model):
         if not all_data:
             return
         raise ValidationError('名称已存在')
-
-    @api.model
-    def create(self, values):
-        utils.set_spell(values)
-        return super(CommonArchive, self).create(values)
-
-    @api.multi
-    def write(self, values):
-        utils.set_spell(values)
-        return super(CommonArchive, self).write(values)
-
-    @api.multi
-    def copy(self, default=None):
-        default = dict(default or {})
-
-        copied_count = self.search_count(
-            [('archive_name', '=', self.archive_name), ('name', '=like', u"Copy of {}%".format(self.name))])
-        if not copied_count:
-            new_name = u"Copy of {}".format(self.name)
-        else:
-            new_name = u"Copy of {} ({})".format(self.name, copied_count)
-
-        default['name'] = new_name
-        return super(CommonArchive, self).copy(default)
-
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
-        args = args or []
-        domain = ['|', ('spell', operator, name), ('name', operator, name)]
-        recs = self.search(domain + args, limit=limit)
-        return recs.name_get()

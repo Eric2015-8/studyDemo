@@ -2,22 +2,12 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from . import utils
+from . import base_infor
 
 
-class Organization(models.Model):
+class Organization(base_infor.BaseInfoUnique):
     _name = 'archives.organization'
     _description = u'档案：数据权限'
-
-    _sql_constraints = [
-        ('name_unique',
-         'UNIQUE(user_id)',
-         "已为该用户授权"),
-    ]
-
-    name = fields.Char(string=u'数据权限名称', required=True, copy=False, readonly=True,
-                       index=True, default=lambda self: _('新建'))  # 使用用户名
-    spell = fields.Char(string=u'首拼')
 
     user_id = fields.Many2one('res.users', string=u'用户', required=True, ondelete='cascade')
 
@@ -282,8 +272,7 @@ class Organization(models.Model):
     @api.model
     def create(self, values):
         self._set_name(values)  # 不要与下一行颠倒
-        utils.set_spell(values)  # 不要与上一行颠倒
-        result = super(Organization, self).create(values)
+        result = super(Organization, self).create(values)  # 不要与上一行颠倒
         self._set_user_organization(result)
         return result
 
@@ -293,13 +282,5 @@ class Organization(models.Model):
         return super(Organization, self).unlink()
 
     @api.multi
-    def write(self, values):
-        utils.set_spell(values)
-        return super(Organization, self).write(values)
-
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
-        args = args or []
-        domain = ['|', ('spell', operator, name), ('name', operator, name)]
-        recs = self.search(domain + args, limit=limit)
-        return recs.name_get()
+    def copy(self, default=None):
+        raise ValidationError('不允许复制')

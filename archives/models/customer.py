@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-from . import utils
+from . import base_infor
 
 
 # import sys;
@@ -10,19 +10,11 @@ from . import utils
 # import utils
 
 
-class Customer(models.Model):
+class Customer(base_infor.BaseInfoUnique):
     _name = 'archives.customer'
     _description = u'档案：客户'
 
-    _sql_constraints = [
-        ('name_unique',
-         'UNIQUE(name)',
-         "已存在同名客户"),
-    ]
-
-    name = fields.Char(string=u'客户', required=True)
     short_name = fields.Char(string=u'简称')
-    spell = fields.Char(string=u'首拼')
 
     # 通用信息
     tel = fields.Char(string=u'联系方式')
@@ -62,36 +54,3 @@ class Customer(models.Model):
             record.zone_type1_id = record.zone_id.zone_type1_id
             record.zone_type2_id = record.zone_id.zone_type2_id
         return
-
-    @api.model
-    def create(self, values):
-        utils.set_spell(values)
-        return super(Customer, self).create(values)
-
-    @api.multi
-    def write(self, values):
-        utils.set_spell(values)
-        return super(Customer, self).write(values)
-
-    @api.multi
-    def copy(self, default=None):
-        default = dict(default or {})
-
-        copied_count = self.search_count(
-            [('name', '=like', u"Copy of {}%".format(self.name))])
-        if not copied_count:
-            new_name = u"Copy of {}".format(self.name)
-        else:
-            new_name = u"Copy of {} ({})".format(self.name, copied_count)
-
-        default['name'] = new_name
-        return super(Customer, self).copy(default)
-
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
-        # if operator not in ('ilike', 'like', '=', '=like', '=ilike'):
-        #     return super(Customer, self).name_search(name, args, operator, limit)
-        args = args or []
-        domain = ['|', ('spell', operator, name), ('name', operator, name)]
-        recs = self.search(domain + args, limit=limit)
-        return recs.name_get()

@@ -2,21 +2,12 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from . import utils
+from . import base_infor
 
 
-class OrganizationGroup(models.Model):
+class OrganizationGroup(base_infor.BaseInfoUnique):
     _name = 'archives.organization_group'
     _description = u'档案：数据权限组'
-
-    _sql_constraints = [
-        ('name_unique',
-         'UNIQUE(user_id)',
-         "已存在相同名称的数据权限组"),
-    ]
-
-    name = fields.Char(string=u'名称', required=True, copy=False)
-    spell = fields.Char(string=u'首拼')
 
     user_ids = fields.Many2many('res.users', string=u'用户')
 
@@ -115,14 +106,12 @@ class OrganizationGroup(models.Model):
 
     @api.model
     def create(self, values):
-        utils.set_spell(values)
         result = super(OrganizationGroup, self).create(values)
         self._del_and_add_organization(result)
         return result
 
     @api.multi
     def write(self, values):
-        utils.set_spell(values)
         user_ids__need_clear_group_id = self._get_del_ids(values)
         result = super(OrganizationGroup, self).write(values)
 
@@ -135,10 +124,3 @@ class OrganizationGroup(models.Model):
     @api.multi
     def unlink(self):
         return super(OrganizationGroup, self).unlink()
-
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
-        args = args or []
-        domain = ['|', ('spell', operator, name), ('name', operator, name)]
-        recs = self.search(domain + args, limit=limit)
-        return recs.name_get()

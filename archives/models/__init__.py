@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from . import base_infor
 from . import bill_define
 from . import department
 from . import staff
@@ -12,7 +13,7 @@ from . import organization_group
 from . import res_user
 from . import customer_setting
 from . import customer_setting_detail
-from . import utils
+# from . import utils
 from . import setting_center
 from . import store_goods_position_detail
 from . import subject
