@@ -1,6 +1,6 @@
 <openerp>
     <data>
-        <record model="ir.ui.view" id="jc_storage_report_storage_account_wizard_wizard">
+        <record model="ir.ui.view" id="jc_finance_report_sale_statistics_wizard">
             <field name="name">销售统计查询</field>
             <field name="model">jc_finance.report_sale_statistics_wizard</field>
             <field name="arch" type="xml">

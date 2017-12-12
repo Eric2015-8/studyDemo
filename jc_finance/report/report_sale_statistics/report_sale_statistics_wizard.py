@@ -5,7 +5,7 @@ from odoo import models, fields, api
 
 class ReportStorageAccountWizard(models.TransientModel):
     _name = 'jc_finance.report_sale_statistics_wizard'
-    _description = u'存储：销售统计查询条件'
+    _description = u'财务：销售统计查询条件'
 
     def _get_default_date_from(self):
         date = fields.Date.from_string(fields.Date.today())
@@ -84,7 +84,7 @@ class ReportStorageAccountWizard(models.TransientModel):
         if self.staff_id:
             condition += self.get_and(condition)
             condition += 'staff_id = ' + str(self.staff_id.id)
-        if self.customer_id:
+        if self.goods_id:
             condition += self.get_and(condition)
             condition += 'goods_id = ' + str(self.goods_id.id)
         if self.date_start:
