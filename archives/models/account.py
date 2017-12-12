@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from . import base_infor
 
 
-class Account(models.Model):
+class Account(base_infor.BaseInfoUnique):
     _name = 'archives.account'
-    _sql_constraints = [
-        ('name_unique',
-         'UNIQUE(name)',
-         "已存在相同账户"),
-    ]
+    _description = u'档案：账户'
 
     name = fields.Char(string=u'账户', required=True)
     bank_id = fields.Many2one('archives.bank', string=u'开户行')

@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from . import base_infor
 
 
-class Subject(models.Model):
+class Subject(base_infor.BaseInfoUnique):
     _name = 'archives.subject'
-
-    _sql_constraints = [
-        ('name_unique',
-         'UNIQUE(name)',
-         "已存在相同科目"),
-    ]
 
     name = fields.Char(string=u'科目', required=True)
 

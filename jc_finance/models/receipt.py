@@ -2,7 +2,7 @@
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
-from . import bill_define
+from odoo.utils import bill_define
 from . import jc_base
 
 

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from . import bill_define
 from . import jc_base
 
 from . import models

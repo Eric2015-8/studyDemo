@@ -2,7 +2,7 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from . import bill_define
+from odoo.utils import bill_define
 
 
 class TransferInDetail(models.Model):

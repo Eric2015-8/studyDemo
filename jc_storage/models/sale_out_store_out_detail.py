@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-from . import bill_define
+from odoo.utils import bill_define
 
 
 class SaleOutStoreOutDetail(models.Model):

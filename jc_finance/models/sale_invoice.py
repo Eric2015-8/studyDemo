@@ -3,8 +3,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from . import jc_base
-from . import bill_define
-from . import util
+from odoo.utils import bill_define, big_number
 
 
 class SaleInvoice(jc_base.Bill):
@@ -62,7 +61,7 @@ class SaleInvoice(jc_base.Bill):
             total_money = 0.0
             for line in bill.invoice_detail:
                 total_money += line.money
-            cn = util.cn_currency(total_money)
+            cn = big_number.cn_currency(total_money)
             bill.update({
                 'total_money': total_money,
                 'total_money_chn': cn,
