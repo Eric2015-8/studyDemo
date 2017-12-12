@@ -1,0 +1,80 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="jc_finance_sale_invoice_statistics_wizard_wizard">
+            <field name="name">销售发票分析查询</field>
+            <field name="model">jc_finance.sale_invoice_statistics_wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group colspan="4">
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                        <field name="bill_state"/>
+                        <field name="company_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="department_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="staff_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="type_id" widget="radio" options="{'horizontal': true}"/>
+                        <field name="remark"/>
+                        <field name="goods_id" options="{'no_open':True,'no_create':True}"/>
+                    </group>
+                    <group>
+                        <label string="显示字段:"/>
+                    </group>
+                    <group col="8" colspan="3">
+                        <table width="40%">
+                            <tr>
+                                <td>
+                                    <label for="s_company_id"/>
+                                    <field name="s_company_id"/>
+                                </td>
+                                <td>
+                                    <label for="s_department_id"/>
+                                    <field name="s_department_id"/>
+                                </td>
+                                <td>
+                                    <label for="s_staff_id"/>
+                                    <field name="s_staff_id"/>
+                                </td>
+                                <td>
+                                    <label for="s_customer_id"/>
+                                    <field name="s_customer_id"/>
+                                </td>
+                                <td>
+                                    <label for="s_type_id"/>
+                                    <field name="s_type_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="s_remark"/>
+                                    <field name="s_remark"/>
+                                </td>
+                                <td>
+                                    <label for="s_goods_id"/>
+                                    <field name="s_goods_id"/>
+                                </td>
+                                <td>
+                                    <label for="s_number"/>
+                                    <field name="s_number"/>
+                                </td>
+                                <td>
+                                    <label for="s_price"/>
+                                    <field name="s_price"/>
+                                </td>
+                                <td>
+                                    <label for="s_money"/>
+                                    <field name="s_money"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </group>
+                    <footer>
+                        <button name="query" type="object"
+                                string="查询" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

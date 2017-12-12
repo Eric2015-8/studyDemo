@@ -45,6 +45,8 @@
 
         'report/report_sale_statistics/report_sale_statistics.xml',
         'report/report_sale_statistics/report_sale_statistics_wizard.xml',
+        'report/sale_invoice_statistics/sale_invoice_statistics.xml',
+        'report/sale_invoice_statistics/sale_invoice_statistics_wizard.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

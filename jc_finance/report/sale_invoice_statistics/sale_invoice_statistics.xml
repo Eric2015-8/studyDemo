@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- 销售发票分析 tree 视图 -->
+        <record id="sale_invoice_statistics_result_tree" model="ir.ui.view">
+            <field name="name">jc_finance.sale_invoice_statistics.tree</field>
+            <field name="model">jc_finance.sale_invoice_statistics_result</field>
+            <field name="arch" type="xml">
+                <tree string="销售发票分析" create="false" delete="false">
+                    <field name="company_id" invisible="not context.get('company_id', False)"/>
+                    <field name="department_id" invisible="not context.get('department_id', False)"/>
+                    <field name="staff_id" invisible="not context.get('staff_id', False)"/>
+                    <field name="customer_id" invisible="not context.get('customer_id', False)"/>
+                    <field name='type_id' invisible="not context.get('type_id', False)"/>
+                    <field name='remark' invisible="not context.get('remark', False)"/>
+                    <field name='goods_id' invisible="not context.get('goods_id', False)"/>
+                    <field name="number" sum="数量合计" invisible="not context.get('number', False)"/>
+                    <field name="price" invisible="not context.get('price', False)"/>
+                    <field name='money' sum="金额合计" invisible="not context.get('money', False)"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- 销售发票分析 graph 视图 -->
+        <record id='sale_invoice_statistics_result_graph' model='ir.ui.view'>
+            <field name='name'>jc_finance sale_invoice_statistics graph</field>
+            <field name='model'>jc_finance.sale_invoice_statistics_result</field>
+            <field name='arch' type='xml'>
+                <pivot string="销售发票分析">
+                    <field name='company_id' type='row'/>
+                    <field name='department_id' type='row'/>
+                    <field name='staff_id' type='row'/>
+                    <field name='customer_id' type='row'/>
+                    <field name="type_id" type="row"/>
+                    <field name="remark" type="row"/>
+                    <field name="goods_id" type="row"/>
+                    <field name="price" type="row"/>
+                    <field name='number' type='measure' sum="数量合计"/>
+                    <field name="money" type='measure' sum="金额合计"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_invoice_statistics_result_kanban">
+            <field name="name">jc_finance.sale_invoice_statistics_result.kanban</field>
+            <field name="model">jc_finance.sale_invoice_statistics_result</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="company_id"/>
+                    <field name="department_id"/>
+                    <field name="staff_id"/>
+                    <field name="customer_id"/>
+                    <field name="type_id"/>
+                    <field name="remark"/>
+                    <field name='goods_id'/>
+                    <field name='number'/>
+                    <field name='price'/>
+                    <field name='money'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <strong>
+                                            <span>
+                                                <t t-esc="record.company_id.value"/>
+                                            </span>
+                                            <span>
+                                                <t t-esc="record.department_id.value"/>
+                                            </span>
+                                            <span>
+                                                <t t-esc="record.staff_id.value"/>
+                                            </span>
+                                            <span>
+                                                <t t-esc="record.customer_id.value"/>
+                                            </span>
+                                            <span>
+                                                <t t-esc="record.type_id.value"/>
+                                            </span>
+                                            <span>
+                                                <t t-esc="record.remark.value"/>
+                                            </span>
+                                            <span>
+                                                <t t-esc="record.goods_id.value"/>
+                                            </span>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4 text-muted" style="padding:0;">
+                                        <span>
+                                            <t t-esc="record.number.value"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-4 text-muted" style="padding:0;">
+                                        <span>
+                                            <t t-esc="record.price.value"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-4" style="padding:0;">
+                                        <span class="pull-right text-right">
+                                            <t t-esc="record.money.value"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <act_window id="jc_finance_sale_statistics_wizard"
+                    name="销售发票分析"
+                    src_model="jc_finance.sale_invoice_statistics_result"
+                    res_model="jc_finance.sale_invoice_statistics_wizard"
+                    view_mode="form"
+                    target="new"
+                    context="{}"/>
+
+        <!-- 销售发票分析 action -->
+        <record id='sale_invoice_statistics_result_action' model='ir.actions.act_window'>
+            <field name='name'>销售发票分析</field>
+            <field name='res_model'>jc_finance.sale_invoice_statistics_result</field>
+            <field name='view_mode'>tree,kanban,pivot</field>
+            <field name='view_id' ref='sale_invoice_statistics_result_tree'/>
+        </record>
+
+        <!-- 销售发票分析 menu -->
+        <menuitem id="menu_sale_invoice_statistics_result" name="销售发票分析"
+                  action="jc_finance_sale_statistics_wizard"
+                  parent="jc_finance_menu_root" sequence="12"/>
+
+    </data>
+</openerp>
