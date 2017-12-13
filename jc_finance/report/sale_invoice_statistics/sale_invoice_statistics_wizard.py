@@ -14,6 +14,8 @@ class SaleInvoiceStatisticsWizard(models.TransientModel):
         month = date.strftime('%m')
         return '{}-{}-01'.format(year, month)
 
+    current_user_id = fields.Many2one('res.users')
+
     date_start = fields.Date(string=u'起始日期', default=_get_default_date_from)
     date_end = fields.Date(string=u'结束日期', default=fields.Date.today)
     # date = fields.Date(string=u'日期')
@@ -47,6 +49,38 @@ class SaleInvoiceStatisticsWizard(models.TransientModel):
     s_number = fields.Boolean(string=u'数量')
     s_price = fields.Boolean(string=u'单价')
     s_money = fields.Boolean(string=u'金额')
+
+    @api.onchange('current_user_id')
+    def _onchange_for_money(self):
+        self._reload()
+
+    def _reload(self):
+        if not self.current_user_id:
+            return
+        dmo = self.env['jc_finance.sale_invoice_statistics_wizard'].search([('create_uid', '=', self._uid)],
+                                                                          limit=1, order='id desc')
+        if not dmo:
+            return
+        self.date_start = dmo.date_start
+        self.date_end = dmo.date_end
+        self.bill_state = dmo.bill_state
+        self.company_id = dmo.company_id
+        self.department_id = dmo.department_id
+        self.staff_id = dmo.staff_id
+        self.customer_id = dmo.customer_id
+        self.type_id = dmo.type_id
+        self.remark = dmo.remark
+        self.goods_id = dmo.goods_id
+        self.s_company_id = dmo.s_company_id
+        self.s_department_id = dmo.s_department_id
+        self.s_staff_id = dmo.s_staff_id
+        self.s_customer_id = dmo.s_customer_id
+        self.s_type_id = dmo.s_type_id
+        self.s_remark = dmo.s_remark
+        self.s_goods_id = dmo.s_goods_id
+        self.s_number = dmo.s_number
+        self.s_price = dmo.s_price
+        self.s_money = dmo.s_money
 
     @api.multi
     def query(self):

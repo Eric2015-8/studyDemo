@@ -116,7 +116,7 @@
                     res_model="jc_finance.sale_invoice_statistics_wizard"
                     view_mode="form"
                     target="new"
-                    context="{}"/>
+                    context="{'default_current_user_id':uid}"/>
 
         <!-- 销售发票分析 action -->
         <record id='sale_invoice_statistics_result_action' model='ir.actions.act_window'>
