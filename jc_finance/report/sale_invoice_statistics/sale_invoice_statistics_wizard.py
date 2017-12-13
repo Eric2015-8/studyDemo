@@ -236,6 +236,7 @@ class SaleInvoiceStatisticsWizard(models.TransientModel):
             # },
             'context': context,
             'res_model': action.res_model,
+            'domain': "[('create_uid','=',%s)]" % self._uid,
         }
 
     def _get_context(self, show_fields):
